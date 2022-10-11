@@ -20,7 +20,7 @@ interface CallHistory {
   calleeId: string;
 }
 
-interface User {
+export interface User {
   id: string;
   name: string;
   nickname: string;
@@ -30,7 +30,7 @@ interface User {
   profileImage: string;
 }
 
-interface Friend extends User {
+export interface Friend extends User {
   lastCalled: Date;
   memories: Memory[];
   recents: CallHistory[];
@@ -40,7 +40,7 @@ interface Friend extends User {
   };
 }
 
-interface Self extends User {
+export interface Self extends User {
   friends: Friend[];
   memories: Memory[];
   recents: CallHistory[];

@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../features/home/screens/index";
+import UserScreen from "../features/user/screens/index";
 
 const Stack = createNativeStackNavigator();
 
@@ -13,6 +14,7 @@ export function Navigation() {
     >
       {/* <Stack.Screen name="Root" component={RootTab} /> */}
       <Stack.Screen name="Root" component={HomeScreen} />
+      <Stack.Screen name="User" component={UserScreen} />
     </Stack.Navigator>
   );
 }

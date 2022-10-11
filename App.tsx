@@ -81,7 +81,7 @@ export default function App() {
 }
 
 // Color Switch Component
-function ToggleDarkMode() {
+export function ToggleDarkMode() {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <HStack space={2} alignItems="center">
