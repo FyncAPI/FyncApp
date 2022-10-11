@@ -12,11 +12,13 @@ import {
   VStack,
   Box,
   ColorMode,
+  StatusBar,
 } from "native-base";
 import type { StorageManager } from "native-base";
 import NativeBaseIcon from "./components/NativeBaseIcon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
+import { Navigation } from "./src/navigations";
 
 // Define the config
 const config = {
@@ -65,43 +67,14 @@ export default function App() {
     },
   };
   return (
-    <NativeBaseProvider theme={theme} colorModeManager={colorModeManager}>
+    <NativeBaseProvider
+      theme={theme}
+      colorModeManager={colorModeManager}
+      config={config}
+    >
       <NavigationContainer>
-        <Center
-          _dark={{ bg: "blueGray.900" }}
-          _light={{ bg: "blueGray.50" }}
-          px={4}
-          flex={1}
-        >
-          <VStack space={5} alignItems="center">
-            <NativeBaseIcon />
-            <Heading size="lg">Welcome to NativeBase</Heading>
-            <HStack space={2} alignItems="center">
-              <Text>Edit</Text>
-              <Box
-                _web={{
-                  _text: {
-                    fontFamily: "monospace",
-                    fontSize: "sm",
-                  },
-                }}
-                px={2}
-                py={1}
-                _dark={{ bg: "brand.700" }}
-                _light={{ bg: "blueGray.200" }}
-              >
-                App.js
-              </Box>
-              <Text>and save to reload.</Text>
-            </HStack>
-            <Link href="https://docs.nativebase.io" isExternal>
-              <Text color="brand.800" underline fontSize={"xl"}>
-                Learn NativeBase
-              </Text>
-            </Link>
-            <ToggleDarkMode />
-          </VStack>
-        </Center>
+        <Navigation />
+        <StatusBar barStyle={"light-content"} />
       </NavigationContainer>
     </NativeBaseProvider>
   );
