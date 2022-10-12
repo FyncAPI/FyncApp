@@ -39,7 +39,7 @@ export default function FriendList() {
           nickname: "Eva",
         },
       ]}
-      renderItem={({ item, index }) => <FriendCard friend={item} />}
+      renderItem={({ item, index }) => <FriendCard bigger={false} />}
     />
   );
 }

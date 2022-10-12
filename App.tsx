@@ -1,3 +1,4 @@
+import "react-native-gesture-handler";
 import React from "react";
 import {
   Text,
@@ -41,7 +42,26 @@ const newColorTheme = {
 };
 
 // extend the theme
-export const theme = extendTheme({ colors: newColorTheme });
+export const theme = extendTheme({
+  colors: newColorTheme,
+  components: {
+    Text: {
+      baseStyle: {
+        color: "green.500",
+      },
+      Heading: {
+        // Can pass also function, giving you access theming tools
+        baseStyle: ({ colorMode }: { colorMode: ColorMode }) => {
+          return {
+            color: colorMode === "dark" ? "red.300" : "blue.300",
+            fontWeight: "normal",
+          };
+        },
+      },
+    },
+  },
+});
+
 type MyThemeType = typeof theme;
 declare module "native-base" {
   interface ICustomTheme extends MyThemeType {}
@@ -77,23 +97,5 @@ export default function App() {
         <StatusBar barStyle={"light-content"} />
       </NavigationContainer>
     </NativeBaseProvider>
-  );
-}
-
-// Color Switch Component
-export function ToggleDarkMode() {
-  const { colorMode, toggleColorMode } = useColorMode();
-  return (
-    <HStack space={2} alignItems="center">
-      <Text>Dark</Text>
-      <Switch
-        isChecked={colorMode === "light"}
-        onToggle={toggleColorMode}
-        aria-label={
-          colorMode === "light" ? "switch to dark mode" : "switch to light mode"
-        }
-      />
-      <Text>Light</Text>
-    </HStack>
   );
 }

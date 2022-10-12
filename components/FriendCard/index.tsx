@@ -7,13 +7,13 @@ import { LinearGradient } from "expo-linear-gradient";
 export default function FriendCard({ bigger }: { bigger: boolean }) {
   const size = bigger ? 120 : 100;
   return (
-    <Box overflow="hidden" mx="2.5" borderRadius="md">
+    <Box overflow="hidden" mx="2.5" borderRadius="lg">
       <Image
         source={{
           uri: "https://placebeard.it/100x100",
         }}
-        w={size}
-        h={size}
+        w={size || 100}
+        h={size || 100}
         alt="friend image"
       />
       <Text
@@ -21,13 +21,14 @@ export default function FriendCard({ bigger }: { bigger: boolean }) {
         position="absolute"
         bottom="0.5"
         left="1.5"
-        fontWeight="medium"
+        fontWeight="bold"
+        fontSize="lg"
       >
         {/* {friend.nickname} */}
-        random name
+        Cha
       </Text>
       <LinearGradient
-        colors={["transparent", "rgba(0,0,0,0.8)"]}
+        colors={["transparent", "transparent", "rgba(0,0,0,0.8)"]}
         style={{
           position: "absolute",
           left: 0,
