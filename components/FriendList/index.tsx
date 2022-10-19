@@ -1,45 +1,22 @@
-import { View, Text } from "react-native";
 import React from "react";
-import { FlatList } from "native-base";
+import { FlatList, Text, View } from "native-base";
 import FriendCard from "../FriendCard";
+import { Friend } from "../../src/contexts/user";
 
-export default function FriendList() {
-  return (
-    <FlatList
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      data={[
-        {
-          id: "1",
-          nickname: "John",
-        },
-        {
-          id: "2",
-          nickname: "Jane",
-        },
-        {
-          id: "3",
-          nickname: "Karl",
-        },
-        {
-          id: "4",
-          nickname: "Felix",
-        },
-        {
-          id: "5",
-          nickname: "Linda",
-        },
-
-        {
-          id: "6",
-          nickname: "Sara",
-        },
-        {
-          id: "7",
-          nickname: "Eva",
-        },
-      ]}
-      renderItem={({ item, index }) => <FriendCard bigger={false} />}
-    />
-  );
+export default function FriendList({ friends }: { friends: Friend[] }) {
+  if (friends.length == 0) {
+    return (
+      <View p="2">
+        <Text>No friends</Text>
+      </View>
+    );
+  } else
+    return (
+      <FlatList
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        data={friends}
+        renderItem={({ item, index }) => <FriendCard bigger={false} />}
+      />
+    );
 }

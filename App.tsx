@@ -1,25 +1,17 @@
 import "react-native-gesture-handler";
+import "expo-dev-client";
 import React from "react";
 import {
-  Text,
-  Link,
-  HStack,
-  Center,
-  Heading,
-  Switch,
-  useColorMode,
   NativeBaseProvider,
   extendTheme,
-  VStack,
-  Box,
   ColorMode,
   StatusBar,
 } from "native-base";
 import type { StorageManager } from "native-base";
-import NativeBaseIcon from "./components/NativeBaseIcon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { Navigation } from "./src/navigations";
+import { UserContextProvider } from "./src/contexts/user/index";
 
 // Define the config
 const config = {
@@ -49,14 +41,44 @@ export const theme = extendTheme({
       baseStyle: {
         color: "green.500",
       },
-      Heading: {
-        // Can pass also function, giving you access theming tools
-        baseStyle: ({ colorMode }: { colorMode: ColorMode }) => {
+    },
+    Heading: {
+      // Can pass also function, giving you access theming tools
+      baseStyle: ({ colorMode }: { colorMode: ColorMode }) => {
+        return {
+          color: colorMode === "dark" ? "red.300" : "blue.300",
+        };
+      },
+    },
+    View: {
+      variants: {
+        primary: ({ colorMode }: { colorMode: ColorMode }) => {
           return {
-            color: colorMode === "dark" ? "red.300" : "blue.300",
+            backgroundColor: colorMode === "dark" ? "red.300" : "blue.300",
             fontWeight: "normal",
           };
         },
+        background: ({ colorMode }: { colorMode: ColorMode }) => {
+          return {
+            backgroundColor: colorMode === "dark" ? "gray.900" : "white",
+          };
+        },
+      },
+      // baseStyle: ({ colorMode }: { colorMode: ColorMode }) => {
+      //   return {
+      //     backgroundColor: colorMode === "dark" ? "red.300" : "blue.300",
+      //     fontWeight: "normal",
+      //   };
+      // },
+      // defaultProps: {
+      //   backgroundColor: "red.500",
+      // },
+    },
+    Icon: {
+      baseStyle: ({ colorMode }: { colorMode: ColorMode }) => {
+        return {
+          color: colorMode === "dark" ? "white" : "black",
+        };
       },
     },
   },
@@ -93,7 +115,9 @@ export default function App() {
       config={config}
     >
       <NavigationContainer>
-        <Navigation />
+        <UserContextProvider>
+          <Navigation />
+        </UserContextProvider>
         <StatusBar barStyle={"light-content"} />
       </NavigationContainer>
     </NativeBaseProvider>
