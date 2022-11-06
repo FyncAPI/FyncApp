@@ -3,44 +3,103 @@ import { ContactType } from "expo-contacts";
 import { View, Text, HStack, Checkbox, Image, Icon, VStack } from "native-base";
 import { Contact } from "expo-contacts";
 import { Ionicons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native";
 
-export default function ContactSelector({
+export default function ContactsSelector({
   contact,
-  selected,
-  setSelected,
+  selectedContacts,
+  setSelectedContacts,
 }: {
   contact: Contact;
-  selected: string[];
-  setSelected: (selected: boolean) => void;
+  selectedContacts: string[];
+  setSelectedContacts: React.Dispatch<React.SetStateAction<string[]>>;
 }) {
-  console.log(contact, "asd");
+  const [selected, setSelected] = React.useState(false);
+
+  React.useEffect(() => {
+    setSelected(selectedContacts.includes(contact.id));
+  }, [selectedContacts]);
+
   return (
-    <HStack p="2" alignItems="center">
-      <Checkbox.Group
-        onChange={setSelected}
-        value={selected}
-        accessibilityLabel="choose numbers"
-      >
-        <Checkbox value={contact.id} colorScheme="green" mr="2">
-          <>
-            {contact.imageAvailable ? (
-              <Image
-                source={{ uri: contact.image?.uri }}
-                alt="image"
-                size="10"
-              />
-            ) : (
-              <Icon as={Ionicons} name="person-circle-outline" size="10" />
-            )}
-            <VStack ml={2}>
-              <Text fontWeight="bold">{contact.firstName}</Text>
-              <Text>
-                {contact?.phoneNumbers && contact.phoneNumbers[0].number}
-              </Text>
-            </VStack>
-          </>
-        </Checkbox>
-      </Checkbox.Group>
-    </HStack>
+    <TouchableOpacity
+      onPress={() => {
+        console.log(contact.id);
+        // selectContact(contact.id);
+        setSelectedContacts((prev) => {
+          if (prev.includes(contact.id)) {
+            return prev.filter((id) => id !== contact.id);
+          } else {
+            return [...prev, contact.id];
+          }
+        });
+      }}
+    >
+      <HStack alignItems="center">
+        {selected ? (
+          <Icon as={Ionicons} name="checkmark-outline" size="5" />
+        ) : (
+          <Icon as={Ionicons} name="ellipse-outline" size="5" />
+        )}
+        {contact.imageAvailable ? (
+          <Image source={{ uri: contact.image?.uri }} alt="image" size="10" />
+        ) : (
+          <Icon as={Ionicons} name="person-circle-outline" size="10" />
+        )}
+        <View ml="2">
+          <Text>{contact.name}</Text>
+          <Text>{contact?.phoneNumbers?.[0]?.number}</Text>
+        </View>
+      </HStack>
+    </TouchableOpacity>
+  );
+}
+export function ContactSelector({
+  contact,
+  selectedContact,
+  setSelectedContact,
+}: {
+  contact: Contact;
+  selectedContact: Contact | undefined;
+  setSelectedContact: React.Dispatch<React.SetStateAction<Contact | undefined>>;
+}) {
+  const [selected, setSelected] = React.useState(false);
+
+  React.useEffect(() => {
+    setSelected(selectedContact?.id == contact.id);
+  }, [selectedContact]);
+
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        console.log(contact.id);
+        // selectContact(contact.id);
+        setSelectedContact((prev) => {
+          if (prev && prev?.id == contact.id) {
+            return undefined;
+          } else {
+            console.log("set");
+
+            return contact;
+          }
+        });
+      }}
+    >
+      <HStack alignItems="center">
+        {selected ? (
+          <Icon as={Ionicons} name="checkmark-outline" size="5" />
+        ) : (
+          <Icon as={Ionicons} name="ellipse-outline" size="5" />
+        )}
+        {contact.imageAvailable ? (
+          <Image source={{ uri: contact.image?.uri }} alt="image" size="10" />
+        ) : (
+          <Icon as={Ionicons} name="person-circle-outline" size="10" />
+        )}
+        <View ml="2">
+          <Text>{contact.name}</Text>
+          <Text>{contact?.phoneNumbers?.[0]?.number}</Text>
+        </View>
+      </HStack>
+    </TouchableOpacity>
   );
 }

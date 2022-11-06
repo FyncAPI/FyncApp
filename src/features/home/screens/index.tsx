@@ -16,8 +16,8 @@ import FriendCard from "../../../../components/FriendCard";
 import FriendList from "../../../../components/FriendList";
 import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { UserContext } from "../../../contexts/user";
-import { Friend } from "../../../contexts/user/index";
+import { UserContext } from "../../../contexts/user-context";
+import { Friend } from "../../../contexts/user-context/index";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -45,7 +45,7 @@ const HomeScreen = () => {
           {
             title: "Recents",
             horizontal: true,
-            data: userData.recents,
+            data: userData.friends,
           },
           {
             title: "Favorites",
@@ -77,11 +77,18 @@ const HomeScreen = () => {
               {section.title}
             </Heading>
             {section.horizontal ? (
-              <FriendList friends={section.data as Friend[]} />
+              <FriendList friends={section.data} />
             ) : section.numColumns ? (
               <Carousel
                 width={width}
-                height={120}
+                height={
+                  140 *
+                  (section.data.length <= 3
+                    ? 1
+                    : section.data.length <= 6
+                    ? 2
+                    : 3)
+                }
                 data={section.data}
                 scrollAnimationDuration={900}
                 onSnapToItem={(index) => console.log("current index:", index)}

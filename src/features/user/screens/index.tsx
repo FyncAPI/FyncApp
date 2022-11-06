@@ -3,7 +3,7 @@ import { SafeTop } from "../../../../components/SafeTop";
 import { Box, Button, Heading, View } from "native-base";
 import { ToggleDarkMode } from "../../../../components/ToggleTheme";
 import { useNavigation } from "@react-navigation/native";
-import { UserContext } from "../../../contexts/user";
+import { UserContext } from "../../../contexts/user-context";
 import { Alert } from "react-native";
 
 export default function UserScreen() {

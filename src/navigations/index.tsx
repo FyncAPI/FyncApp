@@ -6,7 +6,7 @@ import {
   NavigationParamList,
   RootStackParamList,
 } from "../../types";
-import { UserContext } from "../contexts/user";
+import { UserContext } from "../contexts/user-context";
 import FormScreen from "../features/auth/screens/form";
 import LandingScreen from "../features/auth/screens/landing";
 import HomeScreen from "../features/home/screens/index";

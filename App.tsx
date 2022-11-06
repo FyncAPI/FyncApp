@@ -11,7 +11,7 @@ import type { StorageManager } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { Navigation } from "./src/navigations";
-import { UserContextProvider } from "./src/contexts/user/index";
+import { UserContextProvider } from "./src/contexts/user-context/index";
 
 // Define the config
 const config = {

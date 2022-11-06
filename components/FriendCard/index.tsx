@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Image, Text } from "native-base";
-import { Friend } from "../../src/contexts/user";
+import { Friend } from "../../src/contexts/user-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as Linking from "expo-linking";
@@ -17,7 +17,8 @@ export default function FriendCard({
   return (
     <TouchableOpacity
       onPress={() => {
-        Linking.openURL("discord:887154847126786119.1.408969817177980931");
+        console.log(friend.phoneNumbers);
+        // Linking.openURL("discord:887154847126786119.1.408969817177980931");
       }}
     >
       <Box overflow="hidden" mx="2.5" borderRadius="lg">
@@ -38,7 +39,7 @@ export default function FriendCard({
           fontSize="lg"
           color="white"
         >
-          {friend.nickname || friend.name}
+          {friend?.nickname || friend?.name}
         </Text>
         <LinearGradient
           colors={["transparent", "transparent", "rgba(0,0,0,0.8)"]}

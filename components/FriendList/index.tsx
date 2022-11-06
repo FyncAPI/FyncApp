@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList, Text, View } from "native-base";
 import FriendCard from "../FriendCard";
-import { Friend } from "../../src/contexts/user";
+import { Friend } from "../../src/contexts/user-context";
 
 export default function FriendList({ friends }: { friends: Friend[] }) {
   if (friends.length == 0) {
@@ -16,7 +16,9 @@ export default function FriendList({ friends }: { friends: Friend[] }) {
         horizontal
         showsHorizontalScrollIndicator={false}
         data={friends}
-        renderItem={({ item, index }) => <FriendCard bigger={false} />}
+        renderItem={({ item, index }) => (
+          <FriendCard friend={item} bigger={false} />
+        )}
       />
     );
 }

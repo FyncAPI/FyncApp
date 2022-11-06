@@ -51,6 +51,7 @@ export interface UserData {
   recents: CallHistory[];
   favorites: Friend[];
   suggestions: Friend[];
+  profile: User;
 }
 
 interface UserContextInterface {
@@ -75,7 +76,8 @@ export function UserContextProvider({
 
   useEffect(() => {
     // get user from async storage
-    getUserData();
+    deleteUserData();
+    // getUserData();
   }, []);
 
   const saveUserData = (user: UserData) => {
