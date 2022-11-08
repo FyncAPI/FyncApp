@@ -53,6 +53,7 @@ export default function ContactsSelector({
     </TouchableOpacity>
   );
 }
+
 export function ContactSelector({
   contact,
   selectedContact,

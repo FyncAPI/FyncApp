@@ -36,9 +36,9 @@ export interface User extends Contact {
 }
 
 export interface Friend extends User {
-  lastCalled: Date;
-  memories: Memory[];
-  recents: CallHistory[];
+  lastCalled?: Date;
+  memories?: Memory[];
+  recents?: CallHistory[];
   friendship: {
     level: number;
     points: number;

@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Text, View } from "native-base";
 
 export default function GetGps() {
-  const [location, setLocation] = useState<Location.LocationObject>();
-  const [errorMsg, setErrorMsg] = useState<string>();
+  // const [location, setLocation] = useState<Location.LocationObject>();
+  // const [errorMsg, setErrorMsg] = useState<string>();
 
   // useEffect(() => {
   //   (async () => {

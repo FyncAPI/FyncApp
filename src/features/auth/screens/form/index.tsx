@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Button, Text, View } from "native-base";
+import { Button, ScrollView, Text, View } from "native-base";
 import SelectContacts from "../../components/select-contacts";
 import { SafeBottom, SafeTop } from "../../../../../components/SafeTop";
 import {
@@ -8,18 +8,17 @@ import {
   UserData,
 } from "../../../../contexts/user-context";
 import ProfileForm from "../../components/profile-form";
-import { Contact } from "expo-contacts";
+import { Contact, getContactByIdAsync, getContactsAsync } from "expo-contacts";
 import GetGps from "../../components/get-gps";
+import LoadFriends from "../../components/load-friends";
 
 export default function FormScreen() {
   const [page, setPage] = React.useState(0);
-  const [selectedContacts, setSelectedContacts] = React.useState<string[]>([]);
+  const [selectedContactsId, setSelectedContactsId] = React.useState<string[]>(
+    []
+  );
   const [userData, setUserData] = React.useState<UserData>({} as UserData);
   const { saveUserData } = useContext(UserContext);
-
-  useEffect(() => {
-    console.log(selectedContacts, "asd");
-  }, [selectedContacts]);
 
   const updateData =
     (key: keyof UserData) => (data: UserData[keyof UserData]) => {
@@ -29,8 +28,28 @@ export default function FormScreen() {
       });
     };
 
+  // const friends = selectedContactsId.map((id) => {
+  //   getContactByIdAsync(id).then((contact) => {
+  //     return {
+  //       ...contact,
+  //       memories: [],
+  //       recents: [],
+  //       friendship: {
+  //         level: 0,
+  //         points: 0,
+  //       },
+  //     };
+  //   });
+  // });
+
+  // updateData("friends")(friends);
+
+  // console.log(friends, "fbd");
+
   const onNext = () => {
     if (page == 2) {
+      // send to server
+      // save id back here
       // saveUserData({
       //   friends: selectedContacts.map((contact) => ({
       //     ...contact,
@@ -57,11 +76,15 @@ export default function FormScreen() {
         />
       ) : page == 1 ? (
         <SelectContacts
-          selectedContacts={selectedContacts}
-          setSelectedContacts={setSelectedContacts}
+          selectedContactsId={selectedContactsId}
+          setSelectedContactsId={setSelectedContactsId}
         />
       ) : page == 2 ? (
-        <GetGps />
+        <LoadFriends
+          friendsIds={selectedContactsId}
+          friends={userData?.friends}
+          setFriends={updateData("friends")}
+        />
       ) : page == 3 ? (
         <Text>bt</Text>
       ) : (

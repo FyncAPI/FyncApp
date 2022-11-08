@@ -2,6 +2,8 @@ import {
   Box,
   FormControl,
   Heading,
+  HStack,
+  Image,
   Input,
   Text,
   View,
@@ -77,11 +79,48 @@ export default function ProfileForm({
     );
   }, [query]);
 
+  const updateProfile = (key: string) => (value: User[keyof User]) => {
+    setProfile({ ...profile!, [key]: value });
+  };
+
   return (
     <View flex={1} variant="background" p="2">
       <Heading>Choose your profile</Heading>
 
-      <Text> {JSON.stringify(profile)}</Text>
+      {profile?.image ? (
+        <Image
+          source={{ uri: profile?.image.uri }}
+          alt="Alternate Text"
+          size="2xl"
+          rounded="full"
+          resizeMode="cover"
+          w="100px"
+          h="100px"
+        />
+      ) : (
+        <Text>No Image, upload later</Text>
+      )}
+      <FormInput
+        label="Name"
+        value={profile?.name}
+        setValue={updateProfile("name")}
+      />
+      {/* <FormInput
+        flexGrow={1}
+        label="First Name"
+        value={profile?.firstName}
+        setValue={updateProfile("firstName")}
+      />
+      <FormInput
+        label="Last Name"
+        value={profile?.lastName}
+        setValue={updateProfile("lastName")}
+      /> */}
+      <FormInput
+        label="Phone Number"
+        value={profile?.phoneNumbers?.filter((n) => n.number)[0]?.number}
+        setValue={updateProfile("phoneNumber")}
+      />
       <SearchBar query={query} setQuery={setQuery} />
 
       {query && searchedContacts?.length == 0 && <Text>No contacts found</Text>}
@@ -122,9 +161,13 @@ const FormInput = ({
 } & React.ComponentProps<typeof Input>) => {
   return (
     <Box alignItems="center">
-      <FormControl isInvalid={isInvalid} w="75%" maxW="300px">
+      <FormControl isInvalid={isInvalid} w="95%" maxW="400px">
         <FormControl.Label>{label}</FormControl.Label>
-        <Input value={value} setValue={setValue} {...props} />
+        <Input
+          value={value}
+          onChangeText={(text) => setValue(text)}
+          {...props}
+        />
         <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
           {errorMessage}
         </FormControl.ErrorMessage>

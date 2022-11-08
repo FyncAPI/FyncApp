@@ -23,11 +23,11 @@ import { FlashList } from "@shopify/flash-list";
 import { SearchBar } from "../../../../components/SearchBar";
 
 export default function SelectContacts({
-  selectedContacts,
-  setSelectedContacts,
+  selectedContactsId,
+  setSelectedContactsId,
 }: {
-  selectedContacts: string[];
-  setSelectedContacts: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedContactsId: string[];
+  setSelectedContactsId: React.Dispatch<React.SetStateAction<string[]>>;
 }) {
   // const [selected, setSelected] = useState<string[]>([]);
   const [contacts, setContacts] = useState<Contacts.Contact[]>([]);
@@ -82,8 +82,8 @@ export default function SelectContacts({
   }, [query]);
 
   useEffect(() => {
-    console.log(selectedContacts, "x");
-  }, [selectedContacts]);
+    console.log(selectedContactsId, "x");
+  }, [selectedContactsId]);
 
   return (
     <View flex={1} variant="background" p="2">
@@ -104,8 +104,8 @@ export default function SelectContacts({
           return (
             <ContactsSelector
               contact={item}
-              selectedContacts={selectedContacts}
-              setSelectedContacts={setSelectedContacts}
+              selectedContacts={selectedContactsId}
+              setSelectedContacts={setSelectedContactsId}
             />
           );
         }}
