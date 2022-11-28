@@ -32,6 +32,7 @@ export type AuthStackParamList = {
 export type RootStackParamList = {
   Home: undefined;
   User: undefined;
+  Friend: { id: string };
 };
 
 export type AuthStackScreenProps<Screen extends keyof AuthStackParamList> =

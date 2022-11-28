@@ -16,8 +16,7 @@ import FriendCard from "../../../../components/FriendCard";
 import FriendList from "../../../../components/FriendList";
 import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { UserContext } from "../../../contexts/user-context";
-import { Friend } from "../../../contexts/user-context/index";
+import { UserContext } from "../../../contexts/user/context";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -37,20 +36,20 @@ const HomeScreen = () => {
           as={<Ionicons name="person-circle" />}
         />
         <Heading fontSize={"4xl"}>Friends</Heading>
-        {false ? <Text>yes</Text> : <Text>No</Text>}
       </HStack>
+      {/* <Text>{JSON.stringify(userData.friends[0])}</Text> */}
       <SectionList
         pb={bottom}
         sections={[
-          {
-            title: "Recents",
-            horizontal: true,
-            data: userData.friends,
-          },
+          // {
+          //   title: "Recents",
+          //   horizontal: true,
+          //   data: userData.friends,
+          // },
           {
             title: "Favorites",
             horizontal: true,
-            data: userData.favorites,
+            data: userData.favorites || [],
           },
           {
             title: "All",
@@ -58,17 +57,18 @@ const HomeScreen = () => {
             carousel: true,
             data: userData.friends,
           },
-          {
-            title: "Keep in touch",
-            horizontal: true,
+          // {
+          //   title: "Keep in touch",
+          //   horizontal: true,
 
-            safeBottom: true,
-            data: userData.suggestions,
-          },
+          //   safeBottom: true,
+          //   data: userData.suggestions,
+          // },
         ]}
         renderItem={({ item, section }) =>
           section.horizontal || section.numColumns ? null : (
-            <FriendCard bigger={false} />
+            // <FriendCard bigger={false} />
+            <Text>sd</Text>
           )
         }
         renderSectionHeader={({ section }) => (
@@ -96,7 +96,7 @@ const HomeScreen = () => {
                   activeOffsetX: [-10, 10],
                 }}
                 renderItem={({ item, index }) => {
-                  console.log(typeof item, "x");
+                  // console.log(typeof item, "x");
                   return (
                     <View
                       style={{
@@ -113,7 +113,7 @@ const HomeScreen = () => {
                         numColumns={3}
                         data={section.data}
                         renderItem={({ item, index }) => {
-                          console.log(item, index);
+                          // console.log(item, index);
                           return <FriendCard bigger friend={item} />;
                         }}
                       />

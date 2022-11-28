@@ -6,12 +6,14 @@ import {
   extendTheme,
   ColorMode,
   StatusBar,
+  Text,
+  View,
 } from "native-base";
 import type { StorageManager } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { Navigation } from "./src/navigations";
-import { UserContextProvider } from "./src/contexts/user-context/index";
+import { UserContextProvider } from "./src/contexts/user/context";
 
 // Define the config
 const config = {
@@ -74,6 +76,21 @@ export const theme = extendTheme({
       //   backgroundColor: "red.500",
       // },
     },
+    ScrollView: {
+      variants: {
+        primary: ({ colorMode }: { colorMode: ColorMode }) => {
+          return {
+            backgroundColor: colorMode === "dark" ? "red.300" : "blue.300",
+            fontWeight: "normal",
+          };
+        },
+        background: ({ colorMode }: { colorMode: ColorMode }) => {
+          return {
+            backgroundColor: colorMode === "dark" ? "gray.900" : "white",
+          };
+        },
+      },
+    },
     Icon: {
       baseStyle: ({ colorMode }: { colorMode: ColorMode }) => {
         return {
@@ -97,7 +114,7 @@ export default function App() {
         return val === "dark" ? "dark" : "light";
       } catch (e) {
         console.log(e);
-        return "light";
+        return "dark";
       }
     },
     set: async (value: ColorMode) => {

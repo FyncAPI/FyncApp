@@ -1,58 +1,7 @@
 import { View, Text } from "react-native";
 import React, { createContext, useEffect, useState } from "react";
-import { Contact } from "expo-contacts";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-interface Memory {
-  id: string;
-  images: string[];
-  videos: string[];
-  inviter: string;
-  invitee: string;
-  date: Date;
-  location: string;
-  description: string;
-}
-
-interface CallHistory {
-  id: string;
-  duration: number;
-  date: Date;
-  callerId: string;
-  calleeId: string;
-}
-
-// export interface User {
-//   id: string;
-//   name: string;
-//   nickname: string;
-//   phoneNumber: string;
-//   email: string;
-//   birthdate: Date;
-//   profileImage: string;
-// }
-export interface User extends Contact {
-  // _id: string;
-}
-
-export interface Friend extends User {
-  lastCalled?: Date;
-  memories?: Memory[];
-  recents?: CallHistory[];
-  friendship: {
-    level: number;
-    points: number;
-  };
-}
-
-export interface UserData {
-  friends: Friend[];
-  memories: Memory[];
-  recents: CallHistory[];
-  favorites: Friend[];
-  suggestions: Friend[];
-  profile: User;
-}
+import { Friend, UserData } from "./types";
 
 interface UserContextInterface {
   userData: UserData;
@@ -76,13 +25,13 @@ export function UserContextProvider({
 
   useEffect(() => {
     // get user from async storage
-    deleteUserData();
-    // getUserData();
+    // deleteUserData();
+    getUserData();
   }, []);
 
   const saveUserData = (user: UserData) => {
     // save user to async storage
-    saveUser(user);
+    saveValueAsync("user", user);
     setIsRegistered(true);
 
     setUserData(user);
@@ -90,15 +39,18 @@ export function UserContextProvider({
 
   const deleteUserData = () => {
     // delete user from async storage
-    saveUser({} as UserData);
+    saveValueAsync("user", "");
     setIsRegistered(false);
     setUserData({} as UserData);
   };
 
   const getUserData = async () => {
     const user = await AsyncStorage.getItem("@user");
-    if (user) {
+    console.log(user, "user");
+
+    if (user && user != "{}") {
       const ud = JSON.parse(user);
+      console.log(ud, "UXD");
       setUserData(ud);
       setIsRegistered(true);
     } else {
@@ -116,13 +68,13 @@ export function UserContextProvider({
   );
 }
 
-const saveUser = async (user: UserData) => {
+const saveValueAsync = async (key: string, value: any) => {
   try {
-    const jsonValue = JSON.stringify(user);
-    await AsyncStorage.setItem("@user", jsonValue);
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem("@" + key, jsonValue);
   } catch (e) {
     // saving error
-    console.log("error saving user", e);
+    console.log("error saving value", e);
   }
 };
 

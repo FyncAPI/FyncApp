@@ -1,16 +1,16 @@
 import React, { useContext, useEffect } from "react";
-import { Button, ScrollView, Text, View } from "native-base";
+import { Button, Icon, ScrollView, Text, View } from "native-base";
 import SelectContacts from "../../components/select-contacts";
 import { SafeBottom, SafeTop } from "../../../../../components/SafeTop";
-import {
-  Friend,
-  UserContext,
-  UserData,
-} from "../../../../contexts/user-context";
+import { UserContext } from "../../../../contexts/user/context";
 import ProfileForm from "../../components/profile-form";
 import { Contact, getContactByIdAsync, getContactsAsync } from "expo-contacts";
 import GetGps from "../../components/get-gps";
 import LoadFriends from "../../components/load-friends";
+import { Ionicons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
+import { UserData } from "../../../../contexts/user/types";
 
 export default function FormScreen() {
   const [page, setPage] = React.useState(0);
@@ -19,6 +19,7 @@ export default function FormScreen() {
   );
   const [userData, setUserData] = React.useState<UserData>({} as UserData);
   const { saveUserData } = useContext(UserContext);
+  const navigation = useNavigation();
 
   const updateData =
     (key: keyof UserData) => (data: UserData[keyof UserData]) => {
@@ -48,27 +49,26 @@ export default function FormScreen() {
 
   const onNext = () => {
     if (page == 2) {
-      // send to server
-      // save id back here
-      // saveUserData({
-      //   friends: selectedContacts.map((contact) => ({
-      //     ...contact,
-      //     _id: contact.id,
-      //     ...({} as Friend),
-      //   })),
-      //   memories: [],
-      //   recents: [],
-      //   favorites: [],
-      //   suggestions: [],
-      // });
+      saveUserData(userData);
     } else {
       setPage(page + 1);
+    }
+  };
+
+  const onBack = () => {
+    if (page == 0) {
+      navigation.goBack();
+    } else {
+      setPage(page - 1);
     }
   };
 
   return (
     <View flex={1} variant="background" p="3">
       <SafeTop />
+      <TouchableOpacity onPress={onBack}>
+        <Icon as={Ionicons} name="arrow-back" size={8} />
+      </TouchableOpacity>
       {page == 0 ? (
         <ProfileForm
           profile={userData?.profile}

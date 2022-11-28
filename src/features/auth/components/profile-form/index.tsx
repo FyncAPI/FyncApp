@@ -10,7 +10,7 @@ import {
   WarningOutlineIcon,
 } from "native-base";
 import React, { useEffect, useState } from "react";
-import { User } from "../../../../contexts/user-context";
+import { User } from "../../../../contexts/user/types";
 import * as Contacts from "expo-contacts";
 import { SearchBar } from "../../../../components/SearchBar";
 import ContactsSelector, {
@@ -121,6 +121,9 @@ export default function ProfileForm({
         value={profile?.phoneNumbers?.filter((n) => n.number)[0]?.number}
         setValue={updateProfile("phoneNumber")}
       />
+      <Text>
+        {JSON.stringify(profile?.phoneNumbers?.filter((n) => n.number))}
+      </Text>
       <SearchBar query={query} setQuery={setQuery} />
 
       {query && searchedContacts?.length == 0 && <Text>No contacts found</Text>}

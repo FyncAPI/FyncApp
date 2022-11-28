@@ -1,13 +1,14 @@
 import React from "react";
 import { FlatList, Text, View } from "native-base";
 import FriendCard from "../FriendCard";
-import { Friend } from "../../src/contexts/user-context";
+import { Friend } from "../../src/contexts/user/types";
 
 export default function FriendList({ friends }: { friends: Friend[] }) {
-  if (friends.length == 0) {
+  console.log(friends, "friends");
+  if (!friends || friends?.length == 0) {
     return (
       <View p="2">
-        <Text>No friends</Text>
+        <Text>No favorites friends</Text>
       </View>
     );
   } else

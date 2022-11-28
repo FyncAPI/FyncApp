@@ -288,9 +288,6 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         role,
         setRole,
 
-        businessSignIn,
-        candidateSignIn,
-
         onLogout,
         onDeleteAccount,
 

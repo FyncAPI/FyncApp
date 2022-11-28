@@ -1,7 +1,18 @@
-import { Text, View } from "native-base";
+import {
+  Heading,
+  HStack,
+  Icon,
+  IconButton,
+  Image,
+  Text,
+  View,
+} from "native-base";
 import React, { useEffect, useState } from "react";
-import { Friend } from "../../../../contexts/user-context";
+import { Friend } from "../../../../contexts/user/types";
 import * as Contacts from "expo-contacts";
+import { ActivityIndicator } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function LoadFriends({
   friendsIds,
@@ -54,12 +65,35 @@ export default function LoadFriends({
         };
       });
     setFriends(friends);
-  }, [friendsIds]);
+  }, [friendsIds, contacts]);
 
   return (
     <View>
-      <Text>LoadFriends..</Text>
-      <Text>{JSON.stringify(friends)}</Text>
+      {friends?.length == 0 ? (
+        <ActivityIndicator />
+      ) : (
+        <FlatList
+          ListHeaderComponent={() => <Heading my="2">Friends</Heading>}
+          data={friends}
+          renderItem={({ item }) => <FriendCard friend={item} />}
+        />
+      )}
     </View>
   );
 }
+
+const FriendCard = ({ friend }: { friend: Friend }) => {
+  return (
+    <HStack alignItems={"center"}>
+      {friend.imageAvailable ? (
+        <Image source={{ uri: friend.image.uri }} alt="image base" size="sm" />
+      ) : (
+        <Icon as={Ionicons} name="person" size="sm" />
+      )}
+      <Text m="2">{friend.name}</Text>
+      <Text m="1" variant={"baseStyle"}>
+        {friend.phoneNumbers?.map((n) => n?.number + " ")}
+      </Text>
+    </HStack>
+  );
+};

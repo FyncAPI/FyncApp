@@ -6,9 +6,10 @@ import {
   NavigationParamList,
   RootStackParamList,
 } from "../../types";
-import { UserContext } from "../contexts/user-context";
+import { UserContext } from "../contexts/user/context";
 import FormScreen from "../features/auth/screens/form";
 import LandingScreen from "../features/auth/screens/landing";
+import { FriendScreen } from "../features/friend/screens";
 import HomeScreen from "../features/home/screens/index";
 import UserScreen from "../features/user/screens/index";
 import { useUserContext } from "../hooks";
@@ -17,7 +18,7 @@ const Stack = createNativeStackNavigator<NavigationParamList>();
 
 export function Navigation() {
   const { isRegistered, userData } = useContext(UserContext);
-  console.log(isRegistered, userData);
+  console.log(isRegistered, userData, ";lkj");
   return (
     <Stack.Navigator
       screenOptions={{
@@ -60,6 +61,7 @@ function RootStackNavigator() {
     >
       <RootStack.Screen name="Home" component={HomeScreen} />
       <RootStack.Screen name="User" component={UserScreen} />
+      <RootStack.Screen name="Friend" component={FriendScreen} />
     </RootStack.Navigator>
   );
 }
