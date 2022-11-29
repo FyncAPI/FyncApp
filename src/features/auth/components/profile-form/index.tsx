@@ -86,26 +86,28 @@ export default function ProfileForm({
   return (
     <View flex={1} variant="background" p="2">
       <Heading>Choose your profile</Heading>
+      {profile && (
+        <>
+          {profile?.image ? (
+            <Image
+              source={{ uri: profile?.image.uri }}
+              alt="Alternate Text"
+              size="2xl"
+              rounded="full"
+              resizeMode="cover"
+              w="100px"
+              h="100px"
+            />
+          ) : (
+            <Text>No Image, upload later</Text>
+          )}
 
-      {profile?.image ? (
-        <Image
-          source={{ uri: profile?.image.uri }}
-          alt="Alternate Text"
-          size="2xl"
-          rounded="full"
-          resizeMode="cover"
-          w="100px"
-          h="100px"
-        />
-      ) : (
-        <Text>No Image, upload later</Text>
-      )}
-      <FormInput
-        label="Name"
-        value={profile?.name}
-        setValue={updateProfile("name")}
-      />
-      {/* <FormInput
+          <FormInput
+            label="Name"
+            value={profile?.name}
+            setValue={updateProfile("name")}
+          />
+          {/* <FormInput
         flexGrow={1}
         label="First Name"
         value={profile?.firstName}
@@ -116,14 +118,17 @@ export default function ProfileForm({
         value={profile?.lastName}
         setValue={updateProfile("lastName")}
       /> */}
-      <FormInput
-        label="Phone Number"
-        value={profile?.phoneNumbers?.filter((n) => n.number)[0]?.number}
-        setValue={updateProfile("phoneNumber")}
-      />
-      <Text>
+          <FormInput
+            label="Phone Number"
+            value={profile?.phoneNumbers?.filter((n) => n.number)[0]?.number}
+            setValue={updateProfile("phoneNumber")}
+            mb={2}
+          />
+        </>
+      )}
+      {/* <Text>
         {JSON.stringify(profile?.phoneNumbers?.filter((n) => n.number))}
-      </Text>
+      </Text> */}
       <SearchBar query={query} setQuery={setQuery} />
 
       {query && searchedContacts?.length == 0 && <Text>No contacts found</Text>}

@@ -11,7 +11,7 @@ function FriendshipIconBase({
 }) {
   return (
     <View alignItems={"center"} justifyContent={"center"}>
-      <Icon as={Ionicons} name="heart" size="3xl" />
+      <Icon as={Ionicons} name="heart" size="4xl" color={"text.700"} />
       <Text position={"absolute"}>{friendship.points}</Text>
     </View>
   );

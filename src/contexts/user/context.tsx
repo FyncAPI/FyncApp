@@ -1,11 +1,16 @@
-import { View, Text } from "react-native";
 import React, { createContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Friend, UserData } from "./types";
+import { Friend, Memory, UserData } from "./types";
 
 interface UserContextInterface {
   userData: UserData;
   isRegistered: boolean;
+
+  favoriteFriend: (friend: Friend) => void;
+  unfavoriteFriend: (friendId: Friend["id"]) => void;
+
+  addMemory: (friend: Friend, memory: Memory) => void;
+
   saveUserData: (user: UserData) => void;
   deleteUserData: () => void;
 }
@@ -20,7 +25,6 @@ export function UserContextProvider({
   children: React.ReactNode;
 }) {
   const [userData, setUserData] = useState<UserData>({} as UserData);
-  const [friends, setFriends] = useState<Friend[]>([]);
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
 
   useEffect(() => {
@@ -59,9 +63,48 @@ export function UserContextProvider({
     }
   };
 
+  const favoriteFriend = (friend: Friend) => {
+    console.log("favorite friend", friend);
+    // if the friend is already favorited, remove them from the list
+    if (userData?.favorites?.find((f) => f.id == friend.id)) {
+      unfavoriteFriend(friend.id);
+      return;
+    }
+
+    const newFriends =
+      userData?.favorites?.length > 0
+        ? [...userData?.favorites, friend]
+        : [friend];
+
+    saveUserData({
+      ...userData,
+      favorites: newFriends,
+    });
+  };
+
+  const unfavoriteFriend = (friendId: Friend["id"]) => {
+    console.log("unfavorite friend", friendId);
+    const newFriends = userData.favorites.filter((f) => f.id != friendId);
+
+    saveUserData({
+      ...userData,
+      favorites: newFriends,
+    });
+  };
+
+  const addMemory = (friend: Friend, memory: Memory) => {};
+
   return (
     <UserContext.Provider
-      value={{ userData, isRegistered, saveUserData, deleteUserData }}
+      value={{
+        userData,
+        isRegistered,
+        favoriteFriend,
+        unfavoriteFriend,
+        addMemory,
+        saveUserData,
+        deleteUserData,
+      }}
     >
       {children}
     </UserContext.Provider>
@@ -81,6 +124,7 @@ const saveValueAsync = async (key: string, value: any) => {
 const getValue = async (key: string) => {
   try {
     const value = await AsyncStorage.getItem(key);
+
     if (value !== null) {
       // value previously stored
       return value;

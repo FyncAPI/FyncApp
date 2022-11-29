@@ -17,6 +17,7 @@ import FriendList from "../../../../components/FriendList";
 import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { UserContext } from "../../../contexts/user/context";
+import { FriendCarousel } from "../components/FriendCarousel";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -79,48 +80,7 @@ const HomeScreen = () => {
             {section.horizontal ? (
               <FriendList friends={section.data} />
             ) : section.numColumns ? (
-              <Carousel
-                width={width}
-                height={
-                  140 *
-                  (section.data.length <= 3
-                    ? 1
-                    : section.data.length <= 6
-                    ? 2
-                    : 3)
-                }
-                data={section.data}
-                scrollAnimationDuration={900}
-                onSnapToItem={(index) => console.log("current index:", index)}
-                panGestureHandlerProps={{
-                  activeOffsetX: [-10, 10],
-                }}
-                renderItem={({ item, index }) => {
-                  // console.log(typeof item, "x");
-                  return (
-                    <View
-                      style={{
-                        flex: 1,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <FlatList
-                        scrollEnabled={false}
-                        alignSelf="center"
-                        ItemSeparatorComponent={() => (
-                          <View style={{ height: 12 }} />
-                        )}
-                        numColumns={3}
-                        data={section.data}
-                        renderItem={({ item, index }) => {
-                          // console.log(item, index);
-                          return <FriendCard bigger friend={item} />;
-                        }}
-                      />
-                    </View>
-                  );
-                }}
-              />
+              <FriendCarousel friends={section.data} />
             ) : null}
           </>
         )}
