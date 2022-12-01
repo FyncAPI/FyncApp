@@ -2,9 +2,11 @@ import { useNavigation } from "@react-navigation/native";
 import { Button, Heading, Text, View } from "native-base";
 import React from "react";
 import { SafeBottom, SafeTop } from "../../../../../components/SafeTop";
+import { AuthStackNavigationProp } from "../../../../../types";
 
-export default function LandingScreen() {
-  const navigation = useNavigation();
+export const LandingScreen = () => {
+  const navigation = useNavigation<AuthStackNavigationProp<"Landing">>();
+  console.log("Landing Screen");
   return (
     <View flex={1} variant="background" p="2">
       <SafeTop />
@@ -15,4 +17,4 @@ export default function LandingScreen() {
       <SafeBottom />
     </View>
   );
-}
+};

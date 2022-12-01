@@ -7,8 +7,10 @@ import {
   RootStackParamList,
 } from "../../types";
 import { UserContext } from "../contexts/user/context";
+import { AddFriendScreen } from "../features/Add/screens/AddFriendScreen";
+import { AddFromContacts } from "../features/Add/screens/AddFromContacts";
 import FormScreen from "../features/auth/screens/form";
-import LandingScreen from "../features/auth/screens/landing";
+import { LandingScreen } from "../features/auth/screens/landing";
 import { FriendScreen } from "../features/friend/screens";
 import HomeScreen from "../features/home/screens/index";
 import UserScreen from "../features/user/screens/index";
@@ -39,14 +41,15 @@ export function Navigation() {
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 
 function AuthStackNavigator() {
+  console.log("audstl");
   return (
     <AuthStack.Navigator
       screenOptions={{
         headerShown: false,
       }}
     >
-      <AuthStack.Screen name="Landing" component={LandingScreen} />
       <AuthStack.Screen name="Form" component={FormScreen} />
+      <AuthStack.Screen name="Landing" component={LandingScreen} />
     </AuthStack.Navigator>
   );
 }
@@ -62,6 +65,8 @@ function RootStackNavigator() {
       <RootStack.Screen name="Home" component={HomeScreen} />
       <RootStack.Screen name="User" component={UserScreen} />
       <RootStack.Screen name="Friend" component={FriendScreen} />
+      <RootStack.Screen name="AddFriend" component={AddFriendScreen} />
+      <RootStack.Screen name="AddFromContacts" component={AddFromContacts} />
     </RootStack.Navigator>
   );
 }

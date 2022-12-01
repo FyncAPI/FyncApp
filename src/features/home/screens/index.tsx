@@ -14,13 +14,28 @@ import { SafeBottom, SafeTop } from "../../../../components/SafeTop";
 import { Ionicons } from "@expo/vector-icons";
 import FriendCard from "../../../../components/FriendCard";
 import FriendList from "../../../../components/FriendList";
-import { useNavigation } from "@react-navigation/native";
+import {
+  CompositeNavigationProp,
+  useNavigation,
+} from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { UserContext } from "../../../contexts/user/context";
 import { FriendCarousel } from "../components/FriendCarousel";
+import {
+  RootStackNavigationProp,
+  RootStackParamList,
+  RootStackScreenProps,
+} from "../../../../types";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
+type HomeScreenNavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<RootStackParamList, "Home">,
+  NativeStackNavigationProp<RootStackParamList>
+>;
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<RootStackNavigationProp<"Home">>();
   const { width } = Dimensions.get("window");
   const { bottom } = useSafeAreaInsets();
   const { userData } = React.useContext(UserContext);
@@ -37,6 +52,15 @@ const HomeScreen = () => {
           as={<Ionicons name="person-circle" />}
         />
         <Heading fontSize={"4xl"}>Friends</Heading>
+        <Icon
+          onPress={() => {
+            navigation.navigate("AddFriend");
+          }}
+          ml="auto"
+          mr={4}
+          size="3xl"
+          as={<Ionicons name="add-circle-outline" />}
+        />
       </HStack>
       {/* <Text>{JSON.stringify(userData.friends[0])}</Text> */}
       <SectionList
