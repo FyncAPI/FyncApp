@@ -23,7 +23,8 @@ function PhoneNumberCardBase({ phoneNumber }: { phoneNumber: PhoneNumber }) {
         
       )} */}
       <Text fontSize={"xl"}>
-        {getFlagEmoji(phoneNumber?.countryCode)} {phoneNumber.number}
+        {phoneNumber?.countryCode && getFlagEmoji(phoneNumber?.countryCode)}{" "}
+        {phoneNumber.number}
       </Text>
       <View flex={1} />
       <IconButton
