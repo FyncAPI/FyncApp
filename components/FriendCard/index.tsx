@@ -2,25 +2,25 @@ import React from "react";
 import { Box, Image, Text } from "native-base";
 import { Friend } from "../../src/contexts/user/types";
 import { LinearGradient } from "expo-linear-gradient";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import * as Linking from "expo-linking";
 import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native";
 
 // export default function FriendCard({ friend }: { friend: Friend }) {
 export default function FriendCard({
-  bigger,
+  listLength,
   friend,
 }: {
-  bigger: boolean;
+  listLength: number;
   friend: Friend;
 }) {
   const navigation = useNavigation();
-  const size = bigger ? 120 : 100;
+  const size = listLength == 2 ? 160 : 100;
   return (
     <TouchableOpacity
       onPress={() => {
         console.log(friend.phoneNumbers);
-        Linking.openURL("tel:" + friend.phoneNumbers[0].number);
+        Linking.openURL("tel://" + friend.phoneNumbers[0].number);
       }}
       onLongPress={() => {
         navigation.navigate("Friend", { id: friend.id });
