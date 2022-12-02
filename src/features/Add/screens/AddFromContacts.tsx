@@ -9,8 +9,8 @@ import { RootStackNavigationProp } from "../../../../types";
 import BackButton from "../../../components/BackButton";
 import { UserContext } from "../../../contexts/user/context";
 import { UserData } from "../../../contexts/user/types";
-import LoadFriends from "../../auth/components/load-friends";
-import SelectContacts from "../../auth/components/select-contacts";
+import LoadFriends from "../../auth/components/load-friends/LoadFriend";
+import SelectContacts from "../../auth/components/select-contacts/SelectContact";
 
 export const AddFromContacts = gestureHandlerRootHOC(() => {
   const [page, setPage] = React.useState(0);

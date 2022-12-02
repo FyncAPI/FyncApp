@@ -12,19 +12,24 @@ export default function BackButton({
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
   return (
-    <View position="absolute" top={insets.top + 10 + "px"} left={2} zIndex={1}>
-      <TouchableOpacity
-        onPress={() => {
-          console.log("back");
-          navigation.goBack();
-        }}
-      >
+    <View
+      position="absolute"
+      top={insets.top + 10 + "px"}
+      left={2}
+      zIndex={1}
+      _android={{ mt: 3 }}
+    >
+      <TouchableOpacity>
         <Icon
           _dark={{ color: "light.100" }}
           _light={{ color: "dark.100" }}
           as={Ionicons}
           name="arrow-back"
           size={8}
+          onPress={() => {
+            console.log("back");
+            navigation.goBack();
+          }}
           {...props}
         />
       </TouchableOpacity>

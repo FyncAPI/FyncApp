@@ -13,6 +13,7 @@ import * as Contacts from "expo-contacts";
 import { ActivityIndicator } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
+import { useContact } from "../../../../hooks/useContact";
 
 export default function LoadFriends({
   friendsIds,
@@ -23,30 +24,11 @@ export default function LoadFriends({
   friends: Friend[];
   setFriends: (friends: Friend[]) => void;
 }) {
-  const [contacts, setContacts] = useState<Contacts.Contact[]>([]);
   const [error, setError] = useState({});
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const { status } = await Contacts.requestPermissionsAsync();
-        console.log(status, "tus");
-        if (status === "granted") {
-          const { data } = await Contacts.getContactsAsync({
-            fields: [Contacts.Fields.Image, Contacts.Fields.PhoneNumbers],
-          });
-          if (data.length > 0) {
-            setContacts(data);
-          }
-        } else {
-          console.log("Permission denied");
-          setError({ ...error, contacts: "Permission denied" });
-        }
-      } catch (err) {
-        setError({ ...error, contacts: err });
-      }
-    })();
-  }, []);
+  const contacts = useContact();
+  const setFriend = (friend: Friend) => {
+    setFriends(friends.map((f) => (f.id == friend.id ? friend : f)));
+  };
 
   useEffect(() => {
     const friends: Friend[] = contacts
@@ -54,6 +36,12 @@ export default function LoadFriends({
         return friendsIds.includes(contact.id);
       })
       .map((contact) => {
+        let phoneNumbers = contact.phoneNumbers;
+        // if the contact doesn't have a primary contact, set the first one as primary
+        if (!phoneNumbers?.find((phoneNumber) => phoneNumber.isPrimary)) {
+          if (phoneNumbers?.[0]) phoneNumbers[0].isPrimary = true;
+        }
+
         return {
           ...contact,
           friendship: {
@@ -62,6 +50,7 @@ export default function LoadFriends({
           },
           memories: [],
           recents: [],
+          phoneNumbers,
         };
       });
     setFriends(friends);
@@ -69,20 +58,35 @@ export default function LoadFriends({
 
   return (
     <View flex={1}>
+      <Heading size={"2xl"} ml={8}>
+        Friends
+      </Heading>
+      <Text m={2}>
+        Select the primary contact you want to use for each of your friends.
+      </Text>
       {friends?.length == 0 ? (
         <ActivityIndicator />
       ) : (
         <FlatList
-          ListHeaderComponent={() => <Heading my="2">Friends</Heading>}
           data={friends}
-          renderItem={({ item }) => <FriendCard friend={item} />}
+          renderItem={({ item }) => (
+            <FriendCard friend={item} setFriend={setFriend} />
+          )}
         />
       )}
     </View>
   );
 }
 
-const FriendCard = ({ friend }: { friend: Friend }) => {
+const FriendCard = ({
+  friend,
+  setFriend,
+}: {
+  friend: Friend;
+  setFriend: (friend: Friend) => void;
+}) => {
+  let primaryNumber = friend.phoneNumbers?.find((number) => number.isPrimary);
+
   return (
     <HStack
       alignItems={"center"}
@@ -114,8 +118,33 @@ const FriendCard = ({ friend }: { friend: Friend }) => {
         ml="auto"
       >
         {friend.phoneNumbers?.map((n) => (
-          <Text>{n?.number}</Text>
+          <HStack justifyContent={"center"} alignItems="center">
+            <View
+              w={2}
+              h={2}
+              bg={primaryNumber?.id == n.id ? "blue.500" : "transparent"}
+              rounded={"full"}
+              m={1}
+            />
+
+            <Text
+              fontSize={"lg"}
+              m="2"
+              onPress={() => {
+                setFriend({
+                  ...friend,
+                  phoneNumbers: friend.phoneNumbers?.map((number) => ({
+                    ...number,
+                    isPrimary: number.id == n.id,
+                  })),
+                });
+              }}
+            >
+              {n?.number}
+            </Text>
+          </HStack>
         ))}
+        {/* <Text>{JSON.stringify(friend.phoneNumbers[1].isPrimary)}</Text> */}
       </View>
     </HStack>
   );

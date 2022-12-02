@@ -35,6 +35,7 @@ export function UserContextProvider({
   }, []);
 
   const saveUserData = (user: UserData) => {
+    if (!user) return;
     // save user to async storage
     saveValueAsync("user", user);
     setIsRegistered(true);

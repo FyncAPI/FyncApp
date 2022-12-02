@@ -19,6 +19,7 @@ export const AddFriendScreen = () => {
         <Pressable
           left={4}
           bg="fuchsia.900"
+          _light={{ bg: "fuchsia.500" }}
           p="12"
           borderRadius={10}
           m="2"
@@ -26,6 +27,7 @@ export const AddFriendScreen = () => {
         >
           <Heading>Add New Friend</Heading>
         </Pressable>
+
         <Pressable
           right={4}
           bg="darkBlue.900"
@@ -34,7 +36,7 @@ export const AddFriendScreen = () => {
           m="2"
           onPress={() => navigation.navigate("AddFromContacts")}
         >
-          <Heading>Add From Contact</Heading>
+          <Heading _light={{ color: "amber.100" }}>Add From Contact</Heading>
         </Pressable>
       </VStack>
     </View>

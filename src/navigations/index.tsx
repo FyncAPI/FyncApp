@@ -10,11 +10,11 @@ import { UserContext } from "../contexts/user/context";
 import { AddFriendScreen } from "../features/Add/screens/AddFriendScreen";
 import { AddFromContacts } from "../features/Add/screens/AddFromContacts";
 import { AddNewFriendScreen } from "../features/Add/screens/AddNewFriendScreen";
-import FormScreen from "../features/auth/screens/form";
-import { LandingScreen } from "../features/auth/screens/landing";
-import { FriendScreen } from "../features/friend/screens";
-import HomeScreen from "../features/home/screens/index";
-import UserScreen from "../features/user/screens/index";
+import FormScreen from "../features/auth/screens/form/AuthFormScreen";
+import { LandingScreen } from "../features/auth/screens/landing/LandingScreen";
+import { FriendScreen } from "../features/friend/screens/FriendScreen";
+import HomeScreen from "../features/home/screens/HomeScreen";
+import UserScreen from "../features/user/screens/UserScreen";
 import { useUserContext } from "../hooks";
 
 const Stack = createNativeStackNavigator<NavigationParamList>();
@@ -28,7 +28,7 @@ export function Navigation() {
         headerShown: false,
       }}
     >
-      {isRegistered ? (
+      {isRegistered && userData ? (
         <Stack.Screen name="RootStack" component={RootStackNavigator} />
       ) : (
         <Stack.Screen name="AuthStack" component={AuthStackNavigator} />

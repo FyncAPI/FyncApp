@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { SafeTop } from "../../../../components/SafeTop";
 import { Box, Button, Heading, HStack, ScrollView, View } from "native-base";
-import { ToggleDarkMode } from "../../../../components/ToggleTheme";
+import { ToggleDarkMode } from "../../../../components/ThemeSwitch";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../../contexts/user/context";
 import { Alert } from "react-native";

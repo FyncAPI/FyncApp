@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList, Text, View } from "native-base";
-import FriendCard from "../FriendCard";
-import { Friend } from "../../src/contexts/user/types";
+import FriendCard from "./FriendCard";
+import { Friend } from "../src/contexts/user/types";
 
 export default function FriendList({ friends }: { friends: Friend[] }) {
   console.log(friends, "friends");
