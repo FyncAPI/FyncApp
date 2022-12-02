@@ -59,7 +59,7 @@ export const AddFromContacts = gestureHandlerRootHOC(() => {
       ) : null}
 
       <Button mt={"auto"} onPress={onNext}>
-        Continue
+        {page == 0 ? "Next" : page == 1 ? "Finish" : null}
       </Button>
       <SafeBottom />
     </View>

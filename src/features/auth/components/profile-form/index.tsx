@@ -86,28 +86,27 @@ export default function ProfileForm({
   return (
     <View flex={1} variant="background" p="2">
       <Heading>Choose your profile</Heading>
-      {profile && (
-        <>
-          {profile?.image ? (
-            <Image
-              source={{ uri: profile?.image.uri }}
-              alt="Alternate Text"
-              size="2xl"
-              rounded="full"
-              resizeMode="cover"
-              w="100px"
-              h="100px"
-            />
-          ) : (
-            <Text>No Image, upload later</Text>
-          )}
-
-          <FormInput
-            label="Name"
-            value={profile?.name}
-            setValue={updateProfile("name")}
+      <>
+        {profile?.image ? (
+          <Image
+            source={{ uri: profile?.image.uri }}
+            alt="Alternate Text"
+            size="2xl"
+            rounded="full"
+            resizeMode="cover"
+            w="100px"
+            h="100px"
           />
-          {/* <FormInput
+        ) : (
+          <Text>No Image, upload later</Text>
+        )}
+
+        <FormInput
+          label="Name"
+          value={profile?.name}
+          setValue={updateProfile("name")}
+        />
+        {/* <FormInput
         flexGrow={1}
         label="First Name"
         value={profile?.firstName}
@@ -118,37 +117,13 @@ export default function ProfileForm({
         value={profile?.lastName}
         setValue={updateProfile("lastName")}
       /> */}
-          <FormInput
-            label="Phone Number"
-            value={profile?.phoneNumbers?.filter((n) => n.number)[0]?.number}
-            setValue={updateProfile("phoneNumber")}
-            mb={2}
-          />
-        </>
-      )}
-      {/* <Text>
-        {JSON.stringify(profile?.phoneNumbers?.filter((n) => n.number))}
-      </Text> */}
-      <SearchBar query={query} setQuery={setQuery} />
-
-      {query && searchedContacts?.length == 0 && <Text>No contacts found</Text>}
-      <FlatList
-        data={
-          query
-            ? searchedContacts.slice(50 * (page - 1), 50 * page)
-            : contacts.slice(50 * (page - 1), 50 * page)
-        }
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => {
-          return (
-            <ContactSelector
-              contact={item}
-              selectedContact={profile}
-              setSelectedContact={() => setProfile(item)}
-            />
-          );
-        }}
-      />
+        <FormInput
+          label="Phone Number"
+          value={profile?.phoneNumbers?.filter((n) => n.number)[0]?.number}
+          setValue={updateProfile("phoneNumber")}
+          mb={2}
+        />
+      </>
     </View>
   );
 }

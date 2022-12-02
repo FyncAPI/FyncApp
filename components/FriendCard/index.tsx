@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Image, Text } from "native-base";
+import { Box, Image, Text, View } from "native-base";
 import { Friend } from "../../src/contexts/user/types";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Linking from "expo-linking";
@@ -16,7 +16,7 @@ export default function FriendCard({
   friend: Friend;
 }) {
   const navigation = useNavigation<RootStackNavigationProp<"Home">>();
-  const size = listLength == 2 ? 160 : listLength == 1 ? 400 : 110;
+  const size = listLength == 2 ? 160 : listLength == 1 ? 360 : 110;
   return (
     <TouchableOpacity
       onPress={() => {
@@ -39,6 +39,7 @@ export default function FriendCard({
           h={size || 100}
           alt="friend image"
         />
+
         <Text
           zIndex={2}
           position="absolute"
