@@ -68,7 +68,7 @@ export default function LoadFriends({
   }, [friendsIds, contacts]);
 
   return (
-    <View>
+    <View flex={1}>
       {friends?.length == 0 ? (
         <ActivityIndicator />
       ) : (
@@ -84,16 +84,39 @@ export default function LoadFriends({
 
 const FriendCard = ({ friend }: { friend: Friend }) => {
   return (
-    <HStack alignItems={"center"}>
+    <HStack
+      alignItems={"center"}
+      p={2}
+      _dark={{
+        bg: "blueGray.800",
+      }}
+      _light={{
+        bg: "blueGray.100",
+      }}
+      m={1}
+      rounded={"md"}
+    >
       {friend.imageAvailable ? (
         <Image source={{ uri: friend.image.uri }} alt="image base" size="sm" />
       ) : (
-        <Icon as={Ionicons} name="person" size="sm" />
+        <Icon as={Ionicons} name="person" size="md" />
       )}
       <Text m="2">{friend.name}</Text>
-      <Text m="1" variant={"baseStyle"}>
-        {friend.phoneNumbers?.map((n) => n?.number + " ")}
-      </Text>
+      <View
+        _dark={{
+          bg: "darkBlue.900",
+        }}
+        _light={{
+          bg: "blue.200",
+        }}
+        rounded={"sm"}
+        p={"1"}
+        ml="auto"
+      >
+        {friend.phoneNumbers?.map((n) => (
+          <Text>{n?.number}</Text>
+        ))}
+      </View>
     </HStack>
   );
 };

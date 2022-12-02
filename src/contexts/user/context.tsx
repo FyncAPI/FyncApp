@@ -10,6 +10,7 @@ interface UserContextInterface {
   unfavoriteFriend: (friendId: Friend["id"]) => void;
 
   addMemory: (friend: Friend, memory: Memory) => void;
+  addFriend: (friend: Friend) => void;
 
   saveUserData: (user: UserData) => void;
   deleteUserData: () => void;
@@ -93,6 +94,15 @@ export function UserContextProvider({
   };
 
   const addMemory = (friend: Friend, memory: Memory) => {};
+  const AddFriend = (friend: Friend) => {
+    const newFriends =
+      userData?.friends?.length > 0 ? [...userData?.friends, friend] : [friend];
+
+    saveUserData({
+      ...userData,
+      friends: newFriends,
+    });
+  };
 
   return (
     <UserContext.Provider

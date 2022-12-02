@@ -11,11 +11,20 @@ function PhoneNumberListBase({
 }) {
   if (!phoneNumbers) return <Text>No Phone Numbers</Text>;
   return (
-    <>
+    <View
+      _dark={{
+        bg: "trueGray.800",
+      }}
+      _light={{
+        bg: "lightBlue.100",
+      }}
+      rounded={"sm"}
+      p={"1"}
+    >
       {phoneNumbers.map((p, index) => (
         <PhoneNumberCard phoneNumber={p} p={2} key={index} />
       ))}
-    </>
+    </View>
   );
 }
 

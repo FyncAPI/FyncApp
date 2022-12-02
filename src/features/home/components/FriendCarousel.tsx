@@ -14,7 +14,7 @@ export const FriendCarousel = gestureHandlerRootHOC(
     return (
       <Carousel
         width={width}
-        height={140 * (friends.length <= 6 ? 3 : 3)}
+        height={friends.length <= 6 ? 280 : 380}
         data={Array(Math.ceil(friends.length / 9))
           .fill(1)
           .map((_, index) => index * 9)
@@ -24,18 +24,22 @@ export const FriendCarousel = gestureHandlerRootHOC(
         panGestureHandlerProps={{
           activeOffsetX: [-10, 10],
         }}
+        loop={false}
         renderItem={({ item, index }) => {
           console.log(item.length);
-
           return (
             <View
-              bg={"#22333359"}
+              // bg={"#22333359"}
+              _dark={{ bg: "trueGray.800" }}
+              _light={{ bg: "light.100" }}
+              pt={3}
               style={{
                 flex: 1,
-                justifyContent: "center",
+
+                // justifyContent: "center",
                 marginHorizontal: 10,
-                borderRadius: 10,
               }}
+              rounded={"xl"}
               key={index + "LSX"}
             >
               <FlatList

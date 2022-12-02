@@ -43,7 +43,7 @@ const HomeScreen = () => {
   return (
     <View flex={1} variant="background">
       <SafeTop />
-      <HStack space={4} alignItems="center" pl="5">
+      <HStack space={4} alignItems="center" pl="5" _android={{ mt: 3 }}>
         <Icon
           onPress={() => {
             navigation.navigate("User");
@@ -85,7 +85,6 @@ const HomeScreen = () => {
           // {
           //   title: "Keep in touch",
           //   horizontal: true,
-
           //   safeBottom: true,
           //   data: userData.suggestions,
           // },

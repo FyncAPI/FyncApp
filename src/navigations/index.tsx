@@ -9,6 +9,7 @@ import {
 import { UserContext } from "../contexts/user/context";
 import { AddFriendScreen } from "../features/Add/screens/AddFriendScreen";
 import { AddFromContacts } from "../features/Add/screens/AddFromContacts";
+import { AddNewFriendScreen } from "../features/Add/screens/AddNewFriendScreen";
 import FormScreen from "../features/auth/screens/form";
 import { LandingScreen } from "../features/auth/screens/landing";
 import { FriendScreen } from "../features/friend/screens";
@@ -67,6 +68,7 @@ function RootStackNavigator() {
       <RootStack.Screen name="Friend" component={FriendScreen} />
       <RootStack.Screen name="AddFriend" component={AddFriendScreen} />
       <RootStack.Screen name="AddFromContacts" component={AddFromContacts} />
+      <RootStack.Screen name="AddNewFriend" component={AddNewFriendScreen} />
     </RootStack.Navigator>
   );
 }

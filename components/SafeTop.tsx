@@ -13,6 +13,7 @@ export function SafeTop(props: ViewProps) {
         },
         props.style,
       ]}
+      _android={{ mt: 3 }}
       {...props}
     />
   );

@@ -41,27 +41,28 @@ export function FriendScreen() {
   // number
   return (
     <>
-      <BackButton />
-      <View
-        position={"absolute"}
-        top={insets.top + "px"}
-        left={"10"}
-        zIndex={5}
-        mx={2}
-      >
-        <Heading fontSize="4xl" shadow={"9"}>
+      <BackButton _light={{ color: "white" }} />
+      <View position={"absolute"} left={"10"} zIndex={5} mx={2}>
+        <SafeTop />
+        <Heading fontSize="4xl" color={"light.100"} shadow={"9"}>
           {friend?.nickname || friend?.name}
         </Heading>
-        <Text fontSize="lg">{friend?.nickname && friend?.name}</Text>
+        <Text fontSize="lg" color={"light.100"}>
+          {friend?.nickname && friend?.name}
+        </Text>
       </View>
       <View
         top={insets.top + 5 + "px"}
         position={"absolute"}
         zIndex={10}
-        right={10}
+        right={"12px"}
+        alignItems={"center"}
+        justifyContent={"center"}
       >
         <IconButton
-          colorScheme="indigo"
+          colorScheme="pink"
+          alignSelf={"center"}
+          rounded={"full"}
           variant={
             userData?.favorites?.find((fav) => fav.id == friend?.id)
               ? "solid"
@@ -69,6 +70,7 @@ export function FriendScreen() {
           }
           onPress={() => friend && favoriteFriend(friend)}
           icon={<Ionicons name="heart" />}
+          _icon={{ color: "white" }}
           size="lg"
         />
       </View>

@@ -5,7 +5,10 @@ import React from "react";
 import { TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export default function BackButton({ style }: { style?: any }) {
+export default function BackButton({
+  style,
+  ...props
+}: React.ComponentProps<typeof Icon>) {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
   return (
@@ -16,7 +19,14 @@ export default function BackButton({ style }: { style?: any }) {
           navigation.goBack();
         }}
       >
-        <Icon as={Ionicons} name="arrow-back" size={8} />
+        <Icon
+          _dark={{ color: "light.100" }}
+          _light={{ color: "dark.100" }}
+          as={Ionicons}
+          name="arrow-back"
+          size={8}
+          {...props}
+        />
       </TouchableOpacity>
     </View>
   );

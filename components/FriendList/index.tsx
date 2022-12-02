@@ -7,8 +7,10 @@ export default function FriendList({ friends }: { friends: Friend[] }) {
   console.log(friends, "friends");
   if (!friends || friends?.length == 0) {
     return (
-      <View p="2">
-        <Text>No favorites friends</Text>
+      <View p="2" m={2}>
+        <Text ml={2} fontWeight={"bold"}>
+          No favorites friends
+        </Text>
       </View>
     );
   } else
@@ -17,9 +19,7 @@ export default function FriendList({ friends }: { friends: Friend[] }) {
         horizontal
         showsHorizontalScrollIndicator={false}
         data={friends}
-        renderItem={({ item, index }) => (
-          <FriendCard friend={item} bigger={false} />
-        )}
+        renderItem={({ item, index }) => <FriendCard friend={item} />}
       />
     );
 }

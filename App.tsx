@@ -15,6 +15,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { Navigation } from "./src/navigations";
 import { UserContextProvider } from "./src/contexts/user/context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import {
+  useFonts,
+  SpaceGrotesk_300Light,
+  SpaceGrotesk_400Regular,
+  SpaceGrotesk_500Medium,
+  SpaceGrotesk_600SemiBold,
+  SpaceGrotesk_700Bold,
+} from "@expo-google-fonts/space-grotesk";
 
 // Define the config
 const config = {
@@ -39,10 +47,29 @@ const newColorTheme = {
 // extend the theme
 export const theme = extendTheme({
   colors: newColorTheme,
+  fontConfig: {
+    SpaceGrotesk: {
+      300: {
+        normal: "SpaceGrotesk_300Light",
+      },
+      400: {
+        normal: "SpaceGrotesk_400Regular",
+      },
+      500: {
+        normal: "SpaceGrotesk_500Medium",
+      },
+      600: {
+        normal: "SpaceGrotesk_600SemiBold",
+      },
+      700: {
+        normal: "SpaceGrotesk_700Bold",
+      },
+    },
+  },
   components: {
     Text: {
       baseStyle: {
-        color: "green.500",
+        fontFamily: "body",
       },
     },
     Heading: {
@@ -67,15 +94,6 @@ export const theme = extendTheme({
           };
         },
       },
-      // baseStyle: ({ colorMode }: { colorMode: ColorMode }) => {
-      //   return {
-      //     backgroundColor: colorMode === "dark" ? "red.300" : "blue.300",
-      //     fontWeight: "normal",
-      //   };
-      // },
-      // defaultProps: {
-      //   backgroundColor: "red.500",
-      // },
     },
     ScrollView: {
       variants: {
@@ -99,6 +117,10 @@ export const theme = extendTheme({
         };
       },
     },
+  },
+  fonts: {
+    default: "SpaceGrotesk",
+    body: "SpaceGrotesk",
   },
 });
 
@@ -126,6 +148,16 @@ export default function App() {
       }
     },
   };
+  let [fontsLoaded] = useFonts({
+    SpaceGrotesk_300Light,
+    SpaceGrotesk_400Regular,
+    SpaceGrotesk_500Medium,
+    SpaceGrotesk_600SemiBold,
+    SpaceGrotesk_700Bold,
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
     <NativeBaseProvider
       theme={theme}

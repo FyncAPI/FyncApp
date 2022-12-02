@@ -5,17 +5,18 @@ import { LinearGradient } from "expo-linear-gradient";
 import * as Linking from "expo-linking";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
+import { RootStackNavigationProp } from "../../types";
 
 // export default function FriendCard({ friend }: { friend: Friend }) {
 export default function FriendCard({
   listLength,
   friend,
 }: {
-  listLength: number;
+  listLength?: number;
   friend: Friend;
 }) {
-  const navigation = useNavigation();
-  const size = listLength == 2 ? 160 : 100;
+  const navigation = useNavigation<RootStackNavigationProp<"Home">>();
+  const size = listLength == 2 ? 160 : listLength == 1 ? 400 : 110;
   return (
     <TouchableOpacity
       onPress={() => {

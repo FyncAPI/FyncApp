@@ -17,18 +17,24 @@ function getFlagEmoji(countryCode: string) {
 
 function PhoneNumberCardBase({ phoneNumber }: { phoneNumber: PhoneNumber }) {
   return (
-    <HStack p={1}>
+    <HStack p={1} justifyContent={"center"} alignItems={"center"}>
       {/* {phoneNumber.countryCode && (
         // <CountryFlag isoCode={phoneNumber.countryCode} size={25} />
         
       )} */}
-      <Text fontSize={"xl"}>
+      <Text fontSize={"xl"} pl="2">
         {phoneNumber?.countryCode && getFlagEmoji(phoneNumber?.countryCode)}{" "}
         {phoneNumber.number}
       </Text>
       <View flex={1} />
       <IconButton
         icon={<Icon as={Ionicons} name="pencil" />}
+        _icon={{
+          color: "light.100",
+          _light: {
+            color: "dark.100",
+          },
+        }}
         borderRadius="full"
       />
       <IconButton
@@ -36,6 +42,10 @@ function PhoneNumberCardBase({ phoneNumber }: { phoneNumber: PhoneNumber }) {
         borderRadius="full"
         onPress={() => {
           Linking.openURL(`tel:${phoneNumber.number}`);
+        }}
+        variant="ghost"
+        _icon={{
+          color: "green.500",
         }}
       />
     </HStack>
