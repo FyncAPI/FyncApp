@@ -33,7 +33,8 @@ export const FriendCarousel = gestureHandlerRootHOC(
               _dark={{ bg: "trueGray.800" }}
               _light={{ bg: "light.100" }}
               p={3}
-              mx={2}
+              mx={item.length <= 3 ? 4 : 2}
+              py={item.length <= 3 ? 4 : 2}
               rounded={"xl"}
               key={index + "LSX"}
             >

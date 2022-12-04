@@ -16,13 +16,17 @@ export default function FriendCard({
   friend: Friend;
 }) {
   const navigation = useNavigation<RootStackNavigationProp<"Home">>();
-  const size = listLength == 2 ? 160 : listLength == 1 ? 360 : 110;
+  const size = listLength == 2 ? 160 : listLength == 1 ? 300 : 110;
   return (
     <TouchableOpacity
       onPress={() => {
         console.log(friend.phoneNumbers);
         try {
-          Linking.openURL("tel://" + friend.phoneNumbers[0].number);
+          Linking.openURL(
+            "tel://" +
+              (friend.phoneNumbers?.find((x) => x.isPrimary)?.number ||
+                friend.phoneNumbers?.[0]?.number)
+          );
         } catch (e) {
           console.log("cannot call");
         }
