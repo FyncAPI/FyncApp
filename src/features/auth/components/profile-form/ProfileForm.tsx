@@ -41,6 +41,13 @@ export default function ProfileForm({
               setValue={updateProfile("name")}
               isInvalid={profile?.name?.length == 0}
             />
+            <FormInput
+              label="email"
+              value={profile?.email}
+              setValue={updateProfile("email")}
+              isInvalid={profile?.email?.length == 0}
+            />
+
             {/* <FormInput
         flexGrow={1}
         label="First Name"
@@ -53,14 +60,14 @@ export default function ProfileForm({
         setValue={updateProfile("lastName")}
       /> */}
 
-            <FormInput
+            {/* <FormInput
               label="Phone Number"
               value={profile?.phoneNumbers?.[0]?.number}
               isInvalid={profile?.phoneNumbers?.[0]?.number?.length == 0}
               setValue={(v) => updateProfile("phoneNumbers")([{ number: v }])}
               mb={2}
               keyboardType="phone-pad"
-            />
+            /> */}
           </>
         </View>
       </DismissKeyboardView>

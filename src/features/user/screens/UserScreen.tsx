@@ -1,6 +1,14 @@
 import React, { useContext } from "react";
 import { SafeTop } from "../../../../components/SafeTop";
-import { Box, Button, Heading, HStack, ScrollView, View } from "native-base";
+import {
+  Box,
+  Button,
+  Heading,
+  HStack,
+  ScrollView,
+  Text,
+  View,
+} from "native-base";
 import { ToggleDarkMode } from "../../../../components/ThemeSwitch";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../../contexts/user/context";
@@ -28,7 +36,15 @@ export default function UserScreen() {
       <ScrollView flex={1} p={2} variant="background">
         <SafeTop />
         <SafeTop />
-        <Heading>{userData?.profile.name}</Heading>
+        <HStack p={5}>
+          {/* <Image source={{ uri: userData?.photoURL }} alt="user" size={100} /> */}
+          <View>
+            <Heading>{userData?.profile.name}</Heading>
+            {/* <Text>
+              {userData?.profile?.phoneNumbers?.map((p) => p.number).join(", ")}
+            </Text> */}
+          </View>
+        </HStack>
 
         <View m="5">
           <Heading mb={"2"}>Theme</Heading>

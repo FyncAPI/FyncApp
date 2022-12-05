@@ -50,6 +50,7 @@ export function FriendScreen() {
         <Text fontSize="lg" color={"light.100"}>
           {friend?.nickname && friend?.name}
         </Text>
+        {/* <FriendshipIcon friendship={friend?.friendship!} /> */}
       </View>
       <View
         top={insets.top + 5 + "px"}
@@ -122,7 +123,10 @@ ASSDFAAJKL> </Text> */}
           <Text m={5} fontSize={"lg"}>
             in the future
           </Text>
-          <Text>{friend?.friendship.points}</Text>
+          <Heading m={2} fontSize="2xl">
+            Friendships
+          </Heading>
+          <Text mx={"5"}>{friend?.friendship.points}</Text>
         </View>
       </ScrollView>
     </>
