@@ -6,6 +6,7 @@ import {
   NavigationParamList,
   RootStackParamList,
 } from "../../types";
+import { FriendContextProvider } from "../contexts/FriendContext";
 import { UserContext } from "../contexts/user/context";
 import { AddFriendScreen } from "../features/Add/screens/AddFriendScreen";
 import { AddFromContacts } from "../features/Add/screens/AddFromContacts";
@@ -21,7 +22,7 @@ const Stack = createNativeStackNavigator<NavigationParamList>();
 
 export function Navigation() {
   const { isRegistered, userData } = useContext(UserContext);
-  console.log(isRegistered, userData, ";lkj");
+  // //console.log(isRegistered, userData, ";lkj");
   return (
     <Stack.Navigator
       screenOptions={{
@@ -42,7 +43,7 @@ export function Navigation() {
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 
 function AuthStackNavigator() {
-  console.log("audstl");
+  // //console.log("audstl");
   return (
     <AuthStack.Navigator
       screenOptions={{
@@ -58,18 +59,20 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 function RootStackNavigator() {
   return (
-    <RootStack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <RootStack.Screen name="Home" component={HomeScreen} />
-      <RootStack.Screen name="User" component={UserScreen} />
-      <RootStack.Screen name="Friend" component={FriendScreen} />
-      <RootStack.Screen name="AddFriend" component={AddFriendScreen} />
-      <RootStack.Screen name="AddFromContacts" component={AddFromContacts} />
-      <RootStack.Screen name="AddNewFriend" component={AddNewFriendScreen} />
-    </RootStack.Navigator>
+    <FriendContextProvider>
+      <RootStack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <RootStack.Screen name="Home" component={HomeScreen} />
+        <RootStack.Screen name="User" component={UserScreen} />
+        <RootStack.Screen name="Friend" component={FriendScreen} />
+        <RootStack.Screen name="AddFriend" component={AddFriendScreen} />
+        <RootStack.Screen name="AddFromContacts" component={AddFromContacts} />
+        <RootStack.Screen name="AddNewFriend" component={AddNewFriendScreen} />
+      </RootStack.Navigator>
+    </FriendContextProvider>
   );
 }
 // const Tab = createBottomTabNavigator();

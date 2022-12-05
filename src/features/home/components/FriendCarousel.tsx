@@ -26,7 +26,7 @@ export const FriendCarousel = gestureHandlerRootHOC(
         }}
         loop={false}
         renderItem={({ item, index }) => {
-          console.log(item.length);
+          //console.log(item.length);
           return (
             <View
               // bg={"#22333359"}
@@ -49,7 +49,7 @@ export const FriendCarousel = gestureHandlerRootHOC(
                 numColumns={3}
                 data={item}
                 renderItem={({ item: friend, index }) => {
-                  //   console.log(item, index);
+                  //   //console.log(item, index);
                   return (
                     <FriendCard
                       listLength={item.length}

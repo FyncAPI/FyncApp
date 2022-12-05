@@ -136,7 +136,7 @@ export default function App() {
         let val = await AsyncStorage.getItem("@my-app-color-mode");
         return val === "dark" ? "dark" : "light";
       } catch (e) {
-        console.log(e);
+        //console.log(e);
         return "dark";
       }
     },
@@ -144,7 +144,7 @@ export default function App() {
       try {
         await AsyncStorage.setItem("@my-app-color-mode", value);
       } catch (e) {
-        console.log(e);
+        //console.log(e);
       }
     },
   };

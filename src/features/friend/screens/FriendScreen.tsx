@@ -18,18 +18,18 @@ import { Ionicons } from "@expo/vector-icons";
 import { FriendshipIcon } from "../../../components/FriendshipIcon";
 import { PhoneNumberList } from "../../../components/PhoneNumberList";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { FriendContext } from "../../../contexts/FriendContext";
 
 export function FriendScreen() {
   const navigation = useNavigation();
   const route = useRoute<RouteProp<RootStackParamList, "Friend">>();
 
   const { userData, favoriteFriend } = useContext(UserContext);
+  const { friends } = useContext(FriendContext);
   const { id } = route.params;
 
   const insets = useSafeAreaInsets();
-  const [friend, setFriend] = React.useState(
-    userData?.friends?.find((f) => f.id == id)
-  );
+  const [friend, setFriend] = React.useState(friends?.find((f) => f.id == id));
 
   // profile
   // name
@@ -122,6 +122,7 @@ ASSDFAAJKL> </Text> */}
           <Text m={5} fontSize={"lg"}>
             in the future
           </Text>
+          <Text>{friend?.friendship.points}</Text>
         </View>
       </ScrollView>
     </>

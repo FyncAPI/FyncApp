@@ -10,7 +10,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function UserScreen() {
   const navigation = useNavigation();
-  const { deleteUserData } = useContext(UserContext);
+  const { userData, deleteUserData } = useContext(UserContext);
   const insets = useSafeAreaInsets();
   return (
     <>
@@ -28,6 +28,8 @@ export default function UserScreen() {
       <ScrollView flex={1} p={2} variant="background">
         <SafeTop />
         <SafeTop />
+        <Heading>{userData?.profile.name}</Heading>
+
         <View m="5">
           <Heading mb={"2"}>Theme</Heading>
           <ToggleDarkMode />

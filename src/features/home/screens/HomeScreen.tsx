@@ -1,5 +1,5 @@
-import { Dimensions, TextInput } from "react-native";
-import React from "react";
+import { AppState, Dimensions, TextInput } from "react-native";
+import React, { useContext, useEffect } from "react";
 import {
   FlatList,
   View,
@@ -28,6 +28,7 @@ import {
 } from "../../../../types";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { FriendContext } from "../../../contexts/FriendContext";
 
 type HomeScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<RootStackParamList, "Home">,
@@ -39,6 +40,28 @@ const HomeScreen = () => {
   const { width } = Dimensions.get("window");
   const { bottom } = useSafeAreaInsets();
   const { userData } = React.useContext(UserContext);
+  const { friends } = useContext(FriendContext);
+
+  const appState = React.useRef(AppState.currentState);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", (nextAppState) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === "active"
+      ) {
+        //console.log("App has come to the foreground!");
+      }
+
+      appState.current = nextAppState;
+      // setAppStateVisible(appState.current);
+      //console.log("AppState", appState.current);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   return (
     <View flex={1} variant="background">
@@ -80,7 +103,7 @@ const HomeScreen = () => {
             title: "All",
             numColumns: 3,
             carousel: true,
-            data: userData.friends,
+            data: friends,
           },
           // {
           //   title: "Keep in touch",
