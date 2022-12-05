@@ -7,39 +7,34 @@ import FriendCard from "../../../../components/FriendCard";
 import { SafeBottom, SafeTop } from "../../../../components/SafeTop";
 import { RootStackNavigationProp } from "../../../../types";
 import BackButton from "../../../components/BackButton";
+import { FriendContext } from "../../../contexts/FriendContext";
 import { UserContext } from "../../../contexts/user/context";
-import { UserData } from "../../../contexts/user/types";
+import { FriendsData, UserData } from "../../../contexts/user/types";
 import LoadFriends from "../../auth/components/load-friends/LoadFriend";
 import SelectContacts from "../../auth/components/select-contacts/SelectContact";
 
 export const AddFromContacts = gestureHandlerRootHOC(() => {
   const [page, setPage] = React.useState(0);
-  const { saveUserData, userData } = useContext(UserContext);
+  const { friends, updateFriends } = useContext(FriendContext);
   const [selectedContactsId, setSelectedContactsId] = React.useState<string[]>(
-    userData.friends.map((friend) => friend.id)
+    friends.map((friend) => friend.id)
   );
-  const [newData, setNewData] = React.useState<UserData>(userData as UserData);
+
+  const [newFriends, setNewFriends] =
+    React.useState<FriendsData["friends"]>(friends);
+
   const navigation =
     useNavigation<RootStackNavigationProp<"AddFromContacts">>();
 
-  const updateData =
-    (key: keyof UserData) => (data: UserData[keyof UserData]) => {
-      setNewData({
-        ...newData!,
-        [key]: data,
-      });
-    };
-
   const onNext = () => {
     if (page == 1) {
-      saveUserData(newData);
+      updateFriends(newFriends);
       navigation.navigate("Home");
     } else {
       setPage(page + 1);
     }
   };
 
-  const ref = React.useRef<ICarouselInstance>(null);
   return (
     <View flex={1} variant="background" p="3">
       <SafeTop />
@@ -53,8 +48,8 @@ export const AddFromContacts = gestureHandlerRootHOC(() => {
       ) : page == 1 ? (
         <LoadFriends
           friendsIds={selectedContactsId}
-          friends={newData?.friends}
-          setFriends={updateData("friends")}
+          friends={newFriends}
+          setFriends={setNewFriends}
         />
       ) : null}
 

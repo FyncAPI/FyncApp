@@ -191,38 +191,6 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     }
   }
 
-  // async function getFacebookUserData(accessToken: string) {
-  //   try {
-  //     let userInfoResponse = await fetch(
-  //       "https://graph.facebook.com/v13.0/me?fields=email,name,picture{url}&access_token=" +
-  //         accessToken,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  //         },
-  //       }
-  //     );
-  //     const userData = await userInfoResponse.json();
-  //     // // //console.log("fb", userData);
-  //     if (userData) {
-  //       const _userInfo = {
-  //         ...userData,
-  //         picture: userData.picture.data.url,
-  //         facebookId: userData.id,
-  //         provider: "facebook",
-  //         createdAt: new Date().toISOString(),
-  //       };
-
-  //       const res = await findOrCreateUser(_userInfo, role);
-  //       // //console.log("RESULT FROM CREATE", res);
-  //       setUserInfo(res);
-  //       storeData(res);
-  //     }
-  //   } catch (e) {
-  //     // //console.log("error", e);
-  //   }
-  // }
-
   const onLogout = async () => {
     await AsyncStorage.removeItem("@user");
     // setAccessToken(undefined);

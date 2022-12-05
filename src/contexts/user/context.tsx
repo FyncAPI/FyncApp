@@ -126,7 +126,7 @@ const saveValueAsync = async (key: string, value: any) => {
     await AsyncStorage.setItem("@" + key, jsonValue);
   } catch (e) {
     // saving error
-    //console.log("error saving value", e);
+    console.log("error saving value", e);
   }
 };
 
@@ -140,6 +140,6 @@ const getValue = async (key: string) => {
     }
   } catch (e) {
     // error reading Value
-    //console.log("error getting value", e);
+    console.log("error getting value", e);
   }
 };

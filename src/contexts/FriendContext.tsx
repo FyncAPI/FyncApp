@@ -7,6 +7,7 @@ import { Friend, FriendsData } from "./user/types";
 
 interface FriendContextInterface {
   friends: Friend[];
+  updateFriends: (friends: Friend[]) => void;
   //   saveFriendsData: (friendsData: FriendsData) => void;
 
   addFriend: (friend: Friend) => void;
@@ -29,6 +30,7 @@ export const FriendContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { saveFriendsData } = useUserContext();
   const [friends, setFriends] = useState<Friend[]>([]);
   const [isCalling, setIsCalling] = useState<Friend["id"]>("");
   const [appStateArr, setAppStateArr] = useState([AppState.currentState]);
@@ -79,13 +81,32 @@ export const FriendContextProvider = ({
     }
   }, [finishedCall]);
 
-  const getFriendsData = async () => {
-    const friendsData = await AsyncStorage.getItem("@friendsData");
-    console.log(friendsData, "friendsData");
-    if (friendsData) {
-      const parsedFriendsData = JSON.parse(friendsData);
+  const updateFriends = async (newfriends: Friend[]) => {
+    // merge new friends with old friends
+    const newFriendsData: FriendsData = {
+      friends: newfriends.map((friend) => {
+        const oldFriend = friends.find((f) => f.id === friend.id);
+        if (oldFriend) {
+          return oldFriend;
+        }
+        return friend;
+      }),
+    };
+    setFriends(newFriendsData.friends);
+    saveFriendsData(newFriendsData);
+  };
 
-      setFriends(parsedFriendsData.friends);
+  const getFriendsData = async () => {
+    try {
+      const friendsData = await AsyncStorage.getItem("@friendsData");
+      console.log(friendsData, "friendsData");
+      if (friendsData) {
+        const parsedFriendsData = JSON.parse(friendsData);
+
+        setFriends(parsedFriendsData.friends);
+      }
+    } catch (error) {
+      console.log("cant get friends Data", error);
     }
   };
 
@@ -136,6 +157,7 @@ export const FriendContextProvider = ({
     <FriendContext.Provider
       value={{
         friends,
+        updateFriends,
         //   saveFriendsData,
 
         addFriend,
