@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "trojang",
+    "name": "trojung",
     "slug": "trojang",
     "owner": "bunyasit",
     "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/trolljang.png",
     "splash": {
-      "image": "./assets/icon.png",
+      "image": "./assets/spladd.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#220035"
     },
     "updates": {
       "fallbackToCacheTimeout": 0,
@@ -18,12 +18,12 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bunyasit.trojung"
+      "bundleIdentifier": "com.bunyasit.trojang"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/adaptroll.png",
+        "backgroundColor": "#220035"
       },
       "package": "com.bunyasit.trojang",
       "versionCode": 2
