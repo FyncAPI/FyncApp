@@ -18,7 +18,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bunyasit.trojang"
+      "bundleIdentifier": "com.bunyasit.trojung"
     },
     "android": {
       "adaptiveIcon": {
