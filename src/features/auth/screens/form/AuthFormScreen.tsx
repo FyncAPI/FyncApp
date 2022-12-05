@@ -10,7 +10,7 @@ import LoadFriends from "../../components/load-friends/LoadFriend";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import { UserData } from "../../../../contexts/user/types";
+import { FriendsData, UserData } from "../../../../contexts/user/types";
 import { AuthStackNavigationProp } from "../../../../../types";
 import BackButton from "../../../../components/BackButton";
 
@@ -20,14 +20,26 @@ export default function FormScreen() {
     []
   );
   const [userData, setUserData] = React.useState<UserData>({} as UserData);
+  const [friendsData, setFriendsData] = React.useState<FriendsData>(
+    {} as FriendsData
+  );
+
   const [error, setError] = React.useState({});
-  const { saveUserData } = useContext(UserContext);
+  const { saveUserData, saveFriendsData } = useContext(UserContext);
   const navigation = useNavigation<AuthStackNavigationProp<"Form">>();
 
   const updateData =
     (key: keyof UserData) => (data: UserData[keyof UserData]) => {
       setUserData({
         ...userData!,
+        [key]: data,
+      });
+    };
+
+  const updateFriendsData =
+    (key: keyof FriendsData) => (data: FriendsData[keyof FriendsData]) => {
+      setFriendsData({
+        ...friendsData!,
         [key]: data,
       });
     };
@@ -48,12 +60,13 @@ export default function FormScreen() {
 
   // updateData("friends")(friends);
 
-  // console.log(friends, "fbd");
+  // //console.log(friends, "fbd");
 
   const onNext = () => {
-    console.log(Object.entries(error).length);
+    //console.log(Object.entries(error).length);
     if (page == 2 && Object.entries(error).length == 0) {
       saveUserData(userData);
+      saveFriendsData(friendsData);
     } else {
       if (Object.entries(error).length) return;
       setPage(page + 1);
@@ -61,11 +74,11 @@ export default function FormScreen() {
   };
 
   const onBack = () => {
-    console.log(page, "back");
+    //console.log(page, "back");
     if (page <= 0) {
       navigation.navigate("Landing");
     } else {
-      console.log(page);
+      //console.log(page);
       setPage(page - 1);
     }
   };
@@ -92,8 +105,8 @@ export default function FormScreen() {
       ) : page == 2 ? (
         <LoadFriends
           friendsIds={selectedContactsId}
-          friends={userData?.friends}
-          setFriends={updateData("friends")}
+          friends={friendsData?.friends}
+          setFriends={updateFriendsData("friends")}
         />
       ) : page == 3 ? (
         <Text>bt</Text>

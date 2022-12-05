@@ -59,7 +59,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   //     });
 
   useEffect(() => {
-    // console.log("user Changed", authUser, !!authUser, role);
+    // //console.log("user Changed", authUser, !!authUser, role);
     if (authUser?._id) {
       storeData(authUser);
     }
@@ -69,15 +69,15 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     try {
       const value = await AsyncStorage.getItem("@user");
       if (value !== null) {
-        console.log("storage data", value);
+        //console.log("storage data", value);
         const user = JSON.parse(value);
         setAuthUser(user);
         setRole(user.role);
       } else {
-        console.log("no user");
+        //console.log("no user");
       }
     } catch (e) {
-      console.log("error reading value", e);
+      //console.log("error reading value", e);
     }
   };
 
@@ -85,14 +85,14 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     try {
       await AsyncStorage.setItem("@user", JSON.stringify(userInfo));
     } catch (error) {
-      console.log("ere storing", error);
+      //console.log("ere storing", error);
     }
   };
 
   async function appleCandidateAuth(token: string) {
     const res = await appleAuthServer(token, "candidate");
     if (res) {
-      console.log("apple data", res);
+      //console.log("apple data", res);
       if (res.iss) {
         setAuthUser({
           provider: "apple",
@@ -109,14 +109,14 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       }
       return res;
     } else {
-      console.log("no apple data");
+      //console.log("no apple data");
     }
   }
 
   async function appleBusinessAuth(token: string) {
     const res = await appleAuthServer(token, "business");
     if (res) {
-      console.log("apple data", res);
+      //console.log("apple data", res);
       if (!res.iss)
         setAuthUser({ ...res, provider: "apple", role: "business" });
       else
@@ -129,7 +129,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
       return res;
     } else {
-      console.log("no apple data");
+      //console.log("no apple data");
     }
   }
   // these should run once
@@ -153,15 +153,15 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       provider: "google",
     };
 
-    console.log("_userInfo from google", _userInfo.email);
+    //console.log("_userInfo from google", _userInfo.email);
     // setUserInfo(_userInfo);
 
     const dbUser = await findUser(_userInfo, role);
 
-    console.log("user in db is", dbUser.email, dbUser._id);
+    //console.log("user in db is", dbUser.email, dbUser._id);
     //found user
     if (dbUser._id && dbUser.email) {
-      // console.log("got user from db", res);
+      // //console.log("got user from db", res);
       const updatedUser: AuthUser = {
         _id: dbUser._id,
         __v: dbUser.__v,
@@ -191,38 +191,6 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     }
   }
 
-  // async function getFacebookUserData(accessToken: string) {
-  //   try {
-  //     let userInfoResponse = await fetch(
-  //       "https://graph.facebook.com/v13.0/me?fields=email,name,picture{url}&access_token=" +
-  //         accessToken,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  //         },
-  //       }
-  //     );
-  //     const userData = await userInfoResponse.json();
-  //     // // console.log("fb", userData);
-  //     if (userData) {
-  //       const _userInfo = {
-  //         ...userData,
-  //         picture: userData.picture.data.url,
-  //         facebookId: userData.id,
-  //         provider: "facebook",
-  //         createdAt: new Date().toISOString(),
-  //       };
-
-  //       const res = await findOrCreateUser(_userInfo, role);
-  //       // console.log("RESULT FROM CREATE", res);
-  //       setUserInfo(res);
-  //       storeData(res);
-  //     }
-  //   } catch (e) {
-  //     // console.log("error", e);
-  //   }
-  // }
-
   const onLogout = async () => {
     await AsyncStorage.removeItem("@user");
     // setAccessToken(undefined);
@@ -234,21 +202,21 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       if (role == "candidate") {
         deleteCandidate(authUser?._id!)
           .then((res) => {
-            console.log("deleted candidate", res);
+            //console.log("deleted candidate", res);
             onLogout();
           })
           .catch((err) => {
-            console.log("error deleting candidate", err);
+            //console.log("error deleting candidate", err);
             Alert.alert("Error", err.message);
           });
       } else if (role == "business") {
         deleteBusiness(authUser?._id!)
           .then((res) => {
-            console.log("deleted business", res);
+            //console.log("deleted business", res);
             onLogout();
           })
           .catch((err) => {
-            console.log("error deleting business", err);
+            //console.log("error deleting business", err);
             Alert.alert("Error", err.message);
           });
       }
@@ -274,7 +242,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     // }
     // // setAuthUser(null);
 
-    // console.log(role, "erl");
+    // //console.log(role, "erl");
   };
 
   // Get the user's access token from response after login & store in async storage

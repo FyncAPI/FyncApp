@@ -6,7 +6,7 @@ import { AuthStackNavigationProp } from "../../../../../types";
 
 export const LandingScreen = () => {
   const navigation = useNavigation<AuthStackNavigationProp<"Landing">>();
-  console.log("Landing Screen");
+  //console.log("Landing Screen");
   return (
     <View flex={1} variant="background" p="2">
       <SafeTop />

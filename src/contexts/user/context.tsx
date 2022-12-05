@@ -1,18 +1,18 @@
 import React, { createContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Friend, Memory, UserData } from "./types";
+import { Friend, FriendsData, Memory, UserData } from "./types";
 
 interface UserContextInterface {
   userData: UserData;
   isRegistered: boolean;
 
+  addMemory: (friend: Friend, memory: Memory) => void;
+
   favoriteFriend: (friend: Friend) => void;
   unfavoriteFriend: (friendId: Friend["id"]) => void;
 
-  addMemory: (friend: Friend, memory: Memory) => void;
-  addFriend: (friend: Friend) => void;
-
   saveUserData: (user: UserData) => void;
+  saveFriendsData: (friendsData: FriendsData) => void;
   deleteUserData: () => void;
 }
 
@@ -27,10 +27,7 @@ export function UserContextProvider({
 }) {
   const [userData, setUserData] = useState<UserData>({} as UserData);
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
-
   useEffect(() => {
-    // get user from async storage
-    // deleteUserData();
     getUserData();
   }, []);
 
@@ -43,6 +40,14 @@ export function UserContextProvider({
     setUserData(user);
   };
 
+  const saveFriendsData = (friendsData: FriendsData) => {
+    if (!friendsData) return;
+    // save user to async storage
+    saveValueAsync("friendsData", friendsData);
+
+    // setFriends(friendsData.friends);
+  };
+
   const deleteUserData = () => {
     // delete user from async storage
     saveValueAsync("user", "");
@@ -52,21 +57,21 @@ export function UserContextProvider({
 
   const getUserData = async () => {
     const user = await AsyncStorage.getItem("@user");
-    console.log(user, "user");
+    //console.log(user, "user");
 
     if (user && user != "{}") {
       const ud = JSON.parse(user);
-      console.log(ud, "UXD");
+      //console.log(ud, "UXD");
       setUserData(ud);
       setIsRegistered(true);
     } else {
-      console.log("no user found");
+      //console.log("no user found");
       setIsRegistered(false);
     }
   };
 
   const favoriteFriend = (friend: Friend) => {
-    console.log("favorite friend", friend);
+    //console.log("favorite friend", friend);
     // if the friend is already favorited, remove them from the list
     if (userData?.favorites?.find((f) => f.id == friend.id)) {
       unfavoriteFriend(friend.id);
@@ -85,7 +90,7 @@ export function UserContextProvider({
   };
 
   const unfavoriteFriend = (friendId: Friend["id"]) => {
-    console.log("unfavorite friend", friendId);
+    //console.log("unfavorite friend", friendId);
     const newFriends = userData.favorites.filter((f) => f.id != friendId);
 
     saveUserData({
@@ -93,27 +98,20 @@ export function UserContextProvider({
       favorites: newFriends,
     });
   };
-
   const addMemory = (friend: Friend, memory: Memory) => {};
-  const AddFriend = (friend: Friend) => {
-    const newFriends =
-      userData?.friends?.length > 0 ? [...userData?.friends, friend] : [friend];
-
-    saveUserData({
-      ...userData,
-      friends: newFriends,
-    });
-  };
 
   return (
     <UserContext.Provider
       value={{
         userData,
         isRegistered,
-        favoriteFriend,
-        unfavoriteFriend,
+
         addMemory,
         saveUserData,
+        saveFriendsData,
+
+        favoriteFriend,
+        unfavoriteFriend,
         deleteUserData,
       }}
     >

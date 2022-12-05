@@ -4,7 +4,7 @@ import FriendCard from "./FriendCard";
 import { Friend } from "../src/contexts/user/types";
 
 export default function FriendList({ friends }: { friends: Friend[] }) {
-  console.log(friends, "friends");
+  // //console.log(friends, "friends");
   if (!friends || friends?.length == 0) {
     return (
       <View p="2" m={2}>

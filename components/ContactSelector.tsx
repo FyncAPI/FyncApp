@@ -23,7 +23,7 @@ export default function ContactsSelector({
   return (
     <TouchableOpacity
       onPress={() => {
-        console.log(contact.id);
+        //console.log(contact.id);
         // selectContact(contact.id);
         setSelectedContacts((prev) => {
           if (prev.includes(contact.id)) {
@@ -72,13 +72,13 @@ export function ContactSelector({
   return (
     <TouchableOpacity
       onPress={() => {
-        console.log(contact.id);
+        // //console.log(contact.id);
         // selectContact(contact.id);
         setSelectedContact((prev) => {
           if (prev && prev?.id == contact.id) {
             return undefined;
           } else {
-            console.log("set");
+            //console.log("set");
 
             return contact;
           }
