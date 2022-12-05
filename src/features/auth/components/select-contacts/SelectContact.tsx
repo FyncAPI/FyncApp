@@ -45,7 +45,7 @@ export default function SelectContacts({
   //   (async () => {
   //     try {
   //       const { status } = await Contacts.requestPermissionsAsync();
-  //       console.log(status, "tus");
+  //       //console.log(status, "tus");
   //       if (status === "granted") {
   //         const { data } = await Contacts.getContactsAsync({
   //           fields: [Contacts.Fields.Image, Contacts.Fields.PhoneNumbers],
@@ -54,10 +54,10 @@ export default function SelectContacts({
   //           setContacts(data);
   //         }
   //       } else {
-  //         console.log("Permission denied");
+  //         //console.log("Permission denied");
   //       }
   //     } catch (err) {
-  //       console.log(err);
+  //       //console.log(err);
   //     }
   //   })();
   // }, []);
@@ -85,7 +85,7 @@ export default function SelectContacts({
   }, [query]);
 
   useEffect(() => {
-    console.log(selectedContactsId, "x");
+    //console.log(selectedContactsId, "x");
   }, [selectedContactsId]);
 
   return (

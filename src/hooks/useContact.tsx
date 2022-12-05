@@ -8,7 +8,7 @@ export const useContact = () => {
     (async () => {
       try {
         const { status } = await Contacts.requestPermissionsAsync();
-        console.log(status, "tus");
+        //console.log(status, "status");
         if (status === "granted") {
           const { data } = await Contacts.getContactsAsync({
             fields: [Contacts.Fields.Image, Contacts.Fields.PhoneNumbers],
@@ -17,10 +17,10 @@ export const useContact = () => {
             setContacts(data);
           }
         } else {
-          console.log("Permission denied");
+          //console.log("Permission denied");
         }
       } catch (err) {
-        console.log(err);
+        //console.log("cant get ctcs", err);
       }
     })();
   }, []);

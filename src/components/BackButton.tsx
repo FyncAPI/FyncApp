@@ -27,7 +27,7 @@ export default function BackButton({
           name="arrow-back"
           size={8}
           onPress={() => {
-            console.log("back");
+            //console.log("back");
             navigation.goBack();
           }}
           {...props}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box, Image, Text, View } from "native-base";
 import { Friend } from "../src/contexts/user/types";
 import { LinearGradient } from "expo-linear-gradient";
@@ -6,6 +6,7 @@ import * as Linking from "expo-linking";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
 import { RootStackNavigationProp } from "../types";
+import { FriendContext } from "../src/contexts/FriendContext";
 
 // export default function FriendCard({ friend }: { friend: Friend }) {
 export default function FriendCard({
@@ -16,16 +17,14 @@ export default function FriendCard({
   friend: Friend;
 }) {
   const navigation = useNavigation<RootStackNavigationProp<"Home">>();
-  const size = listLength == 2 ? 160 : listLength == 1 ? 360 : 110;
+
+  const { callFriend } = useContext(FriendContext);
+
+  const size = listLength == 2 ? 160 : listLength == 1 ? 300 : 110;
   return (
     <TouchableOpacity
       onPress={() => {
-        console.log(friend.phoneNumbers);
-        try {
-          Linking.openURL("tel://" + friend.phoneNumbers[0].number);
-        } catch (e) {
-          console.log("cannot call");
-        }
+        callFriend(friend.phoneNumbers, friend.id);
       }}
       onLongPress={() => {
         navigation.navigate("Friend", { id: friend.id });
