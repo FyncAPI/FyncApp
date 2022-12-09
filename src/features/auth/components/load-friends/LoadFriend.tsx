@@ -63,9 +63,9 @@ export default function LoadFriends({
       <Heading size={"2xl"} ml={8}>
         Friends
       </Heading>
-      <Text m={2}>
+      {/* <Text m={2}>
         Select the primary contact you want to use for each of your friends.
-      </Text>
+      </Text> */}
       {friends?.length == 0 ? (
         <ActivityIndicator />
       ) : (

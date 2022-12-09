@@ -14,7 +14,9 @@
     "simulator": {
       "distribution": "internal",
       "channel": "simulator",
-      "simulator": true
+      "ios": {
+        "simulator": true
+      }
     },
     "production": {
       "channel": "production"
