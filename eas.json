@@ -11,6 +11,11 @@
       "distribution": "internal",
       "channel": "preview"
     },
+    "simulator": {
+      "distribution": "internal",
+      "channel": "simulator",
+      "simulator": true
+    },
     "production": {
       "channel": "production"
     }

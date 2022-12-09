@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ContactType } from "expo-contacts";
 import { View, Text, HStack, Checkbox, Image, Icon, VStack } from "native-base";
 import { Contact } from "expo-contacts";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
+import axios from "axios";
+// import { PersonasAvatar } from "react-native-personas-avatar";
+
+// Render random avatar
 
 export default function ContactsSelector({
   contact,
@@ -35,20 +39,25 @@ export default function ContactsSelector({
       }}
     >
       <HStack alignItems="center">
-        {selected ? (
-          <Icon as={Ionicons} name="checkmark-outline" size="5" />
-        ) : (
-          <Icon as={Ionicons} name="ellipse-outline" size="5" />
-        )}
         {contact.imageAvailable ? (
           <Image source={{ uri: contact.image?.uri }} alt="image" size="10" />
         ) : (
           <Icon as={Ionicons} name="person-circle-outline" size="10" />
         )}
-        <View ml="2">
+        <View ml="2" mr="auto">
           <Text>{contact.name}</Text>
           <Text>{contact?.phoneNumbers?.[0]?.number}</Text>
         </View>
+        {selected ? (
+          <Icon
+            as={Ionicons}
+            name="checkmark-circle-outline"
+            size="5"
+            color={"primary.500"}
+          />
+        ) : (
+          <Icon as={Ionicons} name="ellipse-outline" size="5" />
+        )}
       </HStack>
     </TouchableOpacity>
   );

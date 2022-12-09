@@ -41,27 +41,6 @@ export default function SelectContacts({
 
   const contacts = useContact();
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const { status } = await Contacts.requestPermissionsAsync();
-  //       //console.log(status, "tus");
-  //       if (status === "granted") {
-  //         const { data } = await Contacts.getContactsAsync({
-  //           fields: [Contacts.Fields.Image, Contacts.Fields.PhoneNumbers],
-  //         });
-  //         if (data.length > 0) {
-  //           setContacts(data);
-  //         }
-  //       } else {
-  //         //console.log("Permission denied");
-  //       }
-  //     } catch (err) {
-  //       //console.log(err);
-  //     }
-  //   })();
-  // }, []);
-
   useEffect(() => {
     if (query == "") {
       setMaxPage(Math.ceil(contacts.length / 50));
@@ -83,11 +62,6 @@ export default function SelectContacts({
       )
     );
   }, [query]);
-
-  useEffect(() => {
-    //console.log(selectedContactsId, "x");
-  }, [selectedContactsId]);
-
   return (
     <>
       <Heading size={"2xl"} ml="8">
@@ -118,6 +92,7 @@ export default function SelectContacts({
             );
           }}
         />
+
         <HStack pt={1} alignItems="center" justifyContent="space-evenly">
           <Button
             onPress={() => {

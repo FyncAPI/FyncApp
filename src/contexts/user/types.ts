@@ -51,6 +51,8 @@ export interface Friend extends User {
     level: number;
     points: number;
   };
+  isFavorite?: boolean;
+  avatar?: string;
 }
 
 export interface UserData {

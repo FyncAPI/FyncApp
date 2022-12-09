@@ -14,7 +14,9 @@ import { ActivityIndicator } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import { useContact } from "../../../../hooks/useContact";
-
+import axios from "axios";
+import { SvgXml } from "react-native-svg";
+import { MULTI_AVATAR_API_KEY } from "@env";
 export default function LoadFriends({
   friendsIds,
   friends,
@@ -86,6 +88,32 @@ const FriendCard = ({
   setFriend: (friend: Friend) => void;
 }) => {
   let primaryNumber = friend.phoneNumbers?.find((number) => number.isPrimary);
+  // const [avatar, setAvatar] = React.useState("");
+
+  useEffect(() => {
+    console.log(friend.name, MULTI_AVATAR_API_KEY);
+    if (friend.avatar || friend.image) {
+      console.log(friend.name, "has avatar or image");
+      return;
+    }
+    axios
+      .get(
+        `https://api.multiavatar.com/${friend.name}?apikey=${MULTI_AVATAR_API_KEY}`,
+        {
+          headers: {
+            "Content-Type": "text/html",
+          },
+        }
+      )
+      .then((res) => {
+        // setAvatar(res.data);
+        setFriend({
+          ...friend,
+          avatar: res.data,
+        });
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <HStack
@@ -100,12 +128,17 @@ const FriendCard = ({
       m={1}
       rounded={"md"}
     >
-      {friend.imageAvailable ? (
+      {friend.image ? (
         <Image source={{ uri: friend.image.uri }} alt="image base" size="sm" />
+      ) : friend.avatar ? (
+        <SvgXml xml={friend.avatar} width="50" height="50" />
       ) : (
-        <Icon as={Ionicons} name="person" size="md" />
+        // <Icon as={<Ionicons name="person" />} size="sm" color="blueGray.400" />
+        <ActivityIndicator size={"small"} />
       )}
-      <Text m="2">{friend.name}</Text>
+      <Text m="2" fontSize="md" fontWeight="medium">
+        {friend.name}
+      </Text>
       <View
         _dark={{
           bg: "darkBlue.900",
@@ -117,33 +150,26 @@ const FriendCard = ({
         p={"1"}
         ml="auto"
       >
-        {friend.phoneNumbers?.map((n) => (
-          <HStack justifyContent={"center"} alignItems="center">
-            <View
-              w={2}
-              h={2}
-              bg={primaryNumber?.id == n.id ? "blue.500" : "transparent"}
-              rounded={"full"}
-              m={1}
-            />
-
-            <Text
-              fontSize={"lg"}
-              m="2"
-              onPress={() => {
-                setFriend({
-                  ...friend,
-                  phoneNumbers: friend.phoneNumbers?.map((number) => ({
-                    ...number,
-                    isPrimary: number.id == n.id,
-                  })),
-                });
-              }}
-            >
-              {n?.number}
-            </Text>
-          </HStack>
-        ))}
+        {/* {friend.phoneNumbers?.map((n) => ( */}
+        <HStack justifyContent={"center"} alignItems="center">
+          {/* <View w={2} h={2} bg={"blue.500"} rounded={"full"} m={1} /> */}
+          <Text
+            fontSize={"sm"}
+            m="1"
+            // onPress={() => {
+            //   setFriend({
+            //     ...friend,
+            //     phoneNumbers: friend.phoneNumbers?.map((number) => ({
+            //       ...number,
+            //       isPrimary: number.id == n.id,
+            //     })),
+            //   });
+            // }}
+          >
+            {primaryNumber?.number}
+          </Text>
+        </HStack>
+        {/* ))} */}
         {/* <Text>{JSON.stringify(friend.phoneNumbers[1].isPrimary)}</Text> */}
       </View>
     </HStack>

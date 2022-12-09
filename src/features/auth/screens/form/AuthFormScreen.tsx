@@ -113,7 +113,7 @@ export default function FormScreen() {
       ) : (
         <Text>asda</Text>
       )}
-      <Button onPress={onNext}>Continue</Button>
+      <Button onPress={onNext}>{page == 2 ? "Finish" : "Next"}</Button>
       <SafeBottom />
     </View>
   );
