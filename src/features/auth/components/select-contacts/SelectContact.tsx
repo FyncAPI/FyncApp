@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -10,7 +10,6 @@ import {
   Icon,
   Image,
   Input,
-  ScrollView,
   Text,
   View,
   VStack,
@@ -22,13 +21,16 @@ import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { SearchBar } from "../../../../components/SearchBar";
 import { useContact } from "../../../../hooks/useContact";
+import { UserContext } from "../../../../contexts/user/context";
 
-export default function SelectContacts({
+export default function ContactSelectorList({
   selectedContactsId,
   setSelectedContactsId,
+  friendsIds,
 }: {
   selectedContactsId: string[];
   setSelectedContactsId: React.Dispatch<React.SetStateAction<string[]>>;
+  friendsIds?: string[];
 }) {
   // const [selected, setSelected] = useState<string[]>([]);
   // const [contacts, setContacts] = useState<Contacts.Contact[]>([]);
@@ -39,7 +41,7 @@ export default function SelectContacts({
     []
   );
 
-  const contacts = useContact();
+  const { contacts } = useContext(UserContext);
 
   useEffect(() => {
     if (query == "") {
@@ -61,13 +63,11 @@ export default function SelectContacts({
           contact?.nickname?.toLowerCase().includes(query.toLowerCase())
       )
     );
+    setPage(1);
   }, [query]);
+
   return (
     <>
-      <Heading size={"2xl"} ml="8">
-        Select Friends
-      </Heading>
-
       <View flex={1} variant="background" p="2">
         <SearchBar query={query} setQuery={setQuery} />
 
@@ -77,8 +77,12 @@ export default function SelectContacts({
         <FlatList
           data={
             query
-              ? searchedContacts.slice(50 * (page - 1), 50 * page)
-              : contacts.slice(50 * (page - 1), 50 * page)
+              ? searchedContacts
+                  .filter((c) => !friendsIds?.includes(c.id))
+                  .slice(50 * (page - 1), 50 * page)
+              : contacts
+                  .filter((c) => !friendsIds?.includes(c.id))
+                  .slice(50 * (page - 1), 50 * page)
           }
           // estimatedItemSize={50}
           keyExtractor={(item) => item.id}

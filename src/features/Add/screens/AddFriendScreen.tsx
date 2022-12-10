@@ -4,9 +4,16 @@ import React from "react";
 import { SafeTop } from "../../../../components/SafeTop";
 import { RootStackNavigationProp } from "../../../../types";
 import BackButton from "../../../components/BackButton";
+import { FriendContext } from "../../../contexts/FriendContext";
+import { UserContext } from "../../../contexts/user/context";
+import ContactSelectorList from "../../auth/components/select-contacts/SelectContact";
+import { AddFromContacts } from "./AddFromContacts";
 
 export const AddFriendScreen = () => {
+  const { contacts } = React.useContext(UserContext);
+  const { friends } = React.useContext(FriendContext);
   const navigation = useNavigation<RootStackNavigationProp<"AddFriend">>();
+
   return (
     <View variant="background" flex={1}>
       <SafeTop />
@@ -14,8 +21,14 @@ export const AddFriendScreen = () => {
       <Heading ml={10} fontSize="4xl">
         Add Friend
       </Heading>
-
-      <VStack m="12" flex={1} justifyContent="center" mb={"32"}>
+      <AddFromContacts />
+      {/* <View flex={1} mx={2}>
+        <SelectContacts
+          selectedContactsId={selectedContactsId}
+          setSelectedContactsId={setSelectedContactsId}
+        />
+      </View> */}
+      {/* <VStack m="12" flex={1} justifyContent="center" mb={"32"}>
         <Pressable
           left={4}
           bg="fuchsia.900"
@@ -38,7 +51,7 @@ export const AddFriendScreen = () => {
         >
           <Heading _light={{ color: "amber.100" }}>Add From Contact</Heading>
         </Pressable>
-      </VStack>
+      </VStack> */}
     </View>
   );
 };

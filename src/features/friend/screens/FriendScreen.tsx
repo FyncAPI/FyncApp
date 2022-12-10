@@ -19,6 +19,7 @@ import { FriendshipIcon } from "../../../components/FriendshipIcon";
 import { PhoneNumberList } from "../../../components/PhoneNumberList";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FriendContext } from "../../../contexts/FriendContext";
+import { SvgXml } from "react-native-svg";
 
 export function FriendScreen() {
   const navigation = useNavigation();
@@ -29,7 +30,9 @@ export function FriendScreen() {
   const { id } = route.params;
 
   const insets = useSafeAreaInsets();
-  const [friend, setFriend] = React.useState(friends?.find((f) => f.id == id));
+  const [friend, setFriend] = React.useState(
+    friends?.find((f) => f.contactId == id)
+  );
 
   // profile
   // name
@@ -39,16 +42,17 @@ export function FriendScreen() {
   //memories
   // friendships
   // number
+
   return (
     <>
       <BackButton _light={{ color: "white" }} />
       <View position={"absolute"} left={"10"} zIndex={5} mx={2}>
         <SafeTop />
         <Heading fontSize="4xl" color={"light.100"} shadow={"9"}>
-          {friend?.nickname || friend?.name}
+          {friend?.contact.nickname || friend?.contact.name}
         </Heading>
         <Text fontSize="lg" color={"light.100"}>
-          {friend?.nickname && friend?.name}
+          {friend?.contact.nickname && friend?.contact.name}
         </Text>
         {/* <FriendshipIcon friendship={friend?.friendship!} /> */}
       </View>
@@ -90,18 +94,27 @@ export function FriendScreen() {
               }}
               colors={["black", "transparent", "transparent"]}
             />
-            <Image
-              source={
-                friend?.image || {
-                  uri: "https://placebeard.it/350x200",
-                }
-              }
-              width="full"
-              height={350}
-              alt="Profile"
-              zIndex={-1}
-            />
+            {friend?.contact.image?.uri ? (
+              <Image
+                source={friend?.contact.image}
+                width="full"
+                height={350}
+                alt="Profile"
+                zIndex={-1}
+              />
+            ) : (
+              <SvgXml width="100%" height="100%" xml={friend?.avatar} />
+            )}
           </>
+          <Text
+            position={"absolute"}
+            color="white"
+            zIndex={5}
+            bottom={0}
+            left={5}
+          >
+            Jack
+          </Text>
         </View>
         {/* <Text>
           {id} {JSON.stringify(friend)}{" "}

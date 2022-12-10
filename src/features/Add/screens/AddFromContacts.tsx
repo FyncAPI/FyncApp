@@ -11,13 +11,14 @@ import { FriendContext } from "../../../contexts/FriendContext";
 import { UserContext } from "../../../contexts/user/context";
 import { FriendsData, UserData } from "../../../contexts/user/types";
 import LoadFriends from "../../auth/components/load-friends/LoadFriend";
-import SelectContacts from "../../auth/components/select-contacts/SelectContact";
+import ContactSelectorList from "../../auth/components/select-contacts/SelectContact";
 
 export const AddFromContacts = gestureHandlerRootHOC(() => {
   const [page, setPage] = React.useState(0);
-  const { friends, updateFriends } = useContext(FriendContext);
+  const { friends, addFriends } = useContext(FriendContext);
   const [selectedContactsId, setSelectedContactsId] = React.useState<string[]>(
-    friends.map((friend) => friend.id)
+    // friends.map((friend) => friend.contactId)
+    []
   );
 
   const [newFriends, setNewFriends] =
@@ -28,7 +29,7 @@ export const AddFromContacts = gestureHandlerRootHOC(() => {
 
   const onNext = () => {
     if (page == 1) {
-      updateFriends(newFriends);
+      addFriends(newFriends);
       navigation.navigate("Home");
     } else {
       setPage(page + 1);
@@ -37,13 +38,11 @@ export const AddFromContacts = gestureHandlerRootHOC(() => {
 
   return (
     <View flex={1} variant="background" p="3">
-      <SafeTop />
-      <View mb={8} />
-      <BackButton />
       {page == 0 ? (
-        <SelectContacts
+        <ContactSelectorList
           selectedContactsId={selectedContactsId}
           setSelectedContactsId={setSelectedContactsId}
+          friendsIds={friends.map((friend) => friend.contactId)}
         />
       ) : page == 1 ? (
         <LoadFriends

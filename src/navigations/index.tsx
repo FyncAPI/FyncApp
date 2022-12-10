@@ -11,7 +11,7 @@ import { UserContext } from "../contexts/user/context";
 import { AddFriendScreen } from "../features/Add/screens/AddFriendScreen";
 import { AddFromContacts } from "../features/Add/screens/AddFromContacts";
 import { AddNewFriendScreen } from "../features/Add/screens/AddNewFriendScreen";
-import FormScreen from "../features/auth/screens/form/AuthFormScreen";
+import AuthFormScreen from "../features/auth/screens/form/AuthFormScreen";
 import { LandingScreen } from "../features/auth/screens/landing/LandingScreen";
 import { FriendScreen } from "../features/friend/screens/FriendScreen";
 import HomeScreen from "../features/home/screens/HomeScreen";
@@ -22,7 +22,7 @@ const Stack = createNativeStackNavigator<NavigationParamList>();
 
 export function Navigation() {
   const { isRegistered, userData } = useContext(UserContext);
-  // //console.log(isRegistered, userData, ";lkj");
+  console.log(isRegistered, userData, ";lkj");
   return (
     <Stack.Navigator
       screenOptions={{
@@ -50,7 +50,7 @@ function AuthStackNavigator() {
         headerShown: false,
       }}
     >
-      <AuthStack.Screen name="Form" component={FormScreen} />
+      <AuthStack.Screen name="Form" component={AuthFormScreen} />
       <AuthStack.Screen name="Landing" component={LandingScreen} />
     </AuthStack.Navigator>
   );

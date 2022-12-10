@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from "native-base";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Friend } from "../../../../contexts/user/types";
 import * as Contacts from "expo-contacts";
 import { ActivityIndicator } from "react-native";
@@ -16,7 +16,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { useContact } from "../../../../hooks/useContact";
 import axios from "axios";
 import { SvgXml } from "react-native-svg";
-import { MULTI_AVATAR_API_KEY } from "@env";
+import { generateAvatar } from "../../../../contexts/FriendService";
+import { UserContext } from "../../../../contexts/user/context";
+
 export default function LoadFriends({
   friendsIds,
   friends,
@@ -24,12 +26,22 @@ export default function LoadFriends({
 }: {
   friendsIds: string[];
   friends: Friend[];
-  setFriends: (friends: Friend[]) => void;
+  setFriends: React.Dispatch<React.SetStateAction<Friend[]>>;
 }) {
   const [error, setError] = useState({});
-  const contacts = useContact();
+  const { contacts } = useContext(UserContext);
+
   const setFriend = (friend: Friend) => {
-    setFriends(friends.map((f) => (f.id == friend.id ? friend : f)));
+    console.log("setting friend", friend?.avatar?.length);
+    setFriends(
+      (prev) =>
+        [
+          ...prev.filter(
+            (prevFriend) => prevFriend?.contact?.id !== friend?.contact?.id
+          ),
+          friend,
+        ] as Friend[]
+    );
   };
 
   useEffect(() => {
@@ -45,7 +57,7 @@ export default function LoadFriends({
         }
 
         return {
-          ...contact,
+          contact: { ...contact, phoneNumbers },
           friendship: {
             level: 1,
             points: 0,
@@ -53,6 +65,7 @@ export default function LoadFriends({
           memories: [],
           recents: [],
           phoneNumbers,
+          contactId: contact.id,
         };
       });
     setFriends(friends);
@@ -60,60 +73,52 @@ export default function LoadFriends({
 
   return (
     <View flex={1}>
-      <Heading size={"2xl"} ml={8}>
-        Friends
-      </Heading>
-      {/* <Text m={2}>
-        Select the primary contact you want to use for each of your friends.
-      </Text> */}
       {friends?.length == 0 ? (
         <ActivityIndicator />
       ) : (
         <FlatList
           data={friends}
           renderItem={({ item }) => (
-            <FriendCard friend={item} setFriend={setFriend} />
+            <LoadFriendCard friend={item} setFriend={setFriend} />
           )}
         />
       )}
+      {/* <Text>{friends.map((f) => f.avatar?.length + " ")}</Text> */}
     </View>
   );
 }
 
-const FriendCard = ({
+const LoadFriendCard = ({
   friend,
   setFriend,
 }: {
   friend: Friend;
   setFriend: (friend: Friend) => void;
 }) => {
-  let primaryNumber = friend.phoneNumbers?.find((number) => number.isPrimary);
-  // const [avatar, setAvatar] = React.useState("");
-
   useEffect(() => {
-    console.log(friend.name, MULTI_AVATAR_API_KEY);
-    if (friend.avatar || friend.image) {
-      console.log(friend.name, "has avatar or image");
+    if (!friend?.contact?.name) return;
+    if (friend.avatar || friend?.contact?.image) {
+      console.log(
+        friend?.contact?.name,
+        "has avatar or image",
+        friend?.avatar?.length,
+        friend?.contact?.image?.uri?.length
+      );
       return;
     }
-    axios
-      .get(
-        `https://api.multiavatar.com/${friend.name}?apikey=${MULTI_AVATAR_API_KEY}`,
-        {
-          headers: {
-            "Content-Type": "text/html",
-          },
-        }
-      )
+    generateAvatar(friend?.contact?.name)
       .then((res) => {
         // setAvatar(res.data);
+        // remove all the words after the last </svg>
+        const svg = res.data.split("</svg>")[0] + "</svg>";
+        console.log(svg.length);
         setFriend({
           ...friend,
-          avatar: res.data,
+          avatar: svg,
         });
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [friend?.contact?.name]);
 
   return (
     <HStack
@@ -128,16 +133,20 @@ const FriendCard = ({
       m={1}
       rounded={"md"}
     >
-      {friend.image ? (
-        <Image source={{ uri: friend.image.uri }} alt="image base" size="sm" />
+      {friend?.contact?.image?.uri ? (
+        <Image
+          source={{ uri: friend.contact.image.uri }}
+          alt="image base"
+          size="sm"
+        />
       ) : friend.avatar ? (
         <SvgXml xml={friend.avatar} width="50" height="50" />
       ) : (
-        // <Icon as={<Ionicons name="person" />} size="sm" color="blueGray.400" />
-        <ActivityIndicator size={"small"} />
+        // <Text>{friend.avatar}</Text>
+        <ActivityIndicator />
       )}
       <Text m="2" fontSize="md" fontWeight="medium">
-        {friend.name}
+        {friend?.contact?.name}
       </Text>
       <View
         _dark={{
@@ -166,7 +175,7 @@ const FriendCard = ({
             //   });
             // }}
           >
-            {primaryNumber?.number}
+            {friend?.contact?.phoneNumbers?.find((n) => n.isPrimary)?.number}
           </Text>
         </HStack>
         {/* ))} */}

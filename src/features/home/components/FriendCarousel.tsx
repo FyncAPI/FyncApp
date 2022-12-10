@@ -54,7 +54,7 @@ export const FriendCarousel = gestureHandlerRootHOC(
                     <FriendCard
                       listLength={item.length}
                       friend={friend}
-                      key={index}
+                      key={index + "FRIEND"}
                     />
                   );
                 }}

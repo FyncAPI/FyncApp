@@ -12,6 +12,7 @@
       "channel": "preview"
     },
     "simulator": {
+      "developmentClient": true,
       "distribution": "internal",
       "channel": "simulator",
       "ios": {

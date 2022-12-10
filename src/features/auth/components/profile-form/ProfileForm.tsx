@@ -29,9 +29,6 @@ export default function ProfileForm({
 
   return (
     <>
-      <Heading size={"2xl"} ml={8}>
-        Add your profile
-      </Heading>
       <DismissKeyboardView>
         <View flex={1} variant="background" p="2">
           <>

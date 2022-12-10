@@ -40,7 +40,7 @@ export interface Gift {
 //   profileImage: string;
 // }
 
-export interface User extends Contact {
+export interface User {
   _id?: string;
 }
 
@@ -53,6 +53,8 @@ export interface Friend extends User {
   };
   isFavorite?: boolean;
   avatar?: string;
+  contactId: string;
+  contact: Contact;
 }
 
 export interface UserData {

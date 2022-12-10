@@ -127,10 +127,11 @@ const HomeScreen = () => {
               <FriendList friends={section.data} />
             ) : section.numColumns ? (
               <FriendCarousel friends={section.data} />
-            ) : null}
+            ) : // <Text>asd</Text>
+            null}
           </>
         )}
-        keyExtractor={(item) => item.id + "asd"}
+        keyExtractor={(item) => item.contactId + "asd"}
         stickySectionHeadersEnabled
         renderSectionFooter={({ section }) =>
           section.safeBottom ? <SafeBottom /> : null

@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
 import { RootStackNavigationProp } from "../types";
 import { FriendContext } from "../src/contexts/FriendContext";
+import { SvgXml } from "react-native-svg";
 
 // export default function FriendCard({ friend }: { friend: Friend }) {
 export default function FriendCard({
@@ -24,24 +25,30 @@ export default function FriendCard({
   return (
     <TouchableOpacity
       onPress={() => {
-        callFriend(friend.phoneNumbers, friend.id);
+        callFriend(friend?.contact.phoneNumbers, friend?.contact.id);
       }}
       onLongPress={() => {
-        navigation.navigate("Friend", { id: friend.id });
+        navigation.navigate("Friend", { id: friend?.contact.id });
       }}
       delayLongPress={500}
     >
       <Box overflow="hidden" mx="2.5" borderRadius="lg">
-        <Image
-          source={
-            friend.image || {
-              uri: "https://placebeard.it/100x100",
-            }
-          }
-          w={size || 100}
-          h={size || 100}
-          alt="friend image"
-        />
+        {friend?.contact?.image ? (
+          <Image
+            source={friend?.contact.image}
+            w={size || 100}
+            h={size || 100}
+            alt="friend image"
+          />
+        ) : friend.avatar ? (
+          <View>
+            <SvgXml
+              xml={friend.avatar}
+              width={size || 100}
+              height={size || 100}
+            />
+          </View>
+        ) : null}
 
         <Text
           zIndex={2}
@@ -52,7 +59,7 @@ export default function FriendCard({
           fontSize="lg"
           color="white"
         >
-          {friend?.nickname || friend?.name}
+          {friend?.contact?.nickname || friend?.contact?.name}
         </Text>
         <LinearGradient
           colors={["transparent", "transparent", "rgba(0,0,0,0.8)"]}
