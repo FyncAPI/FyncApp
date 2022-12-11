@@ -156,12 +156,7 @@ export function FriendScreen() {
           <Text m={5} fontSize={"lg"}>
             in the future
           </Text>
-          <Text m={5} fontSize={"lg"}>
-            in the future
-          </Text>
-          <Text m={5} fontSize={"lg"}>
-            in the future
-          </Text>
+
           <Heading m={2} fontSize="2xl">
             Friendships
           </Heading>

@@ -133,7 +133,7 @@ export default function AuthFormScreen() {
           page == 2 &&
           friends.filter((f) => {
             console.log(f.avatar?.length, f.contact.name);
-            return f.avatar == null;
+            return f.avatar == null || !f.contact.image?.uri;
           }).length > 0
         }
       >
