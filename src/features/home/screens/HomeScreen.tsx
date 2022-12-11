@@ -95,7 +95,7 @@ const HomeScreen = () => {
           //   data: userData.friends,
           // },
           {
-            title: "Favorites",
+            title: "Favorite",
             horizontal: true,
             data: userData.favorites || [],
           },

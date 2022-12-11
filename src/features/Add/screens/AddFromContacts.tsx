@@ -11,7 +11,7 @@ import { FriendContext } from "../../../contexts/FriendContext";
 import { UserContext } from "../../../contexts/user/context";
 import { FriendsData, UserData } from "../../../contexts/user/types";
 import LoadFriends from "../../auth/components/load-friends/LoadFriend";
-import ContactSelectorList from "../../auth/components/select-contacts/SelectContact";
+import ContactSelectorList from "../../auth/components/ContactSelectorList";
 
 export const AddFromContacts = gestureHandlerRootHOC(() => {
   const [page, setPage] = React.useState(0);

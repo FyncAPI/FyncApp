@@ -9,7 +9,7 @@ export default function FriendList({ friends }: { friends: Friend[] }) {
     return (
       <View p="2" m={2}>
         <Text ml={2} fontWeight={"bold"}>
-          No favorites friends
+          No favorite friends
         </Text>
       </View>
     );

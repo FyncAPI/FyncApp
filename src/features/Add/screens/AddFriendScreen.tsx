@@ -6,7 +6,7 @@ import { RootStackNavigationProp } from "../../../../types";
 import BackButton from "../../../components/BackButton";
 import { FriendContext } from "../../../contexts/FriendContext";
 import { UserContext } from "../../../contexts/user/context";
-import ContactSelectorList from "../../auth/components/select-contacts/SelectContact";
+import ContactSelectorList from "../../auth/components/ContactSelectorList";
 import { AddFromContacts } from "./AddFromContacts";
 
 export const AddFriendScreen = () => {

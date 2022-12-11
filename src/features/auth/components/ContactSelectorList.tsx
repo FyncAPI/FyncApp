@@ -8,6 +8,7 @@ import {
   Heading,
   HStack,
   Icon,
+  IconButton,
   Image,
   Input,
   Text,
@@ -15,13 +16,13 @@ import {
   VStack,
 } from "native-base";
 import * as Contacts from "expo-contacts";
-import ContactsSelector from "../../../../../components/ContactSelector";
+import ContactsSelector from "../../../../components/ContactSelector";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import { SearchBar } from "../../../../components/SearchBar";
-import { useContact } from "../../../../hooks/useContact";
-import { UserContext } from "../../../../contexts/user/context";
+import { SearchBar } from "../../../components/SearchBar";
+import { useContact } from "../../../hooks/useContact";
+import { UserContext } from "../../../contexts/user/context";
 
 export default function ContactSelectorList({
   selectedContactsId,
@@ -75,6 +76,7 @@ export default function ContactSelectorList({
           <Text>No contacts found</Text>
         )}
         <FlatList
+          mt={2}
           data={
             query
               ? searchedContacts
@@ -96,27 +98,11 @@ export default function ContactSelectorList({
             );
           }}
         />
-
-        <HStack pt={1} alignItems="center" justifyContent="space-evenly">
-          <Button
-            onPress={() => {
-              setPage((prev) => prev - 1);
-            }}
-            isDisabled={page <= 1}
-          >
-            Prev Page
-          </Button>
+        <HStack my={2}>
+          <Text>Selected: </Text>
           <Text>
-            {page}/{maxPage}
+            {selectedContactsId.length}/{contacts.length}
           </Text>
-          <Button
-            onPress={() => {
-              setPage((prev) => prev + 1);
-            }}
-            isDisabled={page >= maxPage}
-          >
-            Next Page
-          </Button>
         </HStack>
       </View>
     </>

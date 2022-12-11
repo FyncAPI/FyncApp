@@ -62,7 +62,17 @@ export default function FriendCard({
           {friend?.contact?.nickname || friend?.contact?.name}
         </Text>
         <LinearGradient
-          colors={["transparent", "transparent", "rgba(0,0,0,0.8)"]}
+          colors={
+            listLength == 1
+              ? [
+                  "transparent",
+                  "transparent",
+                  "transparent",
+                  "transparent",
+                  "rgba(0,0,0,0.8)",
+                ]
+              : ["transparent", "transparent", "transparent", "rgba(0,0,0,0.8)"]
+          }
           style={{
             position: "absolute",
             left: 0,

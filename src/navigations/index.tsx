@@ -50,8 +50,8 @@ function AuthStackNavigator() {
         headerShown: false,
       }}
     >
-      <AuthStack.Screen name="Form" component={AuthFormScreen} />
       <AuthStack.Screen name="Landing" component={LandingScreen} />
+      <AuthStack.Screen name="Form" component={AuthFormScreen} />
     </AuthStack.Navigator>
   );
 }

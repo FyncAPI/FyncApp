@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Button, Heading, Icon, ScrollView, Text, View } from "native-base";
-import ContactSelectorList from "../../components/select-contacts/SelectContact";
+import ContactSelectorList from "../../components/ContactSelectorList";
 import { SafeBottom, SafeTop } from "../../../../../components/SafeTop";
 import { UserContext } from "../../../../contexts/user/context";
 import ProfileForm from "../../components/profile-form/ProfileForm";

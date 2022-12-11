@@ -26,7 +26,7 @@ import {
 
 // Define the config
 const config = {
-  useSystemColorMode: false,
+  useSystemColorMode: true,
   initialColorMode: "dark",
   dependencies: {
     // For Expo projects (Bare or managed workflow)
