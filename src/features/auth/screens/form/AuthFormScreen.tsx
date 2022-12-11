@@ -127,7 +127,18 @@ export default function AuthFormScreen() {
       ) : (
         <Text>asda</Text>
       )}
-      <Button onPress={onNext}>{page == 2 ? "Finish" : "Next"}</Button>
+      <Button
+        onPress={onNext}
+        disabled={
+          page == 2 &&
+          friends.filter((f) => {
+            console.log(f.avatar?.length, f.contact.name);
+            return f.avatar == null;
+          }).length > 0
+        }
+      >
+        {page == 2 ? "Finish" : "Next"}
+      </Button>
       <SafeBottom />
     </View>
   );

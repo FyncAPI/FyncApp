@@ -50,21 +50,22 @@ export default function LoadFriends({
         return friendsIds.includes(contact.id);
       })
       .map((contact) => {
-        let phoneNumbers = contact.phoneNumbers;
-        // if the contact doesn't have a primary contact, set the first one as primary
-        if (!phoneNumbers?.find((phoneNumber) => phoneNumber.isPrimary)) {
-          if (phoneNumbers?.[0]) phoneNumbers[0].isPrimary = true;
-        }
+        // let phoneNumbers = contact.phoneNumbers;
+        // // if the contact doesn't have a primary contact, set the first one as primary
+        // if (!phoneNumbers?.find((phoneNumber) => phoneNumber.isPrimary)) {
+        //   if (phoneNumbers?.[0]) phoneNumbers[0].isPrimary = true;
+        // }
 
         return {
-          contact: { ...contact, phoneNumbers },
+          // contact: { ...contact, phoneNumbers },
+          contact,
           friendship: {
             level: 1,
             points: 0,
           },
           memories: [],
           recents: [],
-          phoneNumbers,
+          // phoneNumbers,
           contactId: contact.id,
         };
       });
@@ -102,22 +103,19 @@ const LoadFriendCard = ({
         friend?.contact?.name,
         "has avatar or image",
         friend?.avatar?.length,
-        friend?.contact?.image?.uri?.length
+        Object.keys(friend.contact)
+        // friend?.contact?.image?.uri?.length
       );
       return;
     }
-    generateAvatar(friend?.contact?.name)
-      .then((res) => {
-        // setAvatar(res.data);
-        // remove all the words after the last </svg>
-        const svg = res.data.split("</svg>")[0] + "</svg>";
-        console.log(svg.length);
-        setFriend({
-          ...friend,
-          avatar: svg,
-        });
-      })
-      .catch((err) => console.log(err));
+    generateAvatar(friend?.contact?.name).then((svg) => {
+      if (!svg) return;
+      console.log(svg.length);
+      setFriend({
+        ...friend,
+        avatar: svg,
+      });
+    });
   }, [friend?.contact?.name]);
 
   return (
@@ -175,7 +173,7 @@ const LoadFriendCard = ({
             //   });
             // }}
           >
-            {friend?.contact?.phoneNumbers?.find((n) => n.isPrimary)?.number}
+            {friend?.contact?.phoneNumbers?.find((n) => n)?.number}
           </Text>
         </HStack>
         {/* ))} */}

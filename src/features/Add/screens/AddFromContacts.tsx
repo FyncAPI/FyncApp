@@ -29,6 +29,7 @@ export const AddFromContacts = gestureHandlerRootHOC(() => {
 
   const onNext = () => {
     if (page == 1) {
+      console.log("newFriends", newFriends);
       addFriends(newFriends);
       navigation.navigate("Home");
     } else {
@@ -52,7 +53,23 @@ export const AddFromContacts = gestureHandlerRootHOC(() => {
         />
       ) : null}
 
-      <Button mt={"auto"} onPress={onNext}>
+      {/* <Text>
+        {page == 1 && friends.filter((f) => f.avatar == null).length > 0
+          ? friends.filter((f) => f.avatar == null).length +
+            " friends are missing"
+          : "b"}
+      </Text> */}
+      <Button
+        mt={"auto"}
+        onPress={onNext}
+        disabled={
+          page == 1 &&
+          newFriends.filter((f) => {
+            console.log(f.avatar?.length, f.contact.name);
+            return f.avatar == null;
+          }).length > 0
+        }
+      >
         {page == 0 ? "Next" : page == 1 ? "Finish" : null}
       </Button>
       <SafeBottom />

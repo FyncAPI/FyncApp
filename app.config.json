@@ -15,7 +15,9 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/c90b8cf8-bce9-4072-98f5-b891bdd2072c"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.bunyasit.trojang",
@@ -36,6 +38,9 @@
       "eas": {
         "projectId": "c90b8cf8-bce9-4072-98f5-b891bdd2072c"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   },
   "runtimeVersion": {

@@ -10,8 +10,6 @@ import ContactSelectorList from "../../auth/components/select-contacts/SelectCon
 import { AddFromContacts } from "./AddFromContacts";
 
 export const AddFriendScreen = () => {
-  const { contacts } = React.useContext(UserContext);
-  const { friends } = React.useContext(FriendContext);
   const navigation = useNavigation<RootStackNavigationProp<"AddFriend">>();
 
   return (

@@ -127,9 +127,13 @@ export const FriendContextProvider = ({
   };
 
   const removeFriend = (friendId: Friend["contactId"]) => {
-    setFriends((prev) =>
-      prev.filter((friend) => friend?.contact.id !== friendId)
-    );
+    // setFriends((prev) =>
+    //   prev.filter((friend) => friend?.contact.id !== friendId)
+    // );
+
+    const newFriends = friends.filter((f) => f.contact.id !== friendId);
+    setFriends(newFriends);
+    saveFriendsData({ friends: newFriends });
   };
 
   const callFriend = async (
