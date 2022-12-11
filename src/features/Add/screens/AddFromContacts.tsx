@@ -53,20 +53,22 @@ export const AddFromContacts = gestureHandlerRootHOC(() => {
         />
       ) : null}
 
-      {/* <Text>
-        {page == 1 && friends.filter((f) => f.avatar == null).length > 0
-          ? friends.filter((f) => f.avatar == null).length +
-            " friends are missing"
-          : "b"}
-      </Text> */}
       <Button
         mt={"auto"}
         onPress={onNext}
-        disabled={
+        _disabled={{
+          bg: "gray.400",
+        }}
+        isDisabled={
           page == 1 &&
           newFriends.filter((f) => {
-            console.log(f.avatar?.length, f.contact.name);
-            return f.avatar == null || !f.contact.image?.uri;
+            console.log(
+              f.avatar?.length,
+              f.contact.name,
+              f.contact.image?.uri,
+              "xcv"
+            );
+            return f.avatar == null && !f.contact.image?.uri;
           }).length > 0
         }
       >

@@ -129,11 +129,18 @@ export default function AuthFormScreen() {
       )}
       <Button
         onPress={onNext}
-        disabled={
+        _disabled={{
+          bg: "gray.400",
+        }}
+        isDisabled={
           page == 2 &&
           friends.filter((f) => {
-            console.log(f.avatar?.length, f.contact.name);
-            return f.avatar == null || !f.contact.image?.uri;
+            console.log(
+              f.avatar?.length,
+              f.contact.name,
+              !f.contact.image?.uri
+            );
+            return f.avatar == null && !f.contact.image?.uri;
           }).length > 0
         }
       >
