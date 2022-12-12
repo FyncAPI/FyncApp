@@ -8,6 +8,7 @@ import {
   Icon,
   SectionList,
   Text,
+  Button,
 } from "native-base";
 import Carousel from "react-native-reanimated-carousel";
 import { SafeBottom, SafeTop } from "../../../components/SafeTop";
@@ -29,6 +30,9 @@ import {
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FriendContext } from "../../../contexts/FriendContext";
+import { useLoading } from "../../../hooks/useLoading";
+import { BlurView } from "expo-blur";
+import LoadingIndicator from "../../../components/LoadingIndicator";
 
 type HomeScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<RootStackParamList, "Home">,
@@ -62,6 +66,8 @@ const HomeScreen = () => {
       subscription.remove();
     };
   }, []);
+
+  const { startLoading, stopLoading, loading } = useLoading();
 
   return (
     <View flex={1} variant="background">

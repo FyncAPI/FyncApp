@@ -23,6 +23,8 @@ import {
   SpaceGrotesk_600SemiBold,
   SpaceGrotesk_700Bold,
 } from "@expo-google-fonts/space-grotesk";
+import { LoadingModal } from "./src/components/LoadingModal";
+import { useLoading } from "./src/hooks/useLoading";
 
 // Define the config
 const config = {
@@ -130,6 +132,8 @@ declare module "native-base" {
 }
 
 export default function App() {
+  const { loading } = useLoading();
+
   const colorModeManager: StorageManager = {
     get: async () => {
       try {
@@ -148,6 +152,7 @@ export default function App() {
       }
     },
   };
+
   let [fontsLoaded] = useFonts({
     SpaceGrotesk_300Light,
     SpaceGrotesk_400Regular,
@@ -155,9 +160,11 @@ export default function App() {
     SpaceGrotesk_600SemiBold,
     SpaceGrotesk_700Bold,
   });
+
   if (!fontsLoaded) {
     return null;
   }
+
   return (
     <NativeBaseProvider
       theme={theme}

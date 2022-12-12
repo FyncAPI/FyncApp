@@ -20,36 +20,6 @@ export const AddFriendScreen = () => {
         Add Friend
       </Heading>
       <AddFromContacts />
-      {/* <View flex={1} mx={2}>
-        <SelectContacts
-          selectedContactsId={selectedContactsId}
-          setSelectedContactsId={setSelectedContactsId}
-        />
-      </View> */}
-      {/* <VStack m="12" flex={1} justifyContent="center" mb={"32"}>
-        <Pressable
-          left={4}
-          bg="fuchsia.900"
-          _light={{ bg: "fuchsia.500" }}
-          p="12"
-          borderRadius={10}
-          m="2"
-          onPress={null}
-        >
-          <Heading>Add New Friend</Heading>
-        </Pressable>
-
-        <Pressable
-          right={4}
-          bg="darkBlue.900"
-          p="12"
-          borderRadius={10}
-          m="2"
-          onPress={() => navigation.navigate("AddFromContacts")}
-        >
-          <Heading _light={{ color: "amber.100" }}>Add From Contact</Heading>
-        </Pressable>
-      </VStack> */}
     </View>
   );
 };

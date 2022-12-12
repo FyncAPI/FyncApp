@@ -39,7 +39,7 @@ export default function UserScreen() {
         <HStack p={5}>
           {/* <Image source={{ uri: userData?.photoURL }} alt="user" size={100} /> */}
           <View>
-            <Heading>{userData?.profile.name}</Heading>
+            <Heading>{userData?.profile?.name}</Heading>
             {/* <Text>
               {userData?.profile?.phoneNumbers?.map((p) => p.number).join(", ")}
             </Text> */}

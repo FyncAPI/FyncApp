@@ -15,7 +15,7 @@ interface UserContextInterface {
   favoriteFriend: (friend: Friend) => void;
   unfavoriteFriend: (friendId: Friend["contactId"]) => void;
 
-  saveUserData: (user: UserData) => void;
+  saveUserData: (user: UserData, stopLoading?: () => void) => void;
   saveFriendsData: (friendsData: FriendsData) => void;
   deleteUserData: () => void;
 }
@@ -39,9 +39,10 @@ export function UserContextProvider({
     console.log("user context mounted");
   }, []);
 
-  const saveUserData = (user: UserData) => {
+  const saveUserData = (user: UserData, stopLoading?: () => void) => {
     console.log(user, "user");
-    if (!user) return;
+    stopLoading && stopLoading();
+    if (!user) return null;
     // save user to async storage
     saveValueAsync("user", user);
     setIsRegistered(true);
@@ -58,6 +59,7 @@ export function UserContextProvider({
   const deleteUserData = () => {
     // delete user from async storage
     saveValueAsync("user", "");
+    saveFriendsData({} as FriendsData);
     setIsRegistered(false);
     setUserData({} as UserData);
   };
