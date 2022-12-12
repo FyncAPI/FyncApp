@@ -4,7 +4,7 @@ import { Button, Heading, Text, View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Easing } from "react-native-reanimated";
-import { SafeBottom, SafeTop } from "../../../../../components/SafeTop";
+import { SafeBottom, SafeTop } from "../../../../components/SafeTop";
 import { AuthStackNavigationProp } from "../../../../../types";
 
 export const LandingScreen = () => {

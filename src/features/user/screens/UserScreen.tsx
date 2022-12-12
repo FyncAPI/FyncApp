@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { SafeTop } from "../../../../components/SafeTop";
+import { SafeTop } from "../../../components/SafeTop";
 import {
   Box,
   Button,
@@ -9,7 +9,7 @@ import {
   Text,
   View,
 } from "native-base";
-import { ToggleDarkMode } from "../../../../components/ThemeSwitch";
+import { ToggleDarkMode } from "../../../components/ThemeSwitch";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../../contexts/user/context";
 import { Alert } from "react-native";
@@ -39,7 +39,7 @@ export default function UserScreen() {
         <HStack p={5}>
           {/* <Image source={{ uri: userData?.photoURL }} alt="user" size={100} /> */}
           <View>
-            <Heading>{userData?.profile?.name}</Heading>
+            <Heading>{userData?.profile.name}</Heading>
             {/* <Text>
               {userData?.profile?.phoneNumbers?.map((p) => p.number).join(", ")}
             </Text> */}

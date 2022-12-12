@@ -16,7 +16,7 @@ import {
   VStack,
 } from "native-base";
 import * as Contacts from "expo-contacts";
-import ContactsSelector from "../../../../components/ContactSelector";
+import ContactsSelector from "../../../components/ContactSelector";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { FlashList } from "@shopify/flash-list";

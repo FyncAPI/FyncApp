@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList, Text, View } from "native-base";
 import FriendCard from "./FriendCard";
-import { Friend } from "../src/contexts/user/types";
+import { Friend } from "../contexts/user/types";
 
 export default function FriendList({ friends }: { friends: Friend[] }) {
   // //console.log(friends, "friends");
@@ -9,7 +9,7 @@ export default function FriendList({ friends }: { friends: Friend[] }) {
     return (
       <View p="2" m={2}>
         <Text ml={2} fontWeight={"bold"}>
-          No favorite friends
+          no one here
         </Text>
       </View>
     );

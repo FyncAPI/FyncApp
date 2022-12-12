@@ -10,10 +10,10 @@ import {
   Text,
 } from "native-base";
 import Carousel from "react-native-reanimated-carousel";
-import { SafeBottom, SafeTop } from "../../../../components/SafeTop";
+import { SafeBottom, SafeTop } from "../../../components/SafeTop";
 import { Ionicons } from "@expo/vector-icons";
-import FriendCard from "../../../../components/FriendCard";
-import FriendList from "../../../../components/FriendList";
+import FriendCard from "../../../components/FriendCard";
+import FriendList from "../../../components/FriendList";
 import {
   CompositeNavigationProp,
   useNavigation,

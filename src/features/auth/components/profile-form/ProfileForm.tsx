@@ -36,6 +36,7 @@ export default function ProfileForm({
               label="Name"
               value={profile?.name}
               setValue={updateProfile("name")}
+              keyboardType="name-phone-pad"
               isInvalid={profile?.name?.length == 0}
             />
             <FormInput
@@ -43,6 +44,8 @@ export default function ProfileForm({
               value={profile?.email}
               setValue={updateProfile("email")}
               isInvalid={profile?.email?.length == 0}
+              keyboardType="email-address"
+              autoCapitalize="none"
             />
 
             {/* <FormInput

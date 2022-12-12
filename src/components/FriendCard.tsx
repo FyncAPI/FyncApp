@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { Box, Image, Text, View } from "native-base";
-import { Friend } from "../src/contexts/user/types";
+import { Friend } from "../contexts/user/types";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Linking from "expo-linking";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
-import { RootStackNavigationProp } from "../types";
-import { FriendContext } from "../src/contexts/FriendContext";
+import { RootStackNavigationProp } from "../../types";
+import { FriendContext } from "../contexts/FriendContext";
 import { SvgXml } from "react-native-svg";
 
 // export default function FriendCard({ friend }: { friend: Friend }) {

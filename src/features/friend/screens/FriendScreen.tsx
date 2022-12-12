@@ -13,7 +13,7 @@ import {
   View,
 } from "native-base";
 import BackButton from "../../../components/BackButton";
-import { SafeTop } from "../../../../components/SafeTop";
+import { SafeTop } from "../../../components/SafeTop";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { FriendshipIcon } from "../../../components/FriendshipIcon";

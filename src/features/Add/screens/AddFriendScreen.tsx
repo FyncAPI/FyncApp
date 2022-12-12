@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { Heading, Pressable, Text, View, VStack } from "native-base";
 import React from "react";
-import { SafeTop } from "../../../../components/SafeTop";
+import { SafeTop } from "../../../components/SafeTop";
 import { RootStackNavigationProp } from "../../../../types";
 import BackButton from "../../../components/BackButton";
 import { FriendContext } from "../../../contexts/FriendContext";

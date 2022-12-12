@@ -13,8 +13,6 @@ import * as Contacts from "expo-contacts";
 import { ActivityIndicator } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
-import { useContact } from "../../../../hooks/useContact";
-import axios from "axios";
 import { SvgXml } from "react-native-svg";
 import { generateAvatar } from "../../../../contexts/FriendService";
 import { UserContext } from "../../../../contexts/user/context";

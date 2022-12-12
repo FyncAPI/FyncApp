@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Button, Heading, Icon, ScrollView, Text, View } from "native-base";
 import ContactSelectorList from "../../components/ContactSelectorList";
-import { SafeBottom, SafeTop } from "../../../../../components/SafeTop";
+import { SafeBottom, SafeTop } from "../../../../components/SafeTop";
 import { UserContext } from "../../../../contexts/user/context";
 import ProfileForm from "../../components/profile-form/ProfileForm";
 import { Contact, getContactByIdAsync, getContactsAsync } from "expo-contacts";
@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Friend, FriendsData, UserData } from "../../../../contexts/user/types";
 import { AuthStackNavigationProp } from "../../../../../types";
 import BackButton from "../../../../components/BackButton";
+import { LoadingModal } from "../../../../components/LoadingModal";
 
 export default function AuthFormScreen() {
   const [page, setPage] = React.useState(0);
@@ -25,6 +26,7 @@ export default function AuthFormScreen() {
   // );
   const [friends, setFriends] = React.useState<Friend[]>([]);
   const [error, setError] = React.useState({});
+  const [loading, setLoading] = React.useState(false);
 
   const { saveUserData, saveFriendsData } = useContext(UserContext);
 
@@ -37,32 +39,6 @@ export default function AuthFormScreen() {
         [key]: data,
       });
     };
-
-  // const updateFriendsData =
-  //   (key: keyof FriendsData) => (data: FriendsData[keyof FriendsData]) => {
-  //     setFriendsData({
-  //       ...friendsData!,
-  //       [key]: data,
-  //     });
-  //   };
-
-  // const friends = selectedContactsId.map((id) => {
-  //   getContactByIdAsync(id).then((contact) => {
-  //     return {
-  //       ...contact,
-  //       memories: [],
-  //       recents: [],
-  //       friendship: {
-  //         level: 0,
-  //         points: 0,
-  //       },
-  //     };
-  //   });
-  // });
-
-  // updateData("friends")(friends);
-
-  // //console.log(friends, "fbd");
 
   const onNext = () => {
     //console.log(Object.entries(error).length);
@@ -96,6 +72,7 @@ export default function AuthFormScreen() {
 
   return (
     <View flex={1} variant="background" px="3">
+      <LoadingModal loading={loading} />
       <SafeTop />
       <Heading ml={8} fontSize={"4xl"}>
         {page == 0 ? "Profile" : page == 1 ? "Select Friends" : "Confirm"}
@@ -144,7 +121,7 @@ export default function AuthFormScreen() {
           }).length > 0
         }
       >
-        {page == 2 ? "Finish" : "Next"}
+        {page == 1 ? "Finish" : "Next"}
       </Button>
       <SafeBottom />
     </View>
