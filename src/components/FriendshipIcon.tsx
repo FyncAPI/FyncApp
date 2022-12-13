@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Icon, Text, View } from "native-base";
+import { FavouriteIcon, Heading, HStack, Icon, Text, View } from "native-base";
 import React from "react";
 import { Factory } from "native-base";
 import { Friend } from "../contexts/user/types";
@@ -10,10 +10,18 @@ function FriendshipIconBase({
   friendship: Friend["friendship"];
 }) {
   return (
-    <View alignItems={"center"} justifyContent={"center"}>
-      <Icon as={Ionicons} name="heart" size="4xl" color={"text.700"} />
-      <Text position={"absolute"}>{friendship.points}</Text>
-    </View>
+    <HStack p="2" bg={"gray.700"} rounded="full" alignItems={"center"}>
+      <View
+        alignSelf={"start"}
+        alignItems={"center"}
+        justifyContent={"center"}
+        marginRight="2"
+      >
+        <FavouriteIcon size="4xl" color="black" />
+        <Text position={"absolute"}>{friendship.level}</Text>
+      </View>
+      <Heading>{friendship.points}</Heading>
+    </HStack>
   );
 }
 

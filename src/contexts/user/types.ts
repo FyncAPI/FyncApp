@@ -19,6 +19,17 @@ export interface CallHistory {
   calleeId: string;
 }
 
+export interface Gift {
+  _id: string;
+  name: string;
+  description: string;
+  image: string;
+
+  given?: boolean;
+  giverId?: string;
+  receiverId?: string;
+}
+
 // export interface User {
 //   id: string;
 //   name: string;
@@ -29,8 +40,8 @@ export interface CallHistory {
 //   profileImage: string;
 // }
 
-export interface User extends Contact {
-  // _id: string;
+export interface User {
+  _id?: string;
 }
 
 export interface Friend extends User {
@@ -40,6 +51,10 @@ export interface Friend extends User {
     level: number;
     points: number;
   };
+  isFavorite?: boolean;
+  avatar?: string;
+  contactId: string;
+  contact: Contact;
 }
 
 export interface UserData {
@@ -49,6 +64,10 @@ export interface UserData {
   favorites: Friend[];
   suggestions: Friend[];
   profile: User;
+  email: string;
+
+  socialMode: boolean;
+  gifts?: Gift[];
 }
 
 export interface FriendsData {

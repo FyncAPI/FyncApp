@@ -27,6 +27,7 @@ export type NavigationParamList = {
   AuthStack: NavigatorScreenParams<AuthStackParamList>;
   RootStack: NavigatorScreenParams<RootStackParamList>;
 };
+
 export type AuthStackParamList = {
   Landing: undefined;
   Form: undefined;

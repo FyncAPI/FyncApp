@@ -8,12 +8,13 @@ import {
   Icon,
   SectionList,
   Text,
+  Button,
 } from "native-base";
 import Carousel from "react-native-reanimated-carousel";
-import { SafeBottom, SafeTop } from "../../../../components/SafeTop";
+import { SafeBottom, SafeTop } from "../../../components/SafeTop";
 import { Ionicons } from "@expo/vector-icons";
-import FriendCard from "../../../../components/FriendCard";
-import FriendList from "../../../../components/FriendList";
+import FriendCard from "../../../components/FriendCard";
+import FriendList from "../../../components/FriendList";
 import {
   CompositeNavigationProp,
   useNavigation,
@@ -29,6 +30,9 @@ import {
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FriendContext } from "../../../contexts/FriendContext";
+import { useLoading } from "../../../hooks/useLoading";
+import { BlurView } from "expo-blur";
+import LoadingIndicator from "../../../components/LoadingIndicator";
 
 type HomeScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<RootStackParamList, "Home">,
@@ -63,6 +67,8 @@ const HomeScreen = () => {
     };
   }, []);
 
+  const { startLoading, stopLoading, loading } = useLoading();
+
   return (
     <View flex={1} variant="background">
       <SafeTop />
@@ -95,7 +101,7 @@ const HomeScreen = () => {
           //   data: userData.friends,
           // },
           {
-            title: "Favorites",
+            title: "Favorite",
             horizontal: true,
             data: userData.favorites || [],
           },
@@ -127,10 +133,11 @@ const HomeScreen = () => {
               <FriendList friends={section.data} />
             ) : section.numColumns ? (
               <FriendCarousel friends={section.data} />
-            ) : null}
+            ) : // <Text>asd</Text>
+            null}
           </>
         )}
-        keyExtractor={(item) => item.id + "asd"}
+        keyExtractor={(item) => item.contactId + "asd"}
         stickySectionHeadersEnabled
         renderSectionFooter={({ section }) =>
           section.safeBottom ? <SafeBottom /> : null

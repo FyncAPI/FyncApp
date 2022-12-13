@@ -7,13 +7,15 @@ import {
   Text,
   View,
 } from "native-base";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Friend } from "../../../../contexts/user/types";
 import * as Contacts from "expo-contacts";
 import { ActivityIndicator } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
-import { useContact } from "../../../../hooks/useContact";
+import { SvgXml } from "react-native-svg";
+import { generateAvatar } from "../../../../contexts/FriendService";
+import { UserContext } from "../../../../contexts/user/context";
 
 export default function LoadFriends({
   friendsIds,
@@ -22,12 +24,22 @@ export default function LoadFriends({
 }: {
   friendsIds: string[];
   friends: Friend[];
-  setFriends: (friends: Friend[]) => void;
+  setFriends: React.Dispatch<React.SetStateAction<Friend[]>>;
 }) {
   const [error, setError] = useState({});
-  const contacts = useContact();
+  const { contacts } = useContext(UserContext);
+
   const setFriend = (friend: Friend) => {
-    setFriends(friends.map((f) => (f.id == friend.id ? friend : f)));
+    console.log("setting friend", friend?.avatar?.length);
+    setFriends(
+      (prev) =>
+        [
+          ...prev.filter(
+            (prevFriend) => prevFriend?.contact?.id !== friend?.contact?.id
+          ),
+          friend,
+        ] as Friend[]
+    );
   };
 
   useEffect(() => {
@@ -36,21 +48,23 @@ export default function LoadFriends({
         return friendsIds.includes(contact.id);
       })
       .map((contact) => {
-        let phoneNumbers = contact.phoneNumbers;
-        // if the contact doesn't have a primary contact, set the first one as primary
-        if (!phoneNumbers?.find((phoneNumber) => phoneNumber.isPrimary)) {
-          if (phoneNumbers?.[0]) phoneNumbers[0].isPrimary = true;
-        }
+        // let phoneNumbers = contact.phoneNumbers;
+        // // if the contact doesn't have a primary contact, set the first one as primary
+        // if (!phoneNumbers?.find((phoneNumber) => phoneNumber.isPrimary)) {
+        //   if (phoneNumbers?.[0]) phoneNumbers[0].isPrimary = true;
+        // }
 
         return {
-          ...contact,
+          // contact: { ...contact, phoneNumbers },
+          contact,
           friendship: {
             level: 1,
             points: 0,
           },
           memories: [],
           recents: [],
-          phoneNumbers,
+          // phoneNumbers,
+          contactId: contact.id,
         };
       });
     setFriends(friends);
@@ -58,34 +72,49 @@ export default function LoadFriends({
 
   return (
     <View flex={1}>
-      <Heading size={"2xl"} ml={8}>
-        Friends
-      </Heading>
-      <Text m={2}>
-        Select the primary contact you want to use for each of your friends.
-      </Text>
       {friends?.length == 0 ? (
         <ActivityIndicator />
       ) : (
         <FlatList
           data={friends}
           renderItem={({ item }) => (
-            <FriendCard friend={item} setFriend={setFriend} />
+            <LoadFriendCard friend={item} setFriend={setFriend} />
           )}
         />
       )}
+      {/* <Text>{friends.map((f) => f.avatar?.length + " ")}</Text> */}
     </View>
   );
 }
 
-const FriendCard = ({
+const LoadFriendCard = ({
   friend,
   setFriend,
 }: {
   friend: Friend;
   setFriend: (friend: Friend) => void;
 }) => {
-  let primaryNumber = friend.phoneNumbers?.find((number) => number.isPrimary);
+  useEffect(() => {
+    if (!friend?.contact?.name) return;
+    if (friend.avatar || friend?.contact?.image) {
+      console.log(
+        friend?.contact?.name,
+        "has avatar or image",
+        friend?.avatar?.length,
+        Object.keys(friend.contact)
+        // friend?.contact?.image?.uri?.length
+      );
+      return;
+    }
+    generateAvatar(friend?.contact?.name).then((svg) => {
+      if (!svg) return;
+      console.log(svg.length);
+      setFriend({
+        ...friend,
+        avatar: svg,
+      });
+    });
+  }, [friend?.contact?.name]);
 
   return (
     <HStack
@@ -100,12 +129,21 @@ const FriendCard = ({
       m={1}
       rounded={"md"}
     >
-      {friend.imageAvailable ? (
-        <Image source={{ uri: friend.image.uri }} alt="image base" size="sm" />
+      {friend?.contact?.image?.uri ? (
+        <Image
+          source={{ uri: friend.contact.image.uri }}
+          alt="image base"
+          size="sm"
+        />
+      ) : friend.avatar ? (
+        <SvgXml xml={friend.avatar} width="50" height="50" />
       ) : (
-        <Icon as={Ionicons} name="person" size="md" />
+        // <Text>{friend.avatar}</Text>
+        <ActivityIndicator />
       )}
-      <Text m="2">{friend.name}</Text>
+      <Text m="2" fontSize="md" fontWeight="medium">
+        {friend?.contact?.name}
+      </Text>
       <View
         _dark={{
           bg: "darkBlue.900",
@@ -117,33 +155,26 @@ const FriendCard = ({
         p={"1"}
         ml="auto"
       >
-        {friend.phoneNumbers?.map((n) => (
-          <HStack justifyContent={"center"} alignItems="center">
-            <View
-              w={2}
-              h={2}
-              bg={primaryNumber?.id == n.id ? "blue.500" : "transparent"}
-              rounded={"full"}
-              m={1}
-            />
-
-            <Text
-              fontSize={"lg"}
-              m="2"
-              onPress={() => {
-                setFriend({
-                  ...friend,
-                  phoneNumbers: friend.phoneNumbers?.map((number) => ({
-                    ...number,
-                    isPrimary: number.id == n.id,
-                  })),
-                });
-              }}
-            >
-              {n?.number}
-            </Text>
-          </HStack>
-        ))}
+        {/* {friend.phoneNumbers?.map((n) => ( */}
+        <HStack justifyContent={"center"} alignItems="center">
+          {/* <View w={2} h={2} bg={"blue.500"} rounded={"full"} m={1} /> */}
+          <Text
+            fontSize={"sm"}
+            m="1"
+            // onPress={() => {
+            //   setFriend({
+            //     ...friend,
+            //     phoneNumbers: friend.phoneNumbers?.map((number) => ({
+            //       ...number,
+            //       isPrimary: number.id == n.id,
+            //     })),
+            //   });
+            // }}
+          >
+            {friend?.contact?.phoneNumbers?.find((n) => n)?.number}
+          </Text>
+        </HStack>
+        {/* ))} */}
         {/* <Text>{JSON.stringify(friend.phoneNumbers[1].isPrimary)}</Text> */}
       </View>
     </HStack>

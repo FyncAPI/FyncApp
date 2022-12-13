@@ -4,7 +4,7 @@ import { Dimensions } from "react-native";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import Carousel from "react-native-reanimated-carousel";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import FriendCard from "../../../../components/FriendCard";
+import FriendCard from "../../../components/FriendCard";
 import { Friend } from "../../../contexts/user/types";
 
 export const FriendCarousel = gestureHandlerRootHOC(
@@ -54,7 +54,7 @@ export const FriendCarousel = gestureHandlerRootHOC(
                     <FriendCard
                       listLength={item.length}
                       friend={friend}
-                      key={index}
+                      key={index + "FRIEND"}
                     />
                   );
                 }}

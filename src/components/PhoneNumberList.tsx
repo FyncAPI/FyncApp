@@ -7,7 +7,7 @@ import { PhoneNumberCard } from "./PhoneNumberCard";
 function PhoneNumberListBase({
   phoneNumbers,
 }: {
-  phoneNumbers: Friend["phoneNumbers"];
+  phoneNumbers: Friend["contact"]["phoneNumbers"];
 }) {
   if (!phoneNumbers) return <Text>No Phone Numbers</Text>;
   return (
@@ -22,7 +22,7 @@ function PhoneNumberListBase({
       p={"1"}
     >
       {phoneNumbers.map((p, index) => (
-        <PhoneNumberCard phoneNumber={p} p={2} key={index} />
+        <PhoneNumberCard phoneNumber={p} p={2} key={index + "PHONE"} />
       ))}
     </View>
   );

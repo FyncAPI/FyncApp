@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -8,27 +8,30 @@ import {
   Heading,
   HStack,
   Icon,
+  IconButton,
   Image,
   Input,
-  ScrollView,
   Text,
   View,
   VStack,
 } from "native-base";
 import * as Contacts from "expo-contacts";
-import ContactsSelector from "../../../../../components/ContactSelector";
+import ContactsSelector from "../../../components/ContactSelector";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import { SearchBar } from "../../../../components/SearchBar";
-import { useContact } from "../../../../hooks/useContact";
+import { SearchBar } from "../../../components/SearchBar";
+import { useContact } from "../../../hooks/useContact";
+import { UserContext } from "../../../contexts/user/context";
 
-export default function SelectContacts({
+export default function ContactSelectorList({
   selectedContactsId,
   setSelectedContactsId,
+  friendsIds,
 }: {
   selectedContactsId: string[];
   setSelectedContactsId: React.Dispatch<React.SetStateAction<string[]>>;
+  friendsIds?: string[];
 }) {
   // const [selected, setSelected] = useState<string[]>([]);
   // const [contacts, setContacts] = useState<Contacts.Contact[]>([]);
@@ -39,28 +42,7 @@ export default function SelectContacts({
     []
   );
 
-  const contacts = useContact();
-
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const { status } = await Contacts.requestPermissionsAsync();
-  //       //console.log(status, "tus");
-  //       if (status === "granted") {
-  //         const { data } = await Contacts.getContactsAsync({
-  //           fields: [Contacts.Fields.Image, Contacts.Fields.PhoneNumbers],
-  //         });
-  //         if (data.length > 0) {
-  //           setContacts(data);
-  //         }
-  //       } else {
-  //         //console.log("Permission denied");
-  //       }
-  //     } catch (err) {
-  //       //console.log(err);
-  //     }
-  //   })();
-  // }, []);
+  const { contacts } = useContext(UserContext);
 
   useEffect(() => {
     if (query == "") {
@@ -82,18 +64,11 @@ export default function SelectContacts({
           contact?.nickname?.toLowerCase().includes(query.toLowerCase())
       )
     );
+    setPage(1);
   }, [query]);
-
-  useEffect(() => {
-    //console.log(selectedContactsId, "x");
-  }, [selectedContactsId]);
 
   return (
     <>
-      <Heading size={"2xl"} ml="8">
-        Select Friends
-      </Heading>
-
       <View flex={1} variant="background" p="2">
         <SearchBar query={query} setQuery={setQuery} />
 
@@ -101,10 +76,15 @@ export default function SelectContacts({
           <Text>No contacts found</Text>
         )}
         <FlatList
+          mt={2}
           data={
             query
-              ? searchedContacts.slice(50 * (page - 1), 50 * page)
-              : contacts.slice(50 * (page - 1), 50 * page)
+              ? searchedContacts
+                  .filter((c) => !friendsIds?.includes(c.id))
+                  .slice(50 * (page - 1), 50 * page)
+              : contacts
+                  .filter((c) => !friendsIds?.includes(c.id))
+                  .slice(50 * (page - 1), 50 * page)
           }
           // estimatedItemSize={50}
           keyExtractor={(item) => item.id}
@@ -118,26 +98,11 @@ export default function SelectContacts({
             );
           }}
         />
-        <HStack pt={1} alignItems="center" justifyContent="space-evenly">
-          <Button
-            onPress={() => {
-              setPage((prev) => prev - 1);
-            }}
-            isDisabled={page <= 1}
-          >
-            Prev Page
-          </Button>
+        <HStack my={2}>
+          <Text>Selected: </Text>
           <Text>
-            {page}/{maxPage}
+            {selectedContactsId.length}/{contacts.length}
           </Text>
-          <Button
-            onPress={() => {
-              setPage((prev) => prev + 1);
-            }}
-            isDisabled={page >= maxPage}
-          >
-            Next Page
-          </Button>
         </HStack>
       </View>
     </>
