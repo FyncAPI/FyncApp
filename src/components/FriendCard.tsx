@@ -4,7 +4,7 @@ import { Friend } from "../contexts/user/types";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Linking from "expo-linking";
 import { useNavigation } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native";
+import { Dimensions, TouchableOpacity } from "react-native";
 import { RootStackNavigationProp } from "../../types";
 import { FriendContext } from "../contexts/FriendContext";
 import { SvgXml } from "react-native-svg";
@@ -21,7 +21,16 @@ export default function FriendCard({
 
   const { callFriend } = useContext(FriendContext);
 
-  const size = listLength == 2 ? 160 : listLength == 1 ? 300 : 110;
+  const screenSizes = Dimensions.get("window");
+  console.log(screenSizes.width);
+
+  const size =
+    listLength == 2
+      ? screenSizes.width / 2 - 50
+      : listLength == 1
+      ? screenSizes.width - 60
+      : screenSizes.width / 3 - 30;
+
   return (
     <TouchableOpacity
       onPress={() => {
