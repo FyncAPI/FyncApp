@@ -24,12 +24,7 @@ export default function FriendCard({
   const screenSizes = Dimensions.get("window");
   console.log(screenSizes.width);
 
-  const size =
-    listLength == 2
-      ? screenSizes.width / 2 - 50
-      : listLength == 1
-      ? screenSizes.width - 60
-      : screenSizes.width / 3 - 30;
+  const size = screenSizes.width / 3 - 30;
 
   return (
     <TouchableOpacity

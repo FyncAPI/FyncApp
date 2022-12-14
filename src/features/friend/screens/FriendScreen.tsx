@@ -5,6 +5,7 @@ import { UserContext } from "../../../contexts/user/context";
 import {
   Button,
   Heading,
+  HStack,
   Icon,
   IconButton,
   Image,
@@ -22,7 +23,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FriendContext } from "../../../contexts/FriendContext";
 import { SvgXml } from "react-native-svg";
 import { BlurView } from "expo-blur";
-import { Alert, StyleSheet } from "react-native";
+import { Alert, StyleSheet, TouchableOpacity } from "react-native";
 
 export function FriendScreen() {
   const navigation = useNavigation();
@@ -70,7 +71,6 @@ export function FriendScreen() {
         <Text fontSize="lg" color={"light.100"}>
           {friend?.contact.nickname && friend?.contact.name}
         </Text>
-        {/* <FriendshipIcon friendship={friend?.friendship!} /> */}
       </View>
       <View
         top={insets.top + 5 + "px"}
@@ -95,6 +95,7 @@ export function FriendScreen() {
           size="lg"
         />
       </View>
+
       <ScrollView
         variant="background"
         flex={1}
@@ -116,6 +117,7 @@ export function FriendScreen() {
             }}
             colors={["black", "transparent", "transparent", "transparent"]}
           />
+
           {friend?.contact.image?.uri ? (
             <Image
               source={friend?.contact.image}
@@ -137,6 +139,28 @@ export function FriendScreen() {
               </BlurView>
             </>
           )}
+          <TouchableOpacity
+            style={{
+              position: "absolute",
+              bottom: 10,
+              left: 10,
+            }}
+          >
+            <View
+              flexDir={"row"}
+              alignItems={"center"}
+              variant="background"
+              shadow={2}
+              // borderColor={"pink.500"}
+              padding="2"
+              borderRadius={"md"}
+            >
+              <Icon as={<Ionicons name="pencil" />} size="lg" color="whiae" />
+              <Heading size={"sm"} ml={2}>
+                Edit
+              </Heading>
+            </View>
+          </TouchableOpacity>
         </View>
 
         <View p={3}>

@@ -126,13 +126,20 @@ const HomeScreen = () => {
         }
         renderSectionHeader={({ section }) => (
           <>
-            <Heading fontSize={"2xl"} pl="5" my="5">
-              {section.title}
-            </Heading>
-            {section.horizontal ? (
-              <FriendList friends={section.data} />
+            {section.horizontal && section.data.length ? (
+              <>
+                <Heading fontSize={"2xl"} pl="5" my="5">
+                  {section.title}
+                </Heading>
+                <FriendList friends={section.data} />
+              </>
             ) : section.numColumns ? (
-              <FriendCarousel friends={section.data} />
+              <>
+                <Heading fontSize={"2xl"} pl="5" my="5">
+                  {section.title}
+                </Heading>
+                <FriendCarousel friends={section.data} />
+              </>
             ) : // <Text>asd</Text>
             null}
           </>

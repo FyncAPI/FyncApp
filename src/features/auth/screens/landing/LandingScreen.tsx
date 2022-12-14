@@ -13,14 +13,15 @@ export const LandingScreen = () => {
   return (
     <View flex={1} variant="background" p="2">
       <SafeTop />
-      <Heading size={"4xl"} shadow={5}>
-        Trojang
+      <Heading size={"3xl"} shadow={5}>
+        frieny
       </Heading>
-      <Heading shadow={2}>call friends</Heading>
-      {[1, 2, 3].map((_, i) => (
+      <Heading shadow={2}>frien app</Heading>
+      {/* {["#330057", "#0042bc", "#009c49", "#b9bf00", "#fd6e00", "#f20000"].map( */}
+      {["#330057", "#0042bc", "#16d2d2"].map((color, i) => (
         <MotiView
           key={i}
-          from={{ opacity: 0.8, scale: 0 }}
+          from={{ opacity: 1, scale: 0 }}
           animate={{ opacity: 0, scale: 15 }}
           transition={{
             type: "timing",
@@ -38,8 +39,7 @@ export const LandingScreen = () => {
               left: 48,
               width: 80,
               height: 80,
-              backgroundColor:
-                i == 0 ? "#79d8ca" : i == 1 ? "#93f1f8" : "#c1ffda",
+              backgroundColor: color,
               zIndex: -20,
               borderRadius: 55,
             },
