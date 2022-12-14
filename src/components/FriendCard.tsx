@@ -60,10 +60,10 @@ export default function FriendCard({
           bottom="0.5"
           left="1.5"
           fontWeight="bold"
-          fontSize="lg"
+          fontSize="md"
           color="white"
         >
-          {friend?.contact?.nickname || friend?.contact?.name}
+          {friend?.contact?.nickname || friend?.contact?.firstName}
         </Text>
         <LinearGradient
           colors={
