@@ -21,7 +21,7 @@ import {
 import { useLoading } from "../../../../hooks/useLoading";
 
 export default function AuthFormScreen() {
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState(1);
   const [selectedContactsId, setSelectedContactsId] = React.useState<string[]>(
     []
   );
@@ -65,7 +65,12 @@ export default function AuthFormScreen() {
           "loaded friends"
         );
         saveFriendsData({ friends: loadedFriends });
-        saveUserData(userData);
+        saveUserData({
+          ...userData,
+          recents: [],
+          suggestions: [],
+          socialMode: false,
+        });
       }
       // stopLoading()
       setLoading(false);

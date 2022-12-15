@@ -69,7 +69,7 @@ export function UserContextProvider({
     console.log(user, "user");
 
     if (user && user != "{}") {
-      const ud = JSON.parse(user);
+      const ud: UserData = JSON.parse(user);
       console.log(ud, "UXD");
       setUserData(ud);
       setIsRegistered(true);

@@ -4,7 +4,7 @@ import { createContext, useEffect, useRef, useState } from "react";
 import { AppState, Linking } from "react-native";
 import { useUserContext } from "../hooks";
 import { useFriends } from "../hooks/useFriends";
-import { Friend, FriendsData } from "./user/types";
+import { CallHistory, Friend, FriendsData } from "./user/types";
 
 interface FriendContextInterface {
   friends: Friend[];
@@ -16,6 +16,8 @@ interface FriendContextInterface {
 
   //   favoriteFriend: (friend: Friend) => void;
   //   unfavoriteFriend: (friendId: Friend["id"]) => void;
+
+  recentCalls: CallHistory[];
 
   callFriend: (
     phoneNumbers: Contact["phoneNumbers"],
@@ -35,6 +37,7 @@ export const FriendContextProvider = ({
   const { friends, setFriends } = useFriends(contacts);
   const [isCalling, setIsCalling] = useState<Friend["contactId"]>("");
   const [finishedCall, setFinishedCall] = useState(false);
+  const [recentCalls, setRecentCalls] = useState<CallHistory[]>([]);
 
   const appState = useRef(AppState.currentState);
 
@@ -75,6 +78,13 @@ export const FriendContextProvider = ({
 
   useEffect(() => {
     if (finishedCall && isCalling) {
+      setRecentCalls((prev) => [
+        {
+          contactId: isCalling,
+          date: new Date(),
+        },
+        ...prev,
+      ]);
       increaseFriendship(isCalling);
       setIsCalling("");
       setFinishedCall(false);
@@ -148,6 +158,7 @@ export const FriendContextProvider = ({
       );
       //console.log(res, "call res", appStateArr);
       setIsCalling(friendId);
+      // add to recent calls
     } catch (e) {
       //console.log("cannot call", e);
     }
@@ -164,6 +175,7 @@ export const FriendContextProvider = ({
         removeFriend,
 
         callFriend,
+        recentCalls,
       }}
     >
       {children}

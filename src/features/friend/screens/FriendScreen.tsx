@@ -38,28 +38,6 @@ export function FriendScreen() {
     friends?.find((f) => f.contactId == id)
   );
 
-  // profile
-  // name
-  // edit
-  // recents
-
-  //memories
-  // friendships
-  // number
-
-  // return (
-  //   <ScrollView variant="background" flex={1}>
-  //     <LinearGradient
-  //       colors={["#824242", "#1d9c4e", "#854646", "#2b1d76", "#430d58"]}
-  //       style={{
-  //         width: "100%",
-  //         height: 2000,
-  //       }}
-  //     >
-  //       <Heading m="30">asdas</Heading>
-  //     </LinearGradient>
-  //   </ScrollView>
-  // );
   return (
     <>
       <BackButton _light={{ color: "white" }} />
@@ -85,7 +63,9 @@ export function FriendScreen() {
           alignSelf={"center"}
           rounded={"full"}
           variant={
-            userData?.favorites?.find((fav) => fav.id == friend?.id)
+            userData?.favorites?.find(
+              (fav) => fav.contactId == friend?.contactId
+            )
               ? "solid"
               : "outline"
           }
@@ -145,6 +125,7 @@ export function FriendScreen() {
               bottom: 10,
               left: 10,
             }}
+            onPress={() => null}
           >
             <View
               flexDir={"row"}
@@ -155,7 +136,14 @@ export function FriendScreen() {
               padding="2"
               borderRadius={"md"}
             >
-              <Icon as={<Ionicons name="pencil" />} size="lg" color="whiae" />
+              <Icon
+                as={<Ionicons name="pencil" />}
+                size="lg"
+                color={"light.100"}
+                _light={{
+                  color: "dark.100",
+                }}
+              />
               <Heading size={"sm"} ml={2}>
                 Edit
               </Heading>

@@ -11,10 +11,13 @@ export const FriendCarousel = gestureHandlerRootHOC(
   ({ friends }: { friends: Friend[] }) => {
     const { width } = Dimensions.get("window");
     const { bottom } = useSafeAreaInsets();
+    const size = width - 30;
     return (
       <Carousel
         width={width}
-        height={friends.length == 1 ? 380 : friends.length <= 6 ? 280 : 380}
+        height={
+          friends.length == 1 ? size : friends.length <= 6 ? size * 2 : size * 3
+        }
         data={Array(Math.ceil(friends.length / 9))
           .fill(1)
           .map((_, index) => index * 9)
@@ -34,18 +37,24 @@ export const FriendCarousel = gestureHandlerRootHOC(
               _light={{ bg: "light.100" }}
               p={3}
               mx={item.length <= 3 ? 4 : 2}
-              py={item.length <= 3 ? 4 : 2}
+              // py={item.length <= 3 ? 4 : 2}
               rounded={"xl"}
               key={index + "LSX"}
             >
               <FlatList
+                // bg={"#22333359"}
                 scrollEnabled={false}
                 alignSelf="center"
                 ItemSeparatorComponent={() => (
                   <View style={{ height: 12 }}>
-                    {/* <View height={"0.2"} bg="amber.100" /> */}
+                    <View height={"0.2"} bg="amber.100" />
                   </View>
                 )}
+                contentContainerStyle={{
+                  justifyContent: "space-between",
+                  alignItems: "stretch",
+                  flex: 1,
+                }}
                 numColumns={3}
                 data={item}
                 renderItem={({ item: friend, index }) => {

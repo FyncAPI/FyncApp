@@ -29,7 +29,7 @@ export function Navigation() {
         headerShown: false,
       }}
     >
-      {isRegistered && userData ? (
+      {isRegistered ? (
         <Stack.Screen name="RootStack" component={RootStackNavigator} />
       ) : (
         <Stack.Screen name="AuthStack" component={AuthStackNavigator} />
@@ -68,6 +68,7 @@ function RootStackNavigator() {
         <RootStack.Screen name="Home" component={HomeScreen} />
         <RootStack.Screen name="User" component={UserScreen} />
         <RootStack.Screen name="Friend" component={FriendScreen} />
+
         <RootStack.Screen name="AddFriend" component={AddFromContacts} />
         <RootStack.Screen name="AddFromContacts" component={AddFromContacts} />
         <RootStack.Screen name="AddNewFriend" component={AddNewFriendScreen} />

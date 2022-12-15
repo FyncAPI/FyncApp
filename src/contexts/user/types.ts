@@ -4,19 +4,18 @@ export interface Memory {
   id: string;
   images: string[];
   videos: string[];
-  inviter: string;
-  invitee: string;
+  // inviter: string;
+  // invitee: string;
+  friendIds: string[];
   date: Date;
   location: string;
   description: string;
 }
 
 export interface CallHistory {
-  _id: string;
-  duration: number;
+  contactId: string;
+  duration?: number;
   date: Date;
-  callerId: string;
-  calleeId: string;
 }
 
 export interface Gift {
@@ -72,4 +71,5 @@ export interface UserData {
 
 export interface FriendsData {
   friends: Friend[];
+  recentCalls: CallHistory[];
 }

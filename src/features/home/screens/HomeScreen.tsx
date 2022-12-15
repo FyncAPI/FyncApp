@@ -33,6 +33,7 @@ import { FriendContext } from "../../../contexts/FriendContext";
 import { useLoading } from "../../../hooks/useLoading";
 import { BlurView } from "expo-blur";
 import LoadingIndicator from "../../../components/LoadingIndicator";
+import RecentCallList from "../../../components/RecentCallList";
 
 type HomeScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<RootStackParamList, "Home">,
@@ -44,30 +45,9 @@ const HomeScreen = () => {
   const { width } = Dimensions.get("window");
   const { bottom } = useSafeAreaInsets();
   const { userData } = React.useContext(UserContext);
-  const { friends } = useContext(FriendContext);
+  const { friends, recentCalls } = useContext(FriendContext);
 
   const appState = React.useRef(AppState.currentState);
-
-  useEffect(() => {
-    const subscription = AppState.addEventListener("change", (nextAppState) => {
-      if (
-        appState.current.match(/inactive|background/) &&
-        nextAppState === "active"
-      ) {
-        //console.log("App has come to the foreground!");
-      }
-
-      appState.current = nextAppState;
-      // setAppStateVisible(appState.current);
-      //console.log("AppState", appState.current);
-    });
-
-    return () => {
-      subscription.remove();
-    };
-  }, []);
-
-  const { startLoading, stopLoading, loading } = useLoading();
 
   return (
     <View flex={1} variant="background">
@@ -95,11 +75,11 @@ const HomeScreen = () => {
       <SectionList
         pb={bottom}
         sections={[
-          // {
-          //   title: "Recents",
-          //   horizontal: true,
-          //   data: userData.friends,
-          // },
+          {
+            title: "Recents",
+            horizontal: true,
+            data: recentCalls,
+          },
           {
             title: "Favorite",
             horizontal: true,
@@ -126,25 +106,33 @@ const HomeScreen = () => {
         }
         renderSectionHeader={({ section }) => (
           <>
-            {section.horizontal && section.data.length ? (
+            {section.title == "Favorite" ? (
               <>
                 <Heading fontSize={"2xl"} pl="5" my="5">
                   {section.title}
                 </Heading>
                 <FriendList friends={section.data} />
               </>
-            ) : section.numColumns ? (
+            ) : section.title == "All" ? (
               <>
                 <Heading fontSize={"2xl"} pl="5" my="5">
                   {section.title}
                 </Heading>
                 <FriendCarousel friends={section.data} />
               </>
-            ) : // <Text>asd</Text>
-            null}
+            ) : section.title == "Recents" && section.data.length > 0 ? (
+              <>
+                <Heading fontSize={"2xl"} pl="5" my="5">
+                  {section.title}
+                </Heading>
+                <RecentCallList calls={section.data} />
+              </>
+            ) : null}
           </>
         )}
-        keyExtractor={(item) => item.contactId + "asd"}
+        keyExtractor={(item) => {
+          return item.contactId;
+        }}
         stickySectionHeadersEnabled
         renderSectionFooter={({ section }) =>
           section.safeBottom ? <SafeBottom /> : null

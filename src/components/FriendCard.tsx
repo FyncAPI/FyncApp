@@ -22,7 +22,6 @@ export default function FriendCard({
   const { callFriend } = useContext(FriendContext);
 
   const screenSizes = Dimensions.get("window");
-  console.log(screenSizes.width);
 
   const size = screenSizes.width / 3 - 30;
 
@@ -63,7 +62,9 @@ export default function FriendCard({
           fontSize="md"
           color="white"
         >
-          {friend?.contact?.nickname || friend?.contact?.firstName}
+          {friend?.contact?.nickname ||
+            friend?.contact?.firstName ||
+            friend?.contact?.name}
         </Text>
         <LinearGradient
           colors={
