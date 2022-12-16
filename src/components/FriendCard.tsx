@@ -34,6 +34,7 @@ export default function FriendCard({
         navigation.navigate("Friend", { id: friend?.contact.id });
       }}
       delayLongPress={500}
+      // style={{ flex: 0.5, zIndex: 20 }}
     >
       <Box overflow="hidden" mx="2.5" borderRadius="lg">
         {friend?.contact?.image ? (

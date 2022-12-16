@@ -71,6 +71,7 @@ const HomeScreen = () => {
           as={<Ionicons name="add-circle-outline" />}
         />
       </HStack>
+
       {/* <Text>{JSON.stringify(userData.friends[0])}</Text> */}
       <SectionList
         pb={bottom}

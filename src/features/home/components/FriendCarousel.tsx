@@ -1,4 +1,4 @@
-import { FlatList, View } from "native-base";
+import { FlatList, Text, View } from "native-base";
 import React from "react";
 import { Dimensions } from "react-native";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
@@ -35,14 +35,37 @@ export const FriendCarousel = gestureHandlerRootHOC(
               // bg={"#22333359"}
               _dark={{ bg: "trueGray.800" }}
               _light={{ bg: "light.100" }}
-              p={3}
+              p="2"
               mx={item.length <= 3 ? 4 : 2}
-              // py={item.length <= 3 ? 4 : 2}
+              py={3}
               rounded={"xl"}
               key={index + "LSX"}
             >
               <FlatList
-                // bg={"#22333359"}
+                columnWrapperStyle={{
+                  justifyContent:
+                    item.length == 2 || item.length == 5 || item.length == 8
+                      ? "flex-sstart"
+                      : "space-between",
+                }}
+                data={item}
+                keyExtractor={(item) => item.itemId}
+                horizontal={false}
+                numColumns={3}
+                ItemSeparatorComponent={() => (
+                  <View style={{ height: 15 }}>
+                    {/* <View height={"0.2"} bg="amber.100" /> */}
+                  </View>
+                )}
+                renderItem={({ item: friend, index }) => (
+                  <FriendCard
+                    listLength={item.length}
+                    friend={friend}
+                    key={index + "FRIEND"}
+                  />
+                )}
+              />
+              {/* <FlatList
                 scrollEnabled={false}
                 alignSelf="center"
                 ItemSeparatorComponent={() => (
@@ -50,15 +73,10 @@ export const FriendCarousel = gestureHandlerRootHOC(
                     <View height={"0.2"} bg="amber.100" />
                   </View>
                 )}
-                contentContainerStyle={{
-                  justifyContent: "space-between",
-                  alignItems: "stretch",
-                  flex: 1,
-                }}
+                columnWrapperStyle={{ justifyContent: "space-between" }}
                 numColumns={3}
                 data={item}
                 renderItem={({ item: friend, index }) => {
-                  //   //console.log(item, index);
                   return (
                     <FriendCard
                       listLength={item.length}
@@ -67,7 +85,7 @@ export const FriendCarousel = gestureHandlerRootHOC(
                     />
                   );
                 }}
-              />
+              /> */}
             </View>
           );
         }}
