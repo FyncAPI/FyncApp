@@ -15,11 +15,21 @@ export default function FriendList({ friends }: { friends: Friend[] }) {
     );
   } else
     return (
-      <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={friends}
-        renderItem={({ item, index }) => <FriendCard friend={item} />}
-      />
+      <View
+        // bg={"#22333359"}
+        _dark={{ bg: "trueGray.800" }}
+        _light={{ bg: "light.100" }}
+        p="1"
+        mx="2"
+        py={2}
+        rounded={"xl"}
+      >
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={friends}
+          renderItem={({ item, index }) => <FriendCard friend={item} />}
+        />
+      </View>
     );
 }
