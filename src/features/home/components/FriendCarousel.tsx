@@ -45,7 +45,7 @@ export const FriendCarousel = gestureHandlerRootHOC(
                 columnWrapperStyle={{
                   justifyContent:
                     item.length == 2 || item.length == 5 || item.length == 8
-                      ? "flex-sstart"
+                      ? "flex-start"
                       : "space-between",
                 }}
                 data={item}
