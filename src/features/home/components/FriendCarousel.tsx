@@ -35,9 +35,9 @@ export const FriendCarousel = gestureHandlerRootHOC(
               // bg={"#22333359"}
               _dark={{ bg: "trueGray.800" }}
               _light={{ bg: "light.100" }}
-              p="2"
+              p="1"
               mx={item.length <= 3 ? 4 : 2}
-              py={3}
+              py={2}
               rounded={"xl"}
               key={index + "LSX"}
             >
@@ -49,9 +49,9 @@ export const FriendCarousel = gestureHandlerRootHOC(
                       : "space-between",
                 }}
                 data={item}
-                keyExtractor={(item) => item.itemId}
+                keyExtractor={(item) => item.contactId}
                 horizontal={false}
-                numColumns={3}
+                numColumns={4}
                 ItemSeparatorComponent={() => (
                   <View style={{ height: 15 }}>
                     {/* <View height={"0.2"} bg="amber.100" /> */}

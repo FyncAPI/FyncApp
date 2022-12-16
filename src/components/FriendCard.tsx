@@ -23,7 +23,7 @@ export default function FriendCard({
 
   const screenSizes = Dimensions.get("window");
 
-  const size = screenSizes.width / 3 - 30;
+  const size = screenSizes.width / 4 - 20;
 
   return (
     <TouchableOpacity
@@ -36,7 +36,7 @@ export default function FriendCard({
       delayLongPress={500}
       // style={{ flex: 0.5, zIndex: 20 }}
     >
-      <Box overflow="hidden" mx="2.5" borderRadius="lg">
+      <Box overflow="hidden" mx="1.5" borderRadius="lg">
         {friend?.contact?.image ? (
           <Image
             source={friend?.contact.image}
