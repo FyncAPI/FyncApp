@@ -81,6 +81,7 @@ export const theme = extendTheme({
       },
     },
   },
+
   components: {
     Text: {
       baseStyle: {
@@ -89,11 +90,11 @@ export const theme = extendTheme({
     },
     Heading: {
       // Can pass also function, giving you access theming tools
-      baseStyle: ({ colorMode }: { colorMode: ColorMode }) => {
-        return {
-          color: colorMode === "dark" ? "red.300" : "blue.300",
-        };
-      },
+      // baseStyle: ({ colorMode }: { colorMode: ColorMode }) => {
+      //   return {
+      //     color: colorMode === "dark" ? "red.300" : "blue.300",
+      //   };
+      // },
     },
     View: {
       variants: {

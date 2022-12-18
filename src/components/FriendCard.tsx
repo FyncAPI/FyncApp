@@ -78,9 +78,10 @@ export default function FriendCard({
         zIndex={2}
         alignSelf="center"
         fontWeight="bold"
-        mt={-1}
+        mt={0}
         fontSize="md"
         color="white"
+        _light={{ color: "black" }}
       >
         {friend?.contact?.nickname ||
           friend?.contact?.firstName ||

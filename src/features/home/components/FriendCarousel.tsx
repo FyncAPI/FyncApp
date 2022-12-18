@@ -43,8 +43,8 @@ export const FriendCarousel = gestureHandlerRootHOC(
               py={2}
               rounded={"xl"}
               key={index + "LSX"}
-              alignItems="center"
-              justifyContent="center"
+              // alignItems="center"
+              // justifyContent="center"
             >
               <FlatList
                 columnWrapperStyle={{
