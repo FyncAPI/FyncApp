@@ -7,6 +7,7 @@ import {
   HStack,
   ScrollView,
   Select,
+  Slider,
   Text,
   View,
 } from "native-base";
@@ -55,8 +56,8 @@ export default function UserScreen() {
         </View>
 
         <View m="5">
-          <Heading mb={"2"}>Friends column</Heading>
-          <Select
+          <Heading mb={"2"}>Friends columns: {carouselNumColumns}</Heading>
+          {/* <Select
             placeholder="Select option"
             selectedValue={String(carouselNumColumns)}
             onValueChange={(itemValue) => {
@@ -65,7 +66,24 @@ export default function UserScreen() {
           >
             <Select.Item label="3" value="3" />
             <Select.Item label="4" value="4" />
-          </Select>
+          </Select> */}
+          <Slider
+            value={carouselNumColumns}
+            width={100}
+            minValue={2}
+            maxValue={6}
+            step={1}
+            onChange={(value) => {
+              updateSettings({ carouselNumColumns: value });
+            }}
+            size="lg"
+            // defaultValue={3}
+          >
+            <Slider.Track>
+              <Slider.FilledTrack />
+            </Slider.Track>
+            <Slider.Thumb></Slider.Thumb>
+          </Slider>
         </View>
 
         <Button
