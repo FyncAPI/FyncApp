@@ -82,6 +82,7 @@ export default function FriendCard({
         fontSize="md"
         color="white"
         _light={{ color: "black" }}
+        maxW={size}
       >
         {friend?.contact?.nickname ||
           friend?.contact?.firstName ||
