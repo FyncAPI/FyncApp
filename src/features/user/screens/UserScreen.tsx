@@ -6,6 +6,7 @@ import {
   Heading,
   HStack,
   ScrollView,
+  Select,
   Text,
   View,
 } from "native-base";
@@ -15,10 +16,12 @@ import { UserContext } from "../../../contexts/user/context";
 import { Alert } from "react-native";
 import BackButton from "../../../components/BackButton";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { SettingsContext } from "../../../contexts/SettingsContext";
 
 export default function UserScreen() {
   const navigation = useNavigation();
   const { userData, deleteUserData } = useContext(UserContext);
+  const { carouselNumColumns, updateSettings } = useContext(SettingsContext);
   const insets = useSafeAreaInsets();
   return (
     <>
@@ -49,6 +52,20 @@ export default function UserScreen() {
         <View m="5">
           <Heading mb={"2"}>Theme</Heading>
           <ToggleDarkMode />
+        </View>
+
+        <View m="5">
+          <Heading mb={"2"}>Friends column</Heading>
+          <Select
+            placeholder="Select option"
+            selectedValue={String(carouselNumColumns)}
+            onValueChange={(itemValue) => {
+              updateSettings({ carouselNumColumns: Number(itemValue) });
+            }}
+          >
+            <Select.Item label="3" value="3" />
+            <Select.Item label="4" value="4" />
+          </Select>
         </View>
 
         <Button

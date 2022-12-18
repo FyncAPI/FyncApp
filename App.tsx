@@ -25,6 +25,7 @@ import {
 } from "@expo-google-fonts/space-grotesk";
 import { LoadingModal } from "./src/components/LoadingModal";
 import { useLoading } from "./src/hooks/useLoading";
+import { SettingsContextProvider } from "./src/contexts/SettingsContext";
 
 // Define the config
 const config = {
@@ -185,7 +186,9 @@ export default function App() {
     >
       <NavigationContainer>
         <UserContextProvider>
-          <Navigation />
+          <SettingsContextProvider>
+            <Navigation />
+          </SettingsContextProvider>
         </UserContextProvider>
         <StatusBar barStyle={"light-content"} />
       </NavigationContainer>

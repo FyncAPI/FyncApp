@@ -60,7 +60,7 @@ const HomeScreen = () => {
           size="3xl"
           as={<Ionicons name="person-circle" />}
         />
-        <Heading fontSize={"4xl"}>Friends</Heading>
+        <Heading fontSize={"4xl"}>Frieny</Heading>
         <Icon
           onPress={() => {
             navigation.navigate("AddFriend");
@@ -82,7 +82,7 @@ const HomeScreen = () => {
             data: recentCalls,
           },
           {
-            title: "Favorite",
+            title: "Favorites",
             horizontal: true,
             data: userData.favorites || [],
           },
@@ -107,7 +107,7 @@ const HomeScreen = () => {
         }
         renderSectionHeader={({ section }) => (
           <>
-            {section.title == "Favorite" ? (
+            {section.title == "Favorites" && section.data.length > 0 ? (
               <>
                 <Heading fontSize={"2xl"} pl="5" my="5">
                   {section.title}

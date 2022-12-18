@@ -5,12 +5,14 @@ import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import Carousel from "react-native-reanimated-carousel";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FriendCard from "../../../components/FriendCard";
+import { SettingsContext } from "../../../contexts/SettingsContext";
 import { Friend } from "../../../contexts/user/types";
 
 export const FriendCarousel = gestureHandlerRootHOC(
   ({ friends }: { friends: Friend[] }) => {
     const { width } = Dimensions.get("window");
     const { bottom } = useSafeAreaInsets();
+    const { carouselNumColumns } = React.useContext(SettingsContext);
     const size = width - 30;
     return (
       <Carousel
@@ -36,24 +38,25 @@ export const FriendCarousel = gestureHandlerRootHOC(
               _dark={{ bg: "trueGray.800" }}
               _light={{ bg: "light.100" }}
               p="1"
-              mx={item.length <= 3 ? 4 : 2}
+              // mx={item.length <= 3 ? 4 : 2}
+              mx={2}
               py={2}
               rounded={"xl"}
               key={index + "LSX"}
+              alignItems="center"
+              justifyContent="center"
             >
               <FlatList
                 columnWrapperStyle={{
-                  justifyContent:
-                    item.length == 2 || item.length == 5 || item.length == 8
-                      ? "flex-start"
-                      : "space-between",
+                  justifyContent: "flex-start",
                 }}
                 data={item}
-                keyExtractor={(item) => item.contactId}
+                key={item.length + "FRIEND" + carouselNumColumns}
+                keyExtractor={(item) => item.contactId + carouselNumColumns}
                 horizontal={false}
-                numColumns={4}
+                numColumns={carouselNumColumns}
                 ItemSeparatorComponent={() => (
-                  <View style={{ height: 15 }}>
+                  <View style={{ height: 13 + carouselNumColumns }}>
                     {/* <View height={"0.2"} bg="amber.100" /> */}
                   </View>
                 )}

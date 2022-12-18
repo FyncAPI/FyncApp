@@ -83,7 +83,7 @@ export default function AuthFormScreen() {
 
   const onBack = () => {
     //console.log(page, "back");
-    if (page <= 0) {
+    if (page <= 1) {
       navigation.navigate("Landing");
     } else {
       //console.log(page);
@@ -97,7 +97,7 @@ export default function AuthFormScreen() {
       <View flex={1} variant="background" px="3">
         <SafeTop />
         <Heading ml={8} fontSize={"4xl"}>
-          {page == 0 ? "Profile" : page == 1 ? "Select Friends" : "Confirm"}
+          {page == 0 ? "Profile" : page == 1 ? "Add Friends" : "Confirm"}
         </Heading>
         <BackButton onPress={onBack} />
         {/* <TouchableOpacity onPress={onBack}>

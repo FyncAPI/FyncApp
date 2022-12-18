@@ -8,6 +8,7 @@ import { Dimensions, TouchableOpacity } from "react-native";
 import { RootStackNavigationProp } from "../../types";
 import { FriendContext } from "../contexts/FriendContext";
 import { SvgXml } from "react-native-svg";
+import { SettingsContext } from "../contexts/SettingsContext";
 
 // export default function FriendCard({ friend }: { friend: Friend }) {
 export default function FriendCard({
@@ -20,10 +21,11 @@ export default function FriendCard({
   const navigation = useNavigation<RootStackNavigationProp<"Home">>();
 
   const { callFriend } = useContext(FriendContext);
+  const { carouselNumColumns } = React.useContext(SettingsContext);
 
   const screenSizes = Dimensions.get("window");
 
-  const size = screenSizes.width / 4 - 20;
+  const size = screenSizes.width / carouselNumColumns - 20;
 
   return (
     <TouchableOpacity
@@ -40,34 +42,17 @@ export default function FriendCard({
         {friend?.contact?.image ? (
           <Image
             source={friend?.contact.image}
-            w={size || 100}
-            h={size || 100}
+            w={size}
+            h={size}
             alt="friend image"
           />
         ) : friend.avatar ? (
           <View>
-            <SvgXml
-              xml={friend.avatar}
-              width={size || 100}
-              height={size || 100}
-            />
+            <SvgXml xml={friend.avatar} width={size} height={size} />
           </View>
         ) : null}
 
-        <Text
-          zIndex={2}
-          position="absolute"
-          bottom="0.5"
-          left="1.5"
-          fontWeight="bold"
-          fontSize="md"
-          color="white"
-        >
-          {friend?.contact?.nickname ||
-            friend?.contact?.firstName ||
-            friend?.contact?.name}
-        </Text>
-        <LinearGradient
+        {/* <LinearGradient
           colors={
             listLength == 1
               ? [
@@ -87,8 +72,20 @@ export default function FriendCard({
             width: size,
             height: size,
           }}
-        />
+        /> */}
       </Box>
+      <Text
+        zIndex={2}
+        alignSelf="center"
+        fontWeight="bold"
+        mt={-1}
+        fontSize="md"
+        color="white"
+      >
+        {friend?.contact?.nickname ||
+          friend?.contact?.firstName ||
+          friend?.contact?.name}
+      </Text>
     </TouchableOpacity>
   );
 }
