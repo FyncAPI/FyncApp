@@ -60,7 +60,7 @@ const HomeScreen = () => {
           size="3xl"
           as={<Ionicons name="person-circle" />}
         />
-        <Heading fontSize={"4xl"}>Frieny</Heading>
+        <Heading fontSize={"4xl"}>Fync</Heading>
         <Icon
           onPress={() => {
             navigation.navigate("AddFriend");

@@ -32,7 +32,7 @@ export function UserContextProvider({
   const [userData, setUserData] = useState<UserData>({} as UserData);
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
 
-  const contacts = useContact();
+  const { contacts } = useContact();
 
   useEffect(() => {
     getUserData();
@@ -53,6 +53,7 @@ export function UserContextProvider({
   const saveFriendsData = (friendsData: FriendsData) => {
     if (!friendsData) return;
     // save user to async storage
+
     saveValueAsync("friendsData", friendsData);
   };
 

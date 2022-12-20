@@ -1,14 +1,16 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Contact, PhoneNumber } from "expo-contacts";
+import { Contact, PhoneNumber, presentFormAsync } from "expo-contacts";
 import { createContext, useEffect, useRef, useState } from "react";
 import { AppState, Linking } from "react-native";
 import { useUserContext } from "../hooks";
+import { useContact } from "../hooks/useContact";
 import { useFriends } from "../hooks/useFriends";
 import { CallHistory, Friend, FriendsData } from "./user/types";
 
 interface FriendContextInterface {
   friends: Friend[];
   updateFriends: (friends: Friend[]) => void;
+  editContact: (contactId: string) => Promise<void>;
   //   saveFriendsData: (friendsData: FriendsData) => void;
 
   addFriends: (friends: Friend[]) => void;
@@ -34,7 +36,8 @@ export const FriendContextProvider = ({
   children: React.ReactNode;
 }) => {
   const { saveFriendsData, contacts } = useUserContext();
-  const { friends, setFriends } = useFriends(contacts);
+  const { friends, setFriends } = useFriends();
+  const { getContacts } = useContact();
   const [isCalling, setIsCalling] = useState<Friend["contactId"]>("");
   const [finishedCall, setFinishedCall] = useState(false);
   const [recentCalls, setRecentCalls] = useState<CallHistory[]>([]);
@@ -71,10 +74,9 @@ export const FriendContextProvider = ({
     };
   }, []);
 
-  // useEffect(() => {
-  //   console.log("getting friends");
-  //   getFriendsData();
-  // }, []);
+  useEffect(() => {
+    console.log("contacts changed", "asdsd");
+  }, [contacts]);
 
   useEffect(() => {
     if (finishedCall && isCalling) {
@@ -93,19 +95,51 @@ export const FriendContextProvider = ({
 
   const updateFriends = async (newfriends: Friend[]) => {
     // merge new friends with old friends
-    const newFriendsData: FriendsData = {
-      friends: newfriends.map((friend) => {
-        const oldFriend = friends.find(
-          (f) => f.contact.id === friend?.contact.id
-        );
-        if (oldFriend) {
-          return oldFriend;
+    const newFriends = newfriends.map((friend) => {
+      const oldFriend = friends.find(
+        (f) => f.contact.id === friend?.contact.id
+      );
+      if (oldFriend) {
+        return oldFriend;
+      }
+      return friend;
+    });
+
+    setFriends(newFriends);
+    saveFriendsData({
+      friends: newFriends,
+      recentCalls,
+    });
+  };
+
+  const editContact = async (contactId: string) => {
+    presentFormAsync(contactId).then(async (r) => {
+      console.log(r, "asdf");
+      const cts = await getContacts();
+
+      if (!cts) return;
+      console.log("cts", cts.length);
+      const editedContact = cts.find((c) => c.id === contactId);
+
+      if (!editedContact) return;
+
+      const newFriends = friends.map((f) => {
+        if (f.contact.id === contactId) {
+          return {
+            ...f,
+            contact: editedContact,
+          };
         }
-        return friend;
-      }),
-    };
-    setFriends(newFriendsData.friends);
-    saveFriendsData(newFriendsData);
+        return f;
+      });
+
+      setFriends(newFriends);
+
+      saveFriendsData({
+        friends: newFriends,
+        recentCalls,
+      });
+    });
   };
 
   const increaseFriendship = (friendId: Friend["contactId"]) => {
@@ -169,6 +203,7 @@ export const FriendContextProvider = ({
       value={{
         friends,
         updateFriends,
+        editContact,
         //   saveFriendsData,
 
         addFriends,

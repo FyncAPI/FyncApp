@@ -1,6 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { RootStackParamList, RootStackScreenProps } from "../../../../types";
+import {
+  RootStackNavigationProp,
+  RootStackParamList,
+  RootStackScreenProps,
+} from "../../../../types";
 import { UserContext } from "../../../contexts/user/context";
 import {
   Button,
@@ -24,19 +28,24 @@ import { FriendContext } from "../../../contexts/FriendContext";
 import { SvgXml } from "react-native-svg";
 import { BlurView } from "expo-blur";
 import { Alert, StyleSheet, TouchableOpacity } from "react-native";
+import { presentFormAsync } from "expo-contacts";
 
 export function FriendScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<RootStackNavigationProp<"Friend">>();
   const route = useRoute<RouteProp<RootStackParamList, "Friend">>();
 
   const { userData, favoriteFriend } = useContext(UserContext);
-  const { friends, removeFriend } = useContext(FriendContext);
+  const { friends, removeFriend, editContact } = useContext(FriendContext);
   const { id } = route.params;
 
   const insets = useSafeAreaInsets();
   const [friend, setFriend] = React.useState(
     friends?.find((f) => f.contactId == id)
   );
+
+  useEffect(() => {
+    setFriend(friends?.find((f) => f.contactId == id));
+  }, [friends]);
 
   return (
     <>
@@ -122,10 +131,13 @@ export function FriendScreen() {
           <TouchableOpacity
             style={{
               position: "absolute",
+              zIndex: 10,
               bottom: 10,
               left: 10,
             }}
-            onPress={() => null}
+            onPress={async () => {
+              await editContact(friend?.contactId!);
+            }}
           >
             <View
               flexDir={"row"}
@@ -151,12 +163,12 @@ export function FriendScreen() {
           </TouchableOpacity>
         </View>
 
-        <View p={3}>
+        <View p={3} flex={1}>
           <Heading m={2} fontSize="2xl">
             Numbers
           </Heading>
           <PhoneNumberList phoneNumbers={friend?.contact.phoneNumbers} />
-          <Heading m={2} fontSize="2xl">
+          {/* <Heading m={2} fontSize="2xl">
             Memories
           </Heading>
           <Text m={5} fontSize={"lg"}>
@@ -167,7 +179,7 @@ export function FriendScreen() {
           </Heading>
           <Text m={5} fontSize={"lg"}>
             in the future
-          </Text>
+          </Text> */}
 
           <Heading m={2} fontSize="2xl">
             Friendships

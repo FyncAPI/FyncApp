@@ -13,6 +13,7 @@ import { AddFromContacts } from "../features/Add/screens/AddFromContacts";
 import { AddNewFriendScreen } from "../features/Add/screens/AddNewFriendScreen";
 import AuthFormScreen from "../features/auth/screens/form/AuthFormScreen";
 import { LandingScreen } from "../features/auth/screens/landing/LandingScreen";
+import { EditFriendScreen } from "../features/friend/screens/EditFriendScreen";
 import { FriendScreen } from "../features/friend/screens/FriendScreen";
 import HomeScreen from "../features/home/screens/HomeScreen";
 import UserScreen from "../features/user/screens/UserScreen";
@@ -22,7 +23,7 @@ const Stack = createNativeStackNavigator<NavigationParamList>();
 
 export function Navigation() {
   const { isRegistered, userData } = useContext(UserContext);
-  console.log(isRegistered, userData, ";lkj");
+  console.log(isRegistered, ";lkj");
   return (
     <Stack.Navigator
       screenOptions={{
@@ -72,6 +73,7 @@ function RootStackNavigator() {
         <RootStack.Screen name="AddFriend" component={AddFromContacts} />
         <RootStack.Screen name="AddFromContacts" component={AddFromContacts} />
         <RootStack.Screen name="AddNewFriend" component={AddNewFriendScreen} />
+        <RootStack.Screen name="EditFriend" component={EditFriendScreen} />
       </RootStack.Navigator>
     </FriendContextProvider>
   );

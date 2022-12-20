@@ -14,7 +14,7 @@ export const LandingScreen = () => {
     <View flex={1} variant="background" p="2">
       <SafeTop />
       <Heading size={"3xl"} shadow={5}>
-        frieny
+        Fync
       </Heading>
       <Heading shadow={2}>frien app</Heading>
       {/* {["#330057", "#0042bc", "#009c49", "#b9bf00", "#fd6e00", "#f20000"].map( */}

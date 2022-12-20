@@ -39,6 +39,7 @@ export type RootStackParamList = {
   AddFriend: undefined;
   AddFromContacts: undefined;
   AddNewFriend: undefined;
+  EditFriend: { contactId: string };
   Friend: { id: string };
 };
 
