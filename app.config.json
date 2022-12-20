@@ -15,7 +15,9 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/c90b8cf8-bce9-4072-98f5-b891bdd2072c"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.bunyasit.fync",
@@ -34,7 +36,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "c90b8cf8-bce9-4072-98f5-b891bdd2072c"
+        "projectId": "9478f613-7d93-46ac-bd2d-c0d04597e68b"
       }
     },
     "runtimeVersion": {
