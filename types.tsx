@@ -33,6 +33,12 @@ export type AuthStackParamList = {
   Form: undefined;
 };
 
+export type RootTabParamList = {
+  Home: undefined;
+  App: undefined;
+  Explore: undefined;
+};
+
 export type RootStackParamList = {
   Home: undefined;
   User: undefined;

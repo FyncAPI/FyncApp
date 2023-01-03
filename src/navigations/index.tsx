@@ -5,6 +5,7 @@ import {
   AuthStackParamList,
   NavigationParamList,
   RootStackParamList,
+  RootTabParamList,
 } from "../../types";
 import { FriendContextProvider } from "../contexts/FriendContext";
 import { UserContext } from "../contexts/user/context";
@@ -18,7 +19,11 @@ import { FriendScreen } from "../features/friend/screens/FriendScreen";
 import HomeScreen from "../features/home/screens/HomeScreen";
 import UserScreen from "../features/user/screens/UserScreen";
 import { useUserContext } from "../hooks";
-
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Text, useColorModeValue } from "native-base";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import Svg, { Path, SvgFromUri, SvgUri } from "react-native-svg";
+import { RemixIcons } from "../../assets/Icons/RemixIcons";
 const Stack = createNativeStackNavigator<NavigationParamList>();
 
 export function Navigation() {
@@ -31,7 +36,7 @@ export function Navigation() {
       }}
     >
       {isRegistered ? (
-        <Stack.Screen name="RootStack" component={RootStackNavigator} />
+        <Stack.Screen name="RootStack" component={RootTabNavigator} />
       ) : (
         <Stack.Screen name="AuthStack" component={AuthStackNavigator} />
       )}
@@ -56,6 +61,84 @@ function AuthStackNavigator() {
     </AuthStack.Navigator>
   );
 }
+
+const RootTab = createBottomTabNavigator<RootTabParamList>();
+
+function RootTabNavigator() {
+  const insets = useSafeAreaInsets();
+  const bg = useColorModeValue("red.50", "coolGray.900");
+  return (
+    <RootTab.Navigator
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarBadgeStyle: {},
+        // tabBarLabelPosition: "beside-icon",
+        tabBarStyle: {
+          position: "absolute",
+          marginBottom: 10 + insets.bottom,
+          marginHorizontal: 20,
+          borderRadius: 30,
+          borderWidth: 0,
+          backgroundColor: bg,
+          //     ? Colors.dark.business.bottomBar
+          //     : Colors.light.business.bottomBar,
+          paddingBottom: 0,
+
+          // ...shadow.shadowIn,
+          borderTopWidth: 0,
+          borderTopColor: "transparent",
+        },
+
+        headerShown: false,
+        tabBarActiveTintColor: "#7b93ec",
+      }}
+    >
+      <RootTab.Screen
+        name="Home"
+        component={RootStackNavigator}
+        options={{
+          tabBarIcon: ({
+            focused,
+            color,
+            size,
+          }: {
+            focused: boolean;
+            color: string;
+            size: number;
+          }) => (
+            <Ionicons
+              name={focused ? "home-sharp" : "home-outline"}
+              color={color}
+              size={35}
+            />
+          ),
+        }}
+      />
+      <RootTab.Screen
+        name="App"
+        component={UserScreen}
+        options={{
+          tabBarIcon: ({
+            focused,
+            color,
+            size,
+          }: {
+            focused: boolean;
+            color: string;
+            size: number;
+          }) =>
+            focused ? (
+              <RemixIcons color={color} size={35} name={"apps"} />
+            ) : (
+              <RemixIcons color={color} size={35} name={"apps-outline"} />
+            ),
+        }}
+      />
+      <RootTab.Screen name="Explore" component={FriendScreen} />
+    </RootTab.Navigator>
+  );
+}
+
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 function RootStackNavigator() {
