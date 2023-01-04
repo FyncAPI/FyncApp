@@ -24,6 +24,8 @@ import { Text, useColorModeValue } from "native-base";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Svg, { Path, SvgFromUri, SvgUri } from "react-native-svg";
 import { RemixIcons } from "../../assets/Icons/RemixIcons";
+import { BlurView } from "expo-blur";
+import { StyleSheet } from "react-native";
 const Stack = createNativeStackNavigator<NavigationParamList>();
 
 export function Navigation() {
@@ -67,6 +69,7 @@ const RootTab = createBottomTabNavigator<RootTabParamList>();
 function RootTabNavigator() {
   const insets = useSafeAreaInsets();
   const bg = useColorModeValue("red.50", "coolGray.900");
+  const mode = useColorModeValue("light", "dark");
   return (
     <RootTab.Navigator
       screenOptions={{
@@ -75,20 +78,36 @@ function RootTabNavigator() {
         // tabBarLabelPosition: "beside-icon",
         tabBarStyle: {
           position: "absolute",
-          marginBottom: 10 + insets.bottom,
-          marginHorizontal: 20,
-          borderRadius: 30,
+          paddingBottom: 10 + insets.bottom,
+          paddingTop: 20,
+          marginTop: 0,
+
+          marginBottom: 10,
+          // marginHorizontal: 20,
+          // borderRadius: 30,
+          overflow: "hidden",
           borderWidth: 0,
-          backgroundColor: bg,
+          backgroundColor: "transparent",
           //     ? Colors.dark.business.bottomBar
           //     : Colors.light.business.bottomBar,
-          paddingBottom: 0,
 
           // ...shadow.shadowIn,
           borderTopWidth: 0,
           borderTopColor: "transparent",
         },
-
+        tabBarBackground: () => (
+          <BlurView
+            tint={mode}
+            intensity={100}
+            style={[
+              StyleSheet.absoluteFill,
+              {
+                // borderRadius: 30,
+                backgroundColor: "transparent",
+              },
+            ]}
+          />
+        ),
         headerShown: false,
         tabBarActiveTintColor: "#7b93ec",
       }}
@@ -106,8 +125,8 @@ function RootTabNavigator() {
             color: string;
             size: number;
           }) => (
-            <Ionicons
-              name={focused ? "home-sharp" : "home-outline"}
+            <RemixIcons
+              name={focused ? "home" : "home-outline"}
               color={color}
               size={35}
             />
@@ -126,15 +145,36 @@ function RootTabNavigator() {
             focused: boolean;
             color: string;
             size: number;
-          }) =>
-            focused ? (
-              <RemixIcons color={color} size={35} name={"apps"} />
-            ) : (
-              <RemixIcons color={color} size={35} name={"apps-outline"} />
-            ),
+          }) => (
+            <RemixIcons
+              color={color}
+              size={35}
+              name={focused ? "apps" : "apps-outline"}
+            />
+          ),
         }}
       />
-      <RootTab.Screen name="Explore" component={FriendScreen} />
+      <RootTab.Screen
+        name="Explore"
+        component={FriendScreen}
+        options={{
+          tabBarIcon: ({
+            focused,
+            color,
+            size,
+          }: {
+            focused: boolean;
+            color: string;
+            size: number;
+          }) => (
+            <RemixIcons
+              color={color}
+              size={35}
+              name={focused ? "compass" : "compass-outline"}
+            />
+          ),
+        }}
+      />
     </RootTab.Navigator>
   );
 }
