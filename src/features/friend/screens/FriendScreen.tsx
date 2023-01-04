@@ -15,6 +15,7 @@ import {
   Image,
   ScrollView,
   Text,
+  useColorModeValue,
   View,
 } from "native-base";
 import BackButton from "../../../components/BackButton";
@@ -42,6 +43,7 @@ export function FriendScreen() {
   const [friend, setFriend] = React.useState(
     friends?.find((f) => f.contactId == id)
   );
+  const tintMode = useColorModeValue("light", "dark");
 
   useEffect(() => {
     setFriend(friends?.find((f) => f.contactId == id));
@@ -123,7 +125,11 @@ export function FriendScreen() {
                 xml={friend?.avatar}
                 style={[StyleSheet.absoluteFill, { overflow: "visible" }]}
               />
-              <BlurView intensity={100} style={{ overflow: "visible" }}>
+              <BlurView
+                tint={tintMode}
+                intensity={100}
+                style={{ overflow: "visible" }}
+              >
                 <SvgXml width="100%" height="350px" xml={friend?.avatar} />
               </BlurView>
             </>
