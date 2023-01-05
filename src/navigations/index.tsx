@@ -82,7 +82,6 @@ function RootTabNavigator() {
           paddingTop: 20,
           marginTop: 0,
 
-          marginBottom: 10,
           // marginHorizontal: 20,
           // borderRadius: 30,
           overflow: "hidden",
@@ -92,6 +91,7 @@ function RootTabNavigator() {
           //     : Colors.light.business.bottomBar,
 
           // ...shadow.shadowIn,
+          height: 60 + insets.bottom,
           borderTopWidth: 0,
           borderTopColor: "transparent",
         },
