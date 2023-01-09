@@ -51,7 +51,19 @@ export function FriendScreen() {
 
   return (
     <>
-      <BackButton _light={{ color: "white" }} />
+      <BackButton _light={{ color: "white" }} zIndex={5} />
+      <LinearGradient
+        pointerEvents="none"
+        style={{
+          zIndex: 2,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+        }}
+        colors={["black", "transparent", "transparent", "transparent"]}
+      />
       <View position={"absolute"} left={"10"} zIndex={5} mx={2}>
         <SafeTop />
         <Heading fontSize="4xl" color={"light.100"} shadow={"9"}>
@@ -97,18 +109,6 @@ export function FriendScreen() {
         }}
       >
         <View>
-          <LinearGradient
-            style={{
-              zIndex: 2,
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-            }}
-            colors={["black", "transparent", "transparent", "transparent"]}
-          />
-
           {friend?.contact.image?.uri ? (
             <Image
               source={friend?.contact.image}
@@ -118,21 +118,24 @@ export function FriendScreen() {
               zIndex={-1}
             />
           ) : (
-            <>
+            <View>
               <SvgXml
                 width="100%"
-                height="350px"
+                height="400px"
                 xml={friend?.avatar}
-                style={[StyleSheet.absoluteFill, { overflow: "visible" }]}
+                style={[
+                  StyleSheet.absoluteFill,
+                  { overflow: "visible", marginVertical: 50 },
+                ]}
               />
               <BlurView
                 tint={tintMode}
-                intensity={100}
-                style={{ overflow: "visible" }}
+                intensity={60}
+                style={{ overflow: "visible", paddingVertical: 50 }}
               >
                 <SvgXml width="100%" height="350px" xml={friend?.avatar} />
               </BlurView>
-            </>
+            </View>
           )}
           <TouchableOpacity
             style={{

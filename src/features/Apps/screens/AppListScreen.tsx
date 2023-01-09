@@ -1,56 +1,39 @@
-import { AppState, Dimensions, TextInput } from "react-native";
-import React, { useContext, useEffect } from "react";
 import {
-  FlatList,
-  View,
-  Heading,
-  HStack,
-  Icon,
   SectionList,
+  HStack,
+  Heading,
+  Icon,
+  ScrollView,
   Text,
-  Button,
+  View,
 } from "native-base";
-import Carousel from "react-native-reanimated-carousel";
-import { SafeBottom, SafeTop } from "../../../components/SafeTop";
+import React from "react";
+import { SafeTop } from "../../../components/SafeTop";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackNavigationProp } from "../../../../types";
 import { Ionicons } from "@expo/vector-icons";
-import FriendCard from "../../../components/FriendCard";
-import FriendList from "../../../components/FriendList";
-import {
-  CompositeNavigationProp,
-  useNavigation,
-} from "@react-navigation/native";
+import { AnimatedCircles } from "../components/AnimatedCircles";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import Animated, { useSharedValue } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { UserContext } from "../../../contexts/user/context";
-import { FriendCarousel } from "../components/FriendCarousel";
-import {
-  RootStackNavigationProp,
-  RootStackParamList,
-  RootStackScreenProps,
-} from "../../../../types";
-import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { FriendContext } from "../../../contexts/FriendContext";
-import { useLoading } from "../../../hooks/useLoading";
-import { BlurView } from "expo-blur";
-import LoadingIndicator from "../../../components/LoadingIndicator";
-import RecentCallList from "../../../components/RecentCallList";
 
-type HomeScreenNavigationProp = CompositeNavigationProp<
-  BottomTabNavigationProp<RootStackParamList, "Home">,
-  NativeStackNavigationProp<RootStackParamList>
->;
-
-const HomeScreen = () => {
+export const AppListScreen = () => {
   const navigation = useNavigation<RootStackNavigationProp<"Home">>();
-  const { width } = Dimensions.get("window");
   const { bottom } = useSafeAreaInsets();
-  const { userData } = React.useContext(UserContext);
-  const { friends, recentCalls } = useContext(FriendContext);
+  // const matrix = useSharedValue(identity4);
+  const pan = Gesture.Pan();
+  const pinch = Gesture.Pinch();
+  const rotation = Gesture.Rotation();
 
-  const appState = React.useRef(AppState.currentState);
+  const mockApps = [
+    {
+      name: "App 1",
+      icon: "https://picsum.photos/200",
+    },
+  ];
 
   return (
-    <View flex={1} variant="background">
+    <View variant="background" flex={1}>
       <SafeTop />
       <HStack space={4} alignItems="center" pl="5" _android={{ mt: 3 }}>
         <Icon
@@ -60,38 +43,35 @@ const HomeScreen = () => {
           size="3xl"
           as={<Ionicons name="person-circle" />}
         />
-        <Heading fontSize={"4xl"}>Fync</Heading>
+        <Heading fontSize={"4xl"}>Apps</Heading>
         <Icon
           onPress={() => {
-            navigation.navigate("AddFriend");
+            // navigation.navigate("AddFriend");
           }}
           ml="auto"
           mr={4}
           size="3xl"
-          as={<Ionicons name="add-circle-outline" />}
+          as={<Ionicons name="search" />}
         />
       </HStack>
-
-      {/* <Text>{JSON.stringify(userData.friends[0])}</Text> */}
       <SectionList
-        showsVerticalScrollIndicator={false}
         pb={bottom}
         sections={[
           {
-            title: "Recents",
+            title: "Your Apps",
             horizontal: true,
-            data: recentCalls,
+            data: mockApps,
           },
           {
-            title: "Favorites",
+            title: "New Apps",
             horizontal: true,
-            data: userData.favorites || [],
+            data: mockApps,
           },
           {
-            title: "All",
+            title: "Popular Apps",
             numColumns: 3,
             carousel: true,
-            data: friends,
+            data: mockApps,
           },
           // {
           //   title: "Keep in touch",
@@ -140,8 +120,10 @@ const HomeScreen = () => {
           section.safeBottom ? <SafeBottom /> : null
         }
       />
+      {/* <AnimatedCircles /> */}
+      {/* <GestureDetector gesture={Gesture.Race(pan, pinch, rotation)}>
+        <Animated.View></Animated.View>
+      </GestureDetector> */}
     </View>
   );
 };
-
-export default HomeScreen;

@@ -23,6 +23,13 @@ import {
   SpaceGrotesk_600SemiBold,
   SpaceGrotesk_700Bold,
 } from "@expo-google-fonts/space-grotesk";
+
+import * as outfit from "@expo-google-fonts/outfit";
+const {
+  useFonts: useOutfitFonts,
+  __metadata__: outfitMetadata,
+  ...Outfits
+} = outfit;
 import { LoadingModal } from "./src/components/LoadingModal";
 import { useLoading } from "./src/hooks/useLoading";
 import { SettingsContextProvider } from "./src/contexts/SettingsContext";
@@ -80,6 +87,35 @@ export const theme = extendTheme({
         normal: "SpaceGrotesk_700Bold",
       },
     },
+    Outfit: {
+      100: {
+        normal: "Outfit_100Thin",
+      },
+      200: {
+        normal: "Outfit_200ExtraLight",
+      },
+      300: {
+        normal: "Outfit_300Light",
+      },
+      400: {
+        normal: "Outfit_400Regular",
+      },
+      500: {
+        normal: "Outfit_500Medium",
+      },
+      600: {
+        normal: "Outfit_600SemiBold",
+      },
+      700: {
+        normal: "Outfit_700Bold",
+      },
+      800: {
+        normal: "Outfit_800ExtraBold",
+      },
+      900: {
+        normal: "Outfit_900Black",
+      },
+    },
   },
 
   components: {
@@ -135,8 +171,8 @@ export const theme = extendTheme({
     },
   },
   fonts: {
-    default: "SpaceGrotesk",
-    body: "SpaceGrotesk",
+    default: "Outfit",
+    body: "Outfit",
   },
 });
 
@@ -167,7 +203,7 @@ export default function App() {
     },
   };
 
-  let [fontsLoaded] = useFonts({
+  let [SpaceGroteskLoaded] = useFonts({
     SpaceGrotesk_300Light,
     SpaceGrotesk_400Regular,
     SpaceGrotesk_500Medium,
@@ -175,7 +211,14 @@ export default function App() {
     SpaceGrotesk_700Bold,
   });
 
-  if (!fontsLoaded) {
+  let [outfitLoaded] = useOutfitFonts(Outfits);
+  console.log(Object.keys(Outfits), "å∂ƒ");
+
+  // let [outfitLoaded] = Outfit.useFonts({
+  //   ...{ ...Outfit, useFonts },
+  // });
+
+  if (!SpaceGroteskLoaded || !outfitLoaded) {
     return null;
   }
 

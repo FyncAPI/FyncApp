@@ -34,9 +34,9 @@ export type AuthStackParamList = {
 };
 
 export type RootTabParamList = {
-  Home: undefined;
-  App: undefined;
-  Explore: undefined;
+  HomeStack: undefined;
+  AppStack: undefined;
+  ExploreStack: undefined;
 };
 
 export type RootStackParamList = {
@@ -47,6 +47,17 @@ export type RootStackParamList = {
   AddNewFriend: undefined;
   EditFriend: { contactId: string };
   Friend: { id: string };
+};
+
+export type AppStackParamList = {
+  AppList: undefined;
+  App: { id: string };
+};
+
+export type ExploreStackParamList = {
+  Home: undefined;
+  App: { id: string };
+  Event: { id: string };
 };
 
 export type AuthStackScreenProps<Screen extends keyof AuthStackParamList> =

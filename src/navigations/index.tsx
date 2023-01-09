@@ -2,7 +2,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useContext } from "react";
 import {
+  AppStackParamList,
   AuthStackParamList,
+  ExploreStackParamList,
   NavigationParamList,
   RootStackParamList,
   RootTabParamList,
@@ -26,6 +28,9 @@ import Svg, { Path, SvgFromUri, SvgUri } from "react-native-svg";
 import { RemixIcons } from "../../assets/Icons/RemixIcons";
 import { BlurView } from "expo-blur";
 import { StyleSheet } from "react-native";
+import { AppListScreen } from "../features/Apps/screens/AppListScreen";
+import { AppScreen } from "../features/Apps/screens/AppScreen";
+import { ExploreScreen } from "../features/Explore/ExploreScreen";
 const Stack = createNativeStackNavigator<NavigationParamList>();
 
 export function Navigation() {
@@ -102,7 +107,6 @@ function RootTabNavigator() {
             style={[
               StyleSheet.absoluteFill,
               {
-                // borderRadius: 30,
                 backgroundColor: "transparent",
               },
             ]}
@@ -113,7 +117,7 @@ function RootTabNavigator() {
       }}
     >
       <RootTab.Screen
-        name="Home"
+        name="HomeStack"
         component={RootStackNavigator}
         options={{
           tabBarIcon: ({
@@ -134,8 +138,8 @@ function RootTabNavigator() {
         }}
       />
       <RootTab.Screen
-        name="App"
-        component={UserScreen}
+        name="AppStack"
+        component={AppStackNavigator}
         options={{
           tabBarIcon: ({
             focused,
@@ -155,8 +159,8 @@ function RootTabNavigator() {
         }}
       />
       <RootTab.Screen
-        name="Explore"
-        component={FriendScreen}
+        name="ExploreStack"
+        component={ExploreStackNavigator}
         options={{
           tabBarIcon: ({
             focused,
@@ -199,6 +203,35 @@ function RootStackNavigator() {
         <RootStack.Screen name="EditFriend" component={EditFriendScreen} />
       </RootStack.Navigator>
     </FriendContextProvider>
+  );
+}
+
+const AppStack = createNativeStackNavigator<AppStackParamList>();
+
+function AppStackNavigator() {
+  return (
+    <AppStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <AppStack.Screen name="AppList" component={AppListScreen} />
+      <AppStack.Screen name="App" component={AppScreen} />
+    </AppStack.Navigator>
+  );
+}
+
+const ExploreStack = createNativeStackNavigator<ExploreStackParamList>();
+
+function ExploreStackNavigator() {
+  return (
+    <ExploreStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <ExploreStack.Screen name="Home" component={ExploreScreen} />
+    </ExploreStack.Navigator>
   );
 }
 // const Tab = createBottomTabNavigator();

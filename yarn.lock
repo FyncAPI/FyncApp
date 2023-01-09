@@ -1080,6 +1080,11 @@
   resolved "https://registry.yarnpkg.com/@emotion/memoize/-/memoize-0.7.4.tgz#19bf0f5af19149111c40d98bb0cf82119f5d9eeb"
   integrity sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==
 
+"@expo-google-fonts/outfit@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/outfit/-/outfit-0.2.2.tgz#7badcc65649ce95b175038a1422a611df2dcdcda"
+  integrity sha512-0M27jjGxc5dKmw7SC9opSWY3E2LvbYf13ZD7mU1DdfmUlB6SOP9+DIyzN24RVx2WpEkEPAN4iweUoy8xu00A4Q==
+
 "@expo-google-fonts/space-grotesk@^0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@expo-google-fonts/space-grotesk/-/space-grotesk-0.2.2.tgz#96df4663a4a45fa14faf569cf8b311ad019b49dc"

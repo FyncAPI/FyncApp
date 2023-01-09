@@ -16,7 +16,7 @@ export default function BackButton({
       position="absolute"
       top={insets.top + 10 + "px"}
       left={2}
-      zIndex={1}
+      zIndex={5}
       _android={{ mt: 3 }}
     >
       <TouchableOpacity>

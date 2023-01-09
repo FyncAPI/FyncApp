@@ -27,7 +27,7 @@ function PhoneNumberCardBase({ phoneNumber }: { phoneNumber: PhoneNumber }) {
         {phoneNumber.number}
       </Text>
       <View flex={1} />
-      <IconButton
+      {/* <IconButton
         icon={<Icon as={Ionicons} name="pencil" />}
         _icon={{
           color: "light.100",
@@ -36,7 +36,7 @@ function PhoneNumberCardBase({ phoneNumber }: { phoneNumber: PhoneNumber }) {
           },
         }}
         borderRadius="full"
-      />
+      /> */}
       <IconButton
         icon={<Icon as={Ionicons} name="call" />}
         borderRadius="full"

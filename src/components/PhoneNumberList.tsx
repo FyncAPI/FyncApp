@@ -20,6 +20,7 @@ function PhoneNumberListBase({
       }}
       rounded={"sm"}
       p={"1"}
+      mx="2"
     >
       {phoneNumbers.map((p, index) => (
         <PhoneNumberCard phoneNumber={p} p={2} key={index + "PHONE"} />
