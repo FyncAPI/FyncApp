@@ -14,8 +14,8 @@ import { ActivityIndicator } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import { SvgXml } from "react-native-svg";
-import { generateAvatar } from "../../../../contexts/FriendService";
-import { UserContext } from "../../../../contexts/user/context";
+import { generateAvatar } from "../../../../contexts/friend/FriendService";
+import { UserContext } from "../../../../contexts/user/userContext";
 
 export default function LoadFriends({
   friendsIds,

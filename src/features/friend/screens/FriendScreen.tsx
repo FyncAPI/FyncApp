@@ -5,7 +5,7 @@ import {
   RootStackParamList,
   RootStackScreenProps,
 } from "../../../../types";
-import { UserContext } from "../../../contexts/user/context";
+import { UserContext } from "../../../contexts/user/userContext";
 import {
   Button,
   Heading,
@@ -25,7 +25,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { FriendshipIcon } from "../../../components/FriendshipIcon";
 import { PhoneNumberList } from "../../../components/PhoneNumberList";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { FriendContext } from "../../../contexts/FriendContext";
+import { FriendContext } from "../../../contexts/friend/FriendContext";
 import { SvgXml } from "react-native-svg";
 import { BlurView } from "expo-blur";
 import { Alert, StyleSheet, TouchableOpacity } from "react-native";

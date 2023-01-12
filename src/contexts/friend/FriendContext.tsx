@@ -2,10 +2,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Contact, PhoneNumber, presentFormAsync } from "expo-contacts";
 import { createContext, useEffect, useRef, useState } from "react";
 import { AppState, Linking } from "react-native";
-import { useUserContext } from "../hooks";
-import { useContact } from "../hooks/useContact";
-import { useFriends } from "../hooks/useFriends";
-import { CallHistory, Friend, FriendsData } from "./user/types";
+import { useUserContext } from "../../hooks";
+import { useContact } from "../../hooks/useContact";
+import { useFriends } from "../../hooks/useFriends";
+import { CallHistory, Friend, FriendsData } from "../user/types";
 
 interface FriendContextInterface {
   friends: Friend[];
@@ -90,6 +90,16 @@ export const FriendContextProvider = ({
       increaseFriendship(isCalling);
       setIsCalling("");
       setFinishedCall(false);
+
+      saveFriendsData((prev: FriendsData) => ({
+        ...prev,
+        recentCalls: [
+          {
+            contactId: isCalling,
+            date: new Date(),
+          },
+        ],
+      }));
     }
   }, [finishedCall]);
 

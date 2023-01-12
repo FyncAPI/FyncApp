@@ -20,7 +20,7 @@ import {
   useNavigation,
 } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { UserContext } from "../../../contexts/user/context";
+import { UserContext } from "../../../contexts/user/userContext";
 import { FriendCarousel } from "../components/FriendCarousel";
 import {
   RootStackNavigationProp,
@@ -29,7 +29,7 @@ import {
 } from "../../../../types";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { FriendContext } from "../../../contexts/FriendContext";
+import { FriendContext } from "../../../contexts/friend/FriendContext";
 import { useLoading } from "../../../hooks/useLoading";
 import { BlurView } from "expo-blur";
 import LoadingIndicator from "../../../components/LoadingIndicator";

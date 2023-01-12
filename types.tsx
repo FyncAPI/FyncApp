@@ -50,6 +50,7 @@ export type RootStackParamList = {
 };
 
 export type AppStackParamList = {
+  EnableOnline: undefined;
   AppList: undefined;
   App: { id: string };
 };
@@ -77,3 +78,16 @@ export type AuthStackNavigationProp<Screen extends keyof AuthStackParamList> =
     BottomTabNavigationProp<AuthStackParamList, Screen>,
     NativeStackNavigationProp<AuthStackParamList>
   >;
+
+export type AppStackNavigationProp<Screen extends keyof AppStackParamList> =
+  CompositeNavigationProp<
+    BottomTabNavigationProp<AppStackParamList, Screen>,
+    NativeStackNavigationProp<AppStackParamList>
+  >;
+
+export type ExploreStackNavigationProp<
+  Screen extends keyof ExploreStackParamList
+> = CompositeNavigationProp<
+  BottomTabNavigationProp<ExploreStackParamList, Screen>,
+  NativeStackNavigationProp<ExploreStackParamList>
+>;

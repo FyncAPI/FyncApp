@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Button, Heading, Icon, ScrollView, Text, View } from "native-base";
 import ContactSelectorList from "../../components/ContactSelectorList";
 import { SafeBottom, SafeTop } from "../../../../components/SafeTop";
-import { UserContext } from "../../../../contexts/user/context";
+import { UserContext } from "../../../../contexts/user/userContext";
 import ProfileForm from "../../components/profile-form/ProfileForm";
 import { Contact, getContactByIdAsync, getContactsAsync } from "expo-contacts";
 import GetGps from "../../components/get-gps";
@@ -17,7 +17,7 @@ import { LoadingModal } from "../../../../components/LoadingModal";
 import {
   convertIdsToContacts,
   generateAvatar,
-} from "../../../../contexts/FriendService";
+} from "../../../../contexts/friend/FriendService";
 import { useLoading } from "../../../../hooks/useLoading";
 
 export default function AuthFormScreen() {

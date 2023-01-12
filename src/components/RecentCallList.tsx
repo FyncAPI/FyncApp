@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { FlatList, Text, View } from "native-base";
 import FriendCard from "./FriendCard";
 import { CallHistory, Friend } from "../contexts/user/types";
-import { FriendContext } from "../contexts/FriendContext";
+import { FriendContext } from "../contexts/friend/FriendContext";
 
 export default function RecentCallList({ calls }: { calls: CallHistory[] }) {
   // //console.log(friends, "friends");

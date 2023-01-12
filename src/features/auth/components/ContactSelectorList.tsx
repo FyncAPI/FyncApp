@@ -22,7 +22,7 @@ import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { SearchBar } from "../../../components/SearchBar";
 import { useContact } from "../../../hooks/useContact";
-import { UserContext } from "../../../contexts/user/context";
+import { UserContext } from "../../../contexts/user/userContext";
 
 export default function ContactSelectorList({
   selectedContactsId,

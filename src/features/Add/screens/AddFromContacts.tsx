@@ -7,12 +7,12 @@ import FriendCard from "../../../components/FriendCard";
 import { SafeBottom, SafeTop } from "../../../components/SafeTop";
 import { RootStackNavigationProp } from "../../../../types";
 import BackButton from "../../../components/BackButton";
-import { FriendContext } from "../../../contexts/FriendContext";
-import { UserContext } from "../../../contexts/user/context";
+import { FriendContext } from "../../../contexts/friend/FriendContext";
+import { UserContext } from "../../../contexts/user/userContext";
 import { Friend, FriendsData, UserData } from "../../../contexts/user/types";
 import LoadFriends from "../../auth/components/load-friends/LoadFriend";
 import ContactSelectorList from "../../auth/components/ContactSelectorList";
-import { convertIdsToContacts } from "../../../contexts/FriendService";
+import { convertIdsToContacts } from "../../../contexts/friend/FriendService";
 import { LoadingModal } from "../../../components/LoadingModal";
 
 export const AddFromContacts = gestureHandlerRootHOC(() => {

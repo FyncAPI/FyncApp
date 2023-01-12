@@ -17,6 +17,7 @@ interface UserContextInterface {
 
   saveUserData: (user: UserData, stopLoading?: () => void) => void;
   saveFriendsData: (friendsData: FriendsData) => void;
+
   deleteUserData: () => void;
 }
 

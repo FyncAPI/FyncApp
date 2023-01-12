@@ -6,9 +6,9 @@ import * as Linking from "expo-linking";
 import { useNavigation } from "@react-navigation/native";
 import { Dimensions, TouchableOpacity } from "react-native";
 import { RootStackNavigationProp } from "../../types";
-import { FriendContext } from "../contexts/FriendContext";
+import { FriendContext } from "../contexts/friend/FriendContext";
 import { SvgXml } from "react-native-svg";
-import { SettingsContext } from "../contexts/SettingsContext";
+import { SettingsContext } from "../contexts/settings/SettingsContext";
 
 // export default function FriendCard({ friend }: { friend: Friend }) {
 export default function FriendCard({

@@ -13,7 +13,7 @@ import type { StorageManager } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { Navigation } from "./src/navigations";
-import { UserContextProvider } from "./src/contexts/user/context";
+import { UserContextProvider } from "./src/contexts/user/userContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   useFonts,
@@ -32,7 +32,8 @@ const {
 } = outfit;
 import { LoadingModal } from "./src/components/LoadingModal";
 import { useLoading } from "./src/hooks/useLoading";
-import { SettingsContextProvider } from "./src/contexts/SettingsContext";
+import { SettingsContextProvider } from "./src/contexts/settings/SettingsContext";
+import { AppsContextProvider } from "./src/contexts/apps/AppsContext";
 
 // Define the config
 const config = {
@@ -124,13 +125,26 @@ export const theme = extendTheme({
         fontFamily: "body",
       },
     },
-    Heading: {
-      // Can pass also function, giving you access theming tools
-      // baseStyle: ({ colorMode }: { colorMode: ColorMode }) => {
-      //   return {
-      //     color: colorMode === "dark" ? "red.300" : "blue.300",
-      //   };
-      // },
+    Button: {
+      // Can simply pass default props to change default behaviour of components.
+      baseStyle: {
+        rounded: "md",
+      },
+      defaultProps: {
+        colorScheme: "red",
+      },
+      variants: {
+        rounded: {
+          bg: `#C4D8FC`,
+          _hover: {
+            bg: `#cddefd`,
+          },
+          _pressed: {
+            bg: `#abc1e9`,
+          },
+          rounded: "full",
+        },
+      },
     },
     View: {
       variants: {
@@ -231,7 +245,9 @@ export default function App() {
       <NavigationContainer>
         <UserContextProvider>
           <SettingsContextProvider>
-            <Navigation />
+            <AppsContextProvider>
+              <Navigation />
+            </AppsContextProvider>
           </SettingsContextProvider>
         </UserContextProvider>
         <StatusBar barStyle={"light-content"} />

@@ -8,21 +8,28 @@ import {
   ScrollView,
   Select,
   Slider,
+  Switch,
   Text,
   View,
 } from "native-base";
 import { ToggleDarkMode } from "../../../components/ThemeSwitch";
 import { useNavigation } from "@react-navigation/native";
-import { UserContext } from "../../../contexts/user/context";
+import { UserContext } from "../../../contexts/user/userContext";
 import { Alert } from "react-native";
 import BackButton from "../../../components/BackButton";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { SettingsContext } from "../../../contexts/SettingsContext";
+import { SettingsContext } from "../../../contexts/settings/SettingsContext";
 
 export default function UserScreen() {
   const navigation = useNavigation();
   const { userData, deleteUserData } = useContext(UserContext);
-  const { carouselNumColumns, updateSettings } = useContext(SettingsContext);
+  const {
+    carouselNumColumns,
+    updateSettings,
+    enableFyncOnline,
+    disableFyncOnline,
+    fyncOnlineEnabled,
+  } = useContext(SettingsContext);
   const insets = useSafeAreaInsets();
   return (
     <>
@@ -53,6 +60,18 @@ export default function UserScreen() {
         <View m="5">
           <Heading mb={"2"}>Theme</Heading>
           <ToggleDarkMode />
+        </View>
+        <View m="5">
+          <Heading mb={"2"}>Fync Online</Heading>
+          {fyncOnlineEnabled ? (
+            <Button onPress={() => disableFyncOnline()}>
+              <Text>Disable</Text>
+            </Button>
+          ) : (
+            <Button onPress={() => enableFyncOnline()}>
+              <Text>Enable</Text>
+            </Button>
+          )}
         </View>
 
         <View m="5">

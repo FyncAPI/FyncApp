@@ -9,8 +9,8 @@ import {
   RootStackParamList,
   RootTabParamList,
 } from "../../types";
-import { FriendContextProvider } from "../contexts/FriendContext";
-import { UserContext } from "../contexts/user/context";
+import { FriendContextProvider } from "../contexts/friend/FriendContext";
+import { UserContext } from "../contexts/user/userContext";
 import { AddFriendScreen } from "../features/Add/screens/AddFriendScreen";
 import { AddFromContacts } from "../features/Add/screens/AddFromContacts";
 import { AddNewFriendScreen } from "../features/Add/screens/AddNewFriendScreen";
@@ -31,6 +31,8 @@ import { StyleSheet } from "react-native";
 import { AppListScreen } from "../features/Apps/screens/AppListScreen";
 import { AppScreen } from "../features/Apps/screens/AppScreen";
 import { ExploreScreen } from "../features/Explore/ExploreScreen";
+import { EnableOnlineScreen } from "../features/Apps/screens/EnableOnlineScreen";
+import { SettingsContext } from "../contexts/settings/SettingsContext";
 const Stack = createNativeStackNavigator<NavigationParamList>();
 
 export function Navigation() {
@@ -75,6 +77,7 @@ function RootTabNavigator() {
   const insets = useSafeAreaInsets();
   const bg = useColorModeValue("red.50", "coolGray.900");
   const mode = useColorModeValue("light", "dark");
+  const { fyncOnlineEnabled } = useContext(SettingsContext);
   return (
     <RootTab.Navigator
       screenOptions={{
@@ -139,7 +142,7 @@ function RootTabNavigator() {
       />
       <RootTab.Screen
         name="AppStack"
-        component={AppStackNavigator}
+        component={fyncOnlineEnabled ? AppStackNavigator : EnableOnlineScreen}
         options={{
           tabBarIcon: ({
             focused,
@@ -209,14 +212,21 @@ function RootStackNavigator() {
 const AppStack = createNativeStackNavigator<AppStackParamList>();
 
 function AppStackNavigator() {
+  const { fyncOnlineEnabled } = useContext(SettingsContext);
   return (
     <AppStack.Navigator
       screenOptions={{
         headerShown: false,
       }}
     >
-      <AppStack.Screen name="AppList" component={AppListScreen} />
-      <AppStack.Screen name="App" component={AppScreen} />
+      {!fyncOnlineEnabled ? (
+        <AppStack.Screen name="EnableOnline" component={EnableOnlineScreen} />
+      ) : (
+        <>
+          <AppStack.Screen name="AppList" component={AppListScreen} />
+          <AppStack.Screen name="App" component={AppScreen} />
+        </>
+      )}
     </AppStack.Navigator>
   );
 }
