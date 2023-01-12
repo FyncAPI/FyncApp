@@ -118,7 +118,7 @@ export function FriendScreen() {
               zIndex={-1}
             />
           ) : (
-            <View>
+            <View m={5}>
               <SvgXml
                 width="100%"
                 height="400px"
@@ -130,10 +130,10 @@ export function FriendScreen() {
               />
               <BlurView
                 tint={tintMode}
-                intensity={60}
+                intensity={100}
                 style={{ overflow: "visible", paddingVertical: 50 }}
               >
-                <SvgXml width="100%" height="350px" xml={friend?.avatar} />
+                <SvgXml width="100%" height="400px" xml={friend?.avatar} />
               </BlurView>
             </View>
           )}
