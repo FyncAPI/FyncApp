@@ -16,7 +16,7 @@ export const EnableOnlineScreen = () => {
         </Text>
         <Heading size={"2xl"}>Fync Online</Heading>
         <Text fontSize={"md"} left={-20}>
-          Free Forever {fyncOnlineEnabled ? "enabled" : "na"}
+          Free Forever
         </Text>
         <VStack mt={20}>
           {[

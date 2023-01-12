@@ -19,7 +19,7 @@ import {
   View,
 } from "native-base";
 import BackButton from "../../../components/BackButton";
-import { SafeTop } from "../../../components/SafeTop";
+import { SafeBottom, SafeTop } from "../../../components/SafeTop";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { FriendshipIcon } from "../../../components/FriendshipIcon";
@@ -118,7 +118,7 @@ export function FriendScreen() {
               zIndex={-1}
             />
           ) : (
-            <View m={5}>
+            <View m={1}>
               <SvgXml
                 width="100%"
                 height="400px"
@@ -224,6 +224,7 @@ export function FriendScreen() {
           >
             Delete Friend
           </Button>
+          <SafeBottom />
         </View>
       </ScrollView>
     </>

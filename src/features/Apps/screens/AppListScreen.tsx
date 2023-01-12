@@ -43,15 +43,14 @@ export const AppListScreen = () => {
   return (
     <View variant="background" flex={1}>
       <SafeTop />
-      <Text>{fyncOnlineEnabled ? "e" : "d"}</Text>
       <HStack space={4} alignItems="center" pl="5" _android={{ mt: 3 }}>
-        <Icon
+        {/* <Icon
           onPress={() => {
             navigation.navigate("User");
           }}
           size="3xl"
           as={<Ionicons name="person-circle" />}
-        />
+        /> */}
         <Heading fontSize={"4xl"}>Apps</Heading>
         <Icon
           onPress={() => {
