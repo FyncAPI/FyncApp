@@ -147,7 +147,6 @@ export const FriendContextProvider = ({
 
       saveFriendsData({
         friends: newFriends,
-        recentCalls,
       });
     });
   };
