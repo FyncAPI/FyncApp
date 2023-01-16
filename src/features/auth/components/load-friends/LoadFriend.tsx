@@ -8,7 +8,7 @@ import {
   View,
 } from "native-base";
 import React, { useContext, useEffect, useState } from "react";
-import { Friend } from "../../../../contexts/user/types";
+import { Friend } from "../../../../contexts/user/user.types";
 import * as Contacts from "expo-contacts";
 import { ActivityIndicator } from "react-native";
 import { FlatList } from "react-native-gesture-handler";

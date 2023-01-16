@@ -6,7 +6,7 @@ import Carousel from "react-native-reanimated-carousel";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FriendCard from "../../../components/FriendCard";
 import { SettingsContext } from "../../../contexts/settings/SettingsContext";
-import { Friend } from "../../../contexts/user/types";
+import { Friend } from "../../../contexts/user/user.types";
 
 export const FriendCarousel = gestureHandlerRootHOC(
   ({ friends }: { friends: Friend[] }) => {

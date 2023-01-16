@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Box, Image, Text, View } from "native-base";
-import { Friend } from "../contexts/user/types";
+import { Friend } from "../contexts/user/user.types";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Linking from "expo-linking";
 import { useNavigation } from "@react-navigation/native";
@@ -49,7 +49,7 @@ export default function FriendCard({
             h={size}
             alt="friend image"
           />
-        ) : friend.avatar ? (
+        ) : friend?.avatar ? (
           <View>
             <SvgXml xml={friend.avatar} width={size} height={size} />
           </View>

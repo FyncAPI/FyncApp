@@ -117,7 +117,7 @@ function RootTabNavigator() {
           borderWidth: 0,
           backgroundColor: "transparent",
 
-          height: 60 + insets.bottom,
+          height: 50 + insets.bottom,
           borderTopWidth: 0,
           borderTopColor: "transparent",
         },
@@ -242,7 +242,7 @@ const TabBarIcon =
     (
       <RemixIcons
         color={color}
-        size={35}
+        size={30}
         name={focused ? name : `${name}-outline`}
       />
     );

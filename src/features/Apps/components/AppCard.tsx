@@ -1,6 +1,6 @@
 import { Image, Text, View } from "native-base";
 import React from "react";
-import { App } from "../type";
+import { App } from "../apps.type";
 import { TouchableOpacity } from "react-native";
 import {
   CompositeNavigationProp,

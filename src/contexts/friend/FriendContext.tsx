@@ -5,8 +5,9 @@ import { AppState, Linking } from "react-native";
 import { useUserContext } from "../../hooks";
 import { useContact } from "../../hooks/useContact";
 import { useFriends } from "../../hooks/useFriends";
-import { CallHistory, Friend, FriendsData } from "../user/types";
+import { CallHistory, Friend, FriendsData } from "../user/user.types";
 import { UserContext } from "../user/userContext";
+import { useCalls } from "../../hooks/useCalls";
 
 interface FriendContextInterface {
   friends: Friend[];
@@ -38,70 +39,30 @@ export const FriendContextProvider = ({
 }) => {
   const { saveFriendsData, contacts } = useContext(UserContext);
   const { friends, setFriends } = useFriends();
-  const { getContacts } = useContact();
-  const [isCalling, setIsCalling] = useState<Friend["contactId"]>("");
-  const [finishedCall, setFinishedCall] = useState(false);
-  const [recentCalls, setRecentCalls] = useState<CallHistory[]>([]);
 
-  const appState = useRef(AppState.currentState);
-
-  useEffect(() => {
-    let arr: string[] = [];
-    const subscription = AppState.addEventListener("change", (nextAppState) => {
-      if (
-        appState.current.match(/background/) &&
-        arr.length > 3 &&
-        arr[arr.length - 3] === "active" &&
-        arr[arr.length - 2] === "inactive" &&
-        // appStateArr[appStateArr.length - 3] === "active" &&
-        // appStateArr[appStateArr.length - 2] === "inactive" &&
-        // appStateArr[appStateArr.length - 1] === "background" &&
-        nextAppState === "active"
-      ) {
-        console.log("finished calling mannn", arr);
-        setFinishedCall(true);
-        // increaseFriendship(isCalling);
-        // setIsCalling("");
-        arr = [];
+  const increaseFriendship = (friendId: Friend["contactId"]) => {
+    console.log("increase friendship", friendId);
+    const newFriends = friends.map((f) => {
+      if (f.contact.id == friendId) {
+        return {
+          ...f,
+          friendship: {
+            ...f.friendship,
+            points: f.friendship.points + 1,
+          },
+        };
       }
-
-      appState.current = nextAppState;
-      arr.push(nextAppState);
-      console.log("AppState", appState.current);
+      return f;
     });
 
-    return () => {
-      subscription.remove();
-    };
-  }, []);
+    setFriends(newFriends);
+  };
 
-  useEffect(() => {
-    console.log("contacts changed", "asdsd");
-  }, [contacts]);
-
-  useEffect(() => {
-    if (finishedCall && isCalling) {
-      setRecentCalls((prev) => [
-        {
-          contactId: isCalling,
-          date: new Date(),
-        },
-        ...prev,
-      ]);
-      increaseFriendship(isCalling);
-      setIsCalling("");
-      setFinishedCall(false);
-
-      saveFriendsData({
-        recentCalls: [
-          {
-            contactId: isCalling,
-            date: new Date(),
-          },
-        ],
-      });
-    }
-  }, [finishedCall]);
+  const { recentCalls, setIsCalling } = useCalls(
+    increaseFriendship,
+    saveFriendsData
+  );
+  const { getContacts } = useContact();
 
   const updateFriends = async (newfriends: Friend[]) => {
     // merge new friends with old friends
@@ -118,7 +79,6 @@ export const FriendContextProvider = ({
     setFriends(newFriends);
     saveFriendsData({
       friends: newFriends,
-      recentCalls,
     });
   };
 
@@ -149,24 +109,6 @@ export const FriendContextProvider = ({
         friends: newFriends,
       });
     });
-  };
-
-  const increaseFriendship = (friendId: Friend["contactId"]) => {
-    console.log("increase friendship", friendId);
-    const newFriends = friends.map((f) => {
-      if (f.contact.id == friendId) {
-        return {
-          ...f,
-          friendship: {
-            ...f.friendship,
-            points: f.friendship.points + 1,
-          },
-        };
-      }
-      return f;
-    });
-
-    setFriends(newFriends);
   };
 
   const addFriends = (newFriends: Friend[]) => {

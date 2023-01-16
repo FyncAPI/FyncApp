@@ -17,7 +17,7 @@ import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, { useSharedValue } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AppList } from "../components/AppList";
-import { App } from "../type";
+import { App } from "../apps.type";
 import { SettingsContext } from "../../../contexts/settings/SettingsContext";
 
 export const AppListScreen = () => {

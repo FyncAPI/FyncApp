@@ -49,16 +49,28 @@ const config = {
 
 const newColorTheme = {
   primary: {
-    50: "#fdfcfb",
-    100: "#fbedef",
-    200: "#f9c5e1",
-    300: "#f297c2",
-    400: "#f268a2",
-    500: "#ea4688",
-    600: "#d92d68",
-    700: "#b7224c",
-    800: "#8c1931",
-    900: "#5b111a",
+    //   50: "#fdfcfb",
+    //   100: "#fbedef",
+    //   200: "#f9c5e1",
+    //   300: "#f297c2",
+    //   400: "#f268a2",
+    //   500: "#ea4688",
+    //   600: "#d92d68",
+    //   700: "#b7224c",
+    //   800: "#8c1931",
+    //   900: "#5b111a",
+    // },
+    // {
+    "50": "#dce8fc",
+    "100": "#cbddf9",
+    "200": "#bad1f6",
+    "300": "#aac6f2",
+    "400": "#9bbcf0",
+    "500": "#91b4ec",
+    "600": "#89ade8",
+    "700": "#81a7e4",
+    "800": "#7aa1e0",
+    "900": "#739bdb",
   },
   brand: {
     900: "#8287af",
@@ -129,9 +141,6 @@ export const theme = extendTheme({
       // Can simply pass default props to change default behaviour of components.
       baseStyle: {
         rounded: "md",
-      },
-      defaultProps: {
-        colorScheme: "red",
       },
       variants: {
         rounded: {

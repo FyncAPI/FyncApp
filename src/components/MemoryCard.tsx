@@ -1,6 +1,6 @@
 import { Image, Text, View } from "native-base";
 import React from "react";
-import { Memory } from "../contexts/user/types";
+import { Memory } from "../contexts/user/user.types";
 
 export const MemoryCard = ({ memory }: { memory: Memory }) => {
   return (

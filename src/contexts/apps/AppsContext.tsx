@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { App } from "../../features/Apps/type";
+import { App } from "../../features/Apps/apps.type";
 import { SettingsContext } from "../settings/SettingsContext";
 
 interface AppsContextInterface {

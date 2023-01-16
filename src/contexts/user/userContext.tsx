@@ -1,12 +1,15 @@
 import React, { createContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Friend, FriendsData, Memory, UserData } from "./types";
+import { Friend, FriendsData, Memory, UserData } from "./user.types";
 import { useContact } from "../../hooks/useContact";
 import { Contact } from "expo-contacts";
+import { ExploreItem } from "../../features/Explore/explore.type";
 
 interface UserContextInterface {
   userData: UserData;
   isRegistered: boolean;
+
+  exploreItems: ExploreItem[];
 
   contacts: Contact[];
 
@@ -47,7 +50,6 @@ export function UserContextProvider({
     // save user to async storage
     saveValueAsync("user", user);
     setIsRegistered(true);
-
     setUserData(user);
   };
 

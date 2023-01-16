@@ -19,7 +19,7 @@ import BackButton from "../../../components/BackButton";
 import { DismissKeyboardView } from "../../../components/DismissKeyboardView";
 import { SafeTop } from "../../../components/SafeTop";
 import { FriendContext } from "../../../contexts/friend/FriendContext";
-import { Friend } from "../../../contexts/user/types";
+import { Friend } from "../../../contexts/user/user.types";
 import { FriendStackParamList } from "../../../../types";
 
 export const EditFriendScreen = () => {

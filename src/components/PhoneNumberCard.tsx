@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { HStack, Icon, IconButton, Text, View } from "native-base";
 import React from "react";
-import { Friend } from "../contexts/user/types";
+import { Friend } from "../contexts/user/user.types";
 import { Factory } from "native-base";
 import { PhoneNumber } from "expo-contacts";
 import CountryFlag from "react-native-country-flag";

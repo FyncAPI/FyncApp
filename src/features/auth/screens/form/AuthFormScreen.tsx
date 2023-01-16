@@ -10,7 +10,11 @@ import LoadFriends from "../../components/load-friends/LoadFriend";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Friend, FriendsData, UserData } from "../../../../contexts/user/types";
+import {
+  Friend,
+  FriendsData,
+  UserData,
+} from "../../../../contexts/user/user.types";
 import { AuthStackNavigationProp } from "../../../../../types";
 import BackButton from "../../../../components/BackButton";
 import { LoadingModal } from "../../../../components/LoadingModal";

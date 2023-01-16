@@ -35,6 +35,7 @@ import { useLoading } from "../../../hooks/useLoading";
 import { BlurView } from "expo-blur";
 import LoadingIndicator from "../../../components/LoadingIndicator";
 import RecentCallList from "../../../components/RecentCallList";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type HomeScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<RootTabParamList, "Home">,
@@ -72,6 +73,11 @@ const HomeScreen = () => {
           as={<Ionicons name="add-circle-outline" />}
         />
       </HStack>
+      {/* <Button
+        onPress={() => AsyncStorage.getItem("@friendsData").then(console.log)}
+      >
+        <Text>Get all keys</Text>
+      </Button> */}
 
       {/* <Text>{JSON.stringify(userData.friends[0])}</Text> */}
       <SectionList

@@ -1,6 +1,6 @@
 import { Heading, View } from "native-base";
 import React from "react";
-import { App } from "../type";
+import { App } from "../apps.type";
 import { FlatList } from "react-native-gesture-handler";
 import { AppCard } from "./AppCard";
 

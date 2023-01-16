@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Contact } from "expo-contacts";
 import { useEffect, useState } from "react";
-import { Friend } from "../contexts/user/types";
+import { Friend } from "../contexts/user/user.types";
 import { useContact } from "./useContact";
 
 export const useFriends = () => {

@@ -132,3 +132,10 @@ export type UserStackNavigationProp<Screen extends keyof UserStackParamList> =
     BottomTabNavigationProp<UserStackParamList, Screen>,
     NativeStackNavigationProp<UserStackParamList>
   >;
+
+export type NavigationProp<T extends keyof RootTabParamList> = (
+  screen: T
+) => CompositeNavigationProp<
+  BottomTabNavigationProp<RootTabParamList, T>,
+  NativeStackNavigationProp<RootStackParamList>
+>;

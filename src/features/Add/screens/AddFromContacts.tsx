@@ -19,7 +19,11 @@ import {
 import BackButton from "../../../components/BackButton";
 import { FriendContext } from "../../../contexts/friend/FriendContext";
 import { UserContext } from "../../../contexts/user/userContext";
-import { Friend, FriendsData, UserData } from "../../../contexts/user/types";
+import {
+  Friend,
+  FriendsData,
+  UserData,
+} from "../../../contexts/user/user.types";
 import LoadFriends from "../../auth/components/load-friends/LoadFriend";
 import ContactSelectorList from "../../auth/components/ContactSelectorList";
 import { convertIdsToContacts } from "../../../contexts/friend/FriendService";

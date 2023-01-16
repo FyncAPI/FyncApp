@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { FlatList, Text, View } from "native-base";
 import FriendCard from "./FriendCard";
-import { CallHistory, Friend } from "../contexts/user/types";
+import { CallHistory, Friend } from "../contexts/user/user.types";
 import { FriendContext } from "../contexts/friend/FriendContext";
 
 export default function RecentCallList({ calls }: { calls: CallHistory[] }) {
@@ -16,6 +16,7 @@ export default function RecentCallList({ calls }: { calls: CallHistory[] }) {
       horizontal
       showsHorizontalScrollIndicator={false}
       data={recentFriends}
+      keyExtractor={(item, index) => item + index.toString()}
       renderItem={({ item, index }) => <FriendCard friend={item} />}
     />
   );
