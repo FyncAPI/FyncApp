@@ -1,11 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Contact, PhoneNumber, presentFormAsync } from "expo-contacts";
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { AppState, Linking } from "react-native";
 import { useUserContext } from "../../hooks";
 import { useContact } from "../../hooks/useContact";
 import { useFriends } from "../../hooks/useFriends";
 import { CallHistory, Friend, FriendsData } from "../user/types";
+import { UserContext } from "../user/userContext";
 
 interface FriendContextInterface {
   friends: Friend[];
@@ -35,7 +36,7 @@ export const FriendContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { saveFriendsData, contacts } = useUserContext();
+  const { saveFriendsData, contacts } = useContext(UserContext);
   const { friends, setFriends } = useFriends();
   const { getContacts } = useContact();
   const [isCalling, setIsCalling] = useState<Friend["contactId"]>("");
@@ -91,15 +92,14 @@ export const FriendContextProvider = ({
       setIsCalling("");
       setFinishedCall(false);
 
-      saveFriendsData((prev: FriendsData) => ({
-        ...prev,
+      saveFriendsData({
         recentCalls: [
           {
             contactId: isCalling,
             date: new Date(),
           },
         ],
-      }));
+      });
     }
   }, [finishedCall]);
 
@@ -147,7 +147,6 @@ export const FriendContextProvider = ({
 
       saveFriendsData({
         friends: newFriends,
-        recentCalls,
       });
     });
   };
@@ -172,12 +171,10 @@ export const FriendContextProvider = ({
 
   const addFriends = (newFriends: Friend[]) => {
     // add the array of new friends to the old friends
-    const newFriendsData: FriendsData = {
-      friends: [...friends, ...newFriends],
-    };
+    const newFriendsList: Friend[] = [...friends, ...newFriends];
 
-    console.log("new friends", newFriendsData.friends.length);
-    updateFriends(newFriendsData.friends);
+    console.log("new friends", newFriendsList.length);
+    updateFriends(newFriendsList);
   };
 
   const removeFriend = (friendId: Friend["contactId"]) => {

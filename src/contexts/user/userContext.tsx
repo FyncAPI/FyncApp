@@ -16,7 +16,7 @@ interface UserContextInterface {
   unfavoriteFriend: (friendId: Friend["contactId"]) => void;
 
   saveUserData: (user: UserData, stopLoading?: () => void) => void;
-  saveFriendsData: (friendsData: FriendsData) => void;
+  saveFriendsData: (friendsData: Partial<FriendsData>) => void;
 
   deleteUserData: () => void;
 }
@@ -51,16 +51,28 @@ export function UserContextProvider({
     setUserData(user);
   };
 
-  const saveFriendsData = (friendsData: FriendsData) => {
+  const saveFriendsData = (friendsData: Partial<FriendsData>) => {
     if (!friendsData) return;
     // save user to async storage
 
-    saveValueAsync("friendsData", friendsData);
+    getValue("friendsData").then((data) => {
+      console.log(data, "data");
+      if (!data) {
+        console.log("no data");
+      }
+      const fd: FriendsData = JSON.parse(data || "{}");
+      console.log(fd, "fd");
+      const newFriendsData = { ...fd, ...friendsData };
+      console.log(newFriendsData, "newFriendsData");
+
+      saveValueAsync("friendsData", newFriendsData);
+    });
   };
 
   const deleteUserData = () => {
     // delete user from async storage
-    saveValueAsync("user", "");
+    // saveValueAsync("user", "");
+    clearAS();
     saveFriendsData({} as FriendsData);
     setIsRegistered(false);
     setUserData({} as UserData);
@@ -155,5 +167,15 @@ const getValue = async (key: string) => {
   } catch (e) {
     // error reading Value
     console.log("error getting value", e);
+  }
+};
+
+const clearAS = async () => {
+  try {
+    console.log("clearing storage");
+    await AsyncStorage.clear();
+  } catch (e) {
+    // clear error
+    console.log("error clearing storage", e);
   }
 };

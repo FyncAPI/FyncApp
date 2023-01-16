@@ -1,9 +1,16 @@
 import React, { useContext, useEffect } from "react";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import {
+  CompositeNavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import {
   RootStackNavigationProp,
-  RootStackParamList,
   RootStackScreenProps,
+  RootTabParamList,
+  RootStackParamList,
+  FriendStackParamList,
 } from "../../../../types";
 import { UserContext } from "../../../contexts/user/userContext";
 import {
@@ -30,10 +37,20 @@ import { SvgXml } from "react-native-svg";
 import { BlurView } from "expo-blur";
 import { Alert, StyleSheet, TouchableOpacity } from "react-native";
 import { presentFormAsync } from "expo-contacts";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import {
+  NativeStackNavigationProp,
+  NativeStackNavigatorProps,
+} from "@react-navigation/native-stack/lib/typescript/src/types";
+
+type NavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<RootTabParamList, "Home">,
+  NativeStackNavigationProp<RootStackParamList>
+>;
 
 export function FriendScreen() {
-  const navigation = useNavigation<RootStackNavigationProp<"Friend">>();
-  const route = useRoute<RouteProp<RootStackParamList, "Friend">>();
+  const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<FriendStackParamList, "Friend">>();
 
   const { userData, favoriteFriend } = useContext(UserContext);
   const { friends, removeFriend, editContact } = useContext(FriendContext);

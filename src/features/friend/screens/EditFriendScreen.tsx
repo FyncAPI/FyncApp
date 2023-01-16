@@ -15,17 +15,17 @@ import React from "react";
 import { Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SvgXml } from "react-native-svg";
-import { RootStackParamList } from "../../../../types";
 import BackButton from "../../../components/BackButton";
 import { DismissKeyboardView } from "../../../components/DismissKeyboardView";
 import { SafeTop } from "../../../components/SafeTop";
 import { FriendContext } from "../../../contexts/friend/FriendContext";
 import { Friend } from "../../../contexts/user/types";
+import { FriendStackParamList } from "../../../../types";
 
 export const EditFriendScreen = () => {
   const {
     params: { contactId },
-  } = useRoute<RouteProp<RootStackParamList, "EditFriend">>();
+  } = useRoute<RouteProp<FriendStackParamList, "EditFriend">>();
 
   const [friend, setFriend] = React.useState<Friend>({} as Friend);
 

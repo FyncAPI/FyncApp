@@ -5,7 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import * as Linking from "expo-linking";
 import { useNavigation } from "@react-navigation/native";
 import { Dimensions, TouchableOpacity } from "react-native";
-import { RootStackNavigationProp } from "../../types";
+import { RootStackNavigationProp, RootTabNavigationProp } from "../../types";
 import { FriendContext } from "../contexts/friend/FriendContext";
 import { SvgXml } from "react-native-svg";
 import { SettingsContext } from "../contexts/settings/SettingsContext";
@@ -18,7 +18,7 @@ export default function FriendCard({
   listLength?: number;
   friend: Friend;
 }) {
-  const navigation = useNavigation<RootStackNavigationProp<"Home">>();
+  const navigation = useNavigation<RootTabNavigationProp<"Home">>();
 
   const { callFriend } = useContext(FriendContext);
   const { carouselNumColumns } = React.useContext(SettingsContext);
@@ -33,7 +33,10 @@ export default function FriendCard({
         callFriend(friend?.contact.phoneNumbers, friend?.contact.id);
       }}
       onLongPress={() => {
-        navigation.navigate("Friend", { id: friend?.contact.id });
+        navigation.navigate("FriendStack", {
+          screen: "Friend",
+          params: { id: friend?.contact.id },
+        });
       }}
       delayLongPress={500}
       // style={{ flex: 0.5, zIndex: 20 }}

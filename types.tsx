@@ -33,32 +33,40 @@ export type AuthStackParamList = {
   Form: undefined;
 };
 
-export type RootTabParamList = {
-  HomeStack: undefined;
-  AppStack: undefined;
-  ExploreStack: undefined;
+export type RootStackParamList = {
+  RootTab: NavigatorScreenParams<RootTabParamList>;
+  AppStack: NavigatorScreenParams<AppStackParamList>;
+  AddStack: NavigatorScreenParams<AddStackParamList>;
+  FriendStack: NavigatorScreenParams<FriendStackParamList>;
+  UserStack: NavigatorScreenParams<UserStackParamList>;
 };
 
-export type RootStackParamList = {
+export type RootTabParamList = {
   Home: undefined;
-  User: undefined;
+  Apps: undefined;
+  Explore: undefined;
+};
+
+export type FriendStackParamList = {
+  Friend: { id: string };
+
+  EditFriend: { contactId: string };
+};
+
+export type AddStackParamList = {
   AddFriend: undefined;
   AddFromContacts: undefined;
   AddNewFriend: undefined;
-  EditFriend: { contactId: string };
-  Friend: { id: string };
+};
+
+export type UserStackParamList = {
+  User: undefined;
 };
 
 export type AppStackParamList = {
-  EnableOnline: undefined;
+  // EnableOnline: undefined;
   AppList: undefined;
   App: { id: string };
-};
-
-export type ExploreStackParamList = {
-  Home: undefined;
-  App: { id: string };
-  Event: { id: string };
 };
 
 export type AuthStackScreenProps<Screen extends keyof AuthStackParamList> =
@@ -66,6 +74,27 @@ export type AuthStackScreenProps<Screen extends keyof AuthStackParamList> =
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
+
+export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
+  BottomTabScreenProps<RootTabParamList, Screen>;
+
+export type FriendStackScreenProps<Screen extends keyof FriendStackParamList> =
+  NativeStackScreenProps<FriendStackParamList, Screen>;
+
+export type AddStackScreenProps<Screen extends keyof AddStackParamList> =
+  NativeStackScreenProps<AddStackParamList, Screen>;
+
+export type UserStackScreenProps<Screen extends keyof UserStackParamList> =
+  NativeStackScreenProps<UserStackParamList, Screen>;
+
+export type AppStackScreenProps<Screen extends keyof AppStackParamList> =
+  NativeStackScreenProps<AppStackParamList, Screen>;
+
+export type RootTabNavigationProp<Screen extends keyof RootTabParamList> =
+  CompositeNavigationProp<
+    BottomTabNavigationProp<RootTabParamList, Screen>,
+    NativeStackNavigationProp<RootStackParamList>
+  >;
 
 export type RootStackNavigationProp<Screen extends keyof RootStackParamList> =
   CompositeNavigationProp<
@@ -85,9 +114,21 @@ export type AppStackNavigationProp<Screen extends keyof AppStackParamList> =
     NativeStackNavigationProp<AppStackParamList>
   >;
 
-export type ExploreStackNavigationProp<
-  Screen extends keyof ExploreStackParamList
+export type FriendStackNavigationProp<
+  Screen extends keyof FriendStackParamList
 > = CompositeNavigationProp<
-  BottomTabNavigationProp<ExploreStackParamList, Screen>,
-  NativeStackNavigationProp<ExploreStackParamList>
+  BottomTabNavigationProp<FriendStackParamList, Screen>,
+  NativeStackNavigationProp<FriendStackParamList>
 >;
+
+export type AddStackNavigationProp<Screen extends keyof AddStackParamList> =
+  CompositeNavigationProp<
+    BottomTabNavigationProp<AddStackParamList, Screen>,
+    NativeStackNavigationProp<AddStackParamList>
+  >;
+
+export type UserStackNavigationProp<Screen extends keyof UserStackParamList> =
+  CompositeNavigationProp<
+    BottomTabNavigationProp<UserStackParamList, Screen>,
+    NativeStackNavigationProp<UserStackParamList>
+  >;

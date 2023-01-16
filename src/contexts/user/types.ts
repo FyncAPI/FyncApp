@@ -59,7 +59,6 @@ export interface Friend extends User {
 export interface UserData {
   // friends: Friend[];
   // memories: Memory[];
-  recents: CallHistory[];
   favorites: Friend[];
   suggestions: Friend[];
   profile: User;
