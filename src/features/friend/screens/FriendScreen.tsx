@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import {
   RootStackNavigationProp,
-  RootStackParamList,
+  HomeStackParamList,
   RootStackScreenProps,
 } from "../../../../types";
 import { UserContext } from "../../../contexts/user/userContext";
@@ -33,7 +33,7 @@ import { presentFormAsync } from "expo-contacts";
 
 export function FriendScreen() {
   const navigation = useNavigation<RootStackNavigationProp<"Friend">>();
-  const route = useRoute<RouteProp<RootStackParamList, "Friend">>();
+  const route = useRoute<RouteProp<HomeStackParamList, "Friend">>();
 
   const { userData, favoriteFriend } = useContext(UserContext);
   const { friends, removeFriend, editContact } = useContext(FriendContext);

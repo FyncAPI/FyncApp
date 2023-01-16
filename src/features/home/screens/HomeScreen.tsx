@@ -26,6 +26,7 @@ import {
   RootStackNavigationProp,
   RootStackParamList,
   RootStackScreenProps,
+  RootTabParamList,
 } from "../../../../types";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -36,12 +37,12 @@ import LoadingIndicator from "../../../components/LoadingIndicator";
 import RecentCallList from "../../../components/RecentCallList";
 
 type HomeScreenNavigationProp = CompositeNavigationProp<
-  BottomTabNavigationProp<RootStackParamList, "Home">,
+  BottomTabNavigationProp<RootTabParamList, "Home">,
   NativeStackNavigationProp<RootStackParamList>
 >;
 
 const HomeScreen = () => {
-  const navigation = useNavigation<RootStackNavigationProp<"Home">>();
+  const navigation = useNavigation<HomeScreenNavigationProp>();
   const { width } = Dimensions.get("window");
   const { bottom } = useSafeAreaInsets();
   const { userData } = React.useContext(UserContext);
@@ -55,7 +56,7 @@ const HomeScreen = () => {
       <HStack space={4} alignItems="center" pl="5" _android={{ mt: 3 }}>
         <Icon
           onPress={() => {
-            navigation.navigate("User");
+            navigation.navigate("UserStack", { screen: "User" });
           }}
           size="3xl"
           as={<Ionicons name="person-circle" />}
@@ -63,7 +64,7 @@ const HomeScreen = () => {
         <Heading fontSize={"4xl"}>Fync</Heading>
         <Icon
           onPress={() => {
-            navigation.navigate("AddFriend");
+            navigation.navigate("AddStack", { screen: "AddFromContacts" }); //navigation.navigate("AddFriend
           }}
           ml="auto"
           mr={4}
@@ -80,7 +81,7 @@ const HomeScreen = () => {
           {
             title: "Recents",
             horizontal: true,
-            data: recentCalls,
+            data: recentCalls || [],
           },
           {
             title: "Favorites",
@@ -91,7 +92,7 @@ const HomeScreen = () => {
             title: "All",
             numColumns: 3,
             carousel: true,
-            data: friends,
+            data: friends || [],
           },
           // {
           //   title: "Keep in touch",
