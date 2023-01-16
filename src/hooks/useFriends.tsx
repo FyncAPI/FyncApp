@@ -3,6 +3,7 @@ import { Contact } from "expo-contacts";
 import { useEffect, useState } from "react";
 import { Friend } from "../contexts/user/types";
 import { useContact } from "./useContact";
+import { getFriendsDataAS } from "../contexts/AsyncStorageService";
 
 export const useFriends = () => {
   const [friends, setFriends] = useState<Friend[]>([]);
@@ -19,10 +20,10 @@ export const useFriends = () => {
 
   const getFriendsData = async () => {
     try {
-      const friendsData = await AsyncStorage.getItem("@friendsData");
+      const friendsData = await getFriendsDataAS();
       // console.log(friendsData, "friendsData");
       if (friendsData && contacts.length > 0) {
-        const parsedFriendsData = JSON.parse(friendsData);
+        const parsedFriendsData = friendsData;
         // update friends with new contacts
         const newFriends = parsedFriendsData.friends.map((friend: Friend) => {
           const contact = contacts.find(

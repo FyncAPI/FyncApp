@@ -47,7 +47,9 @@ export const LandingScreen = () => {
         />
       ))}
       <View flex={1} />
-      <Button onPress={() => navigation.navigate("Form")}>Get Started</Button>
+      <Button variant={"rounded"} onPress={() => navigation.navigate("Form")}>
+        Get Started
+      </Button>
       <SafeBottom />
     </View>
   );

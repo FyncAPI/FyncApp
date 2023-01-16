@@ -19,6 +19,7 @@ import {
   generateAvatar,
 } from "../../../../contexts/friend/FriendService";
 import { useLoading } from "../../../../hooks/useLoading";
+import { FriendContext } from "../../../../contexts/friend/FriendContext";
 
 export default function AuthFormScreen() {
   const [page, setPage] = React.useState(1);
@@ -34,7 +35,8 @@ export default function AuthFormScreen() {
   // const {stopLoading, startLoading, loading} = useLoading()
   const [loading, setLoading] = React.useState(false);
 
-  const { saveUserData, saveFriendsData, contacts } = useContext(UserContext);
+  const { saveUserData, contacts } = useContext(UserContext);
+  const { saveFriendsData } = useContext(FriendContext);
 
   const navigation = useNavigation<AuthStackNavigationProp<"Form">>();
 
@@ -133,6 +135,7 @@ export default function AuthFormScreen() {
             bg: "gray.400",
           }}
           mb="2"
+          variant={"rounded"}
         >
           {page == 1 ? "Finish" : "Next"}
         </Button>

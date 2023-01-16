@@ -6,8 +6,10 @@ import {
   AuthStackParamList,
   ExploreStackParamList,
   NavigationParamList,
-  RootStackParamList,
+  HomeStackParamList,
   RootTabParamList,
+  RootStackParamList,
+  UserStackParamList,
 } from "../../types";
 import { FriendContextProvider } from "../contexts/friend/FriendContext";
 import { UserContext } from "../contexts/user/userContext";
@@ -45,7 +47,7 @@ export function Navigation() {
       }}
     >
       {isRegistered ? (
-        <Stack.Screen name="RootStack" component={RootTabNavigator} />
+        <Stack.Screen name="RootStack" component={RootStackNavigator} />
       ) : (
         <Stack.Screen name="AuthStack" component={AuthStackNavigator} />
       )}
@@ -71,6 +73,23 @@ function AuthStackNavigator() {
   );
 }
 
+const RootStack = createNativeStackNavigator<RootStackParamList>();
+
+function RootStackNavigator() {
+  return (
+    <RootStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <RootStack.Screen name="Root" component={RootTabNavigator} />
+      <RootStack.Screen name="Friend" component={FriendScreen} />
+      <RootStack.Screen name="User" component={UserStackNavigator} />
+      <RootStack.Screen name="App" component={AppStackNavigator} />
+    </RootStack.Navigator>
+  );
+}
+
 const RootTab = createBottomTabNavigator<RootTabParamList>();
 
 function RootTabNavigator() {
@@ -83,22 +102,16 @@ function RootTabNavigator() {
       screenOptions={{
         tabBarShowLabel: false,
         tabBarBadgeStyle: {},
-        // tabBarLabelPosition: "beside-icon",
         tabBarStyle: {
           position: "absolute",
           paddingBottom: 10 + insets.bottom,
           paddingTop: 20,
           marginTop: 0,
 
-          // marginHorizontal: 20,
-          // borderRadius: 30,
           overflow: "hidden",
           borderWidth: 0,
           backgroundColor: "transparent",
-          //     ? Colors.dark.business.bottomBar
-          //     : Colors.light.business.bottomBar,
 
-          // ...shadow.shadowIn,
           height: 60 + insets.bottom,
           borderTopWidth: 0,
           borderTopColor: "transparent",
@@ -120,92 +133,65 @@ function RootTabNavigator() {
       }}
     >
       <RootTab.Screen
-        name="HomeStack"
-        component={RootStackNavigator}
+        name="HomeTab"
+        component={HomeScreen}
         options={{
-          tabBarIcon: ({
-            focused,
-            color,
-            size,
-          }: {
-            focused: boolean;
-            color: string;
-            size: number;
-          }) => (
-            <RemixIcons
-              name={focused ? "home" : "home-outline"}
-              color={color}
-              size={35}
-            />
-          ),
+          tabBarIcon: TabBarIcon("home"),
         }}
       />
       <RootTab.Screen
-        name="AppStack"
-        component={fyncOnlineEnabled ? AppStackNavigator : EnableOnlineScreen}
+        name="AppTab"
+        component={fyncOnlineEnabled ? AppListScreen : EnableOnlineScreen}
         options={{
-          tabBarIcon: ({
-            focused,
-            color,
-            size,
-          }: {
-            focused: boolean;
-            color: string;
-            size: number;
-          }) => (
-            <RemixIcons
-              color={color}
-              size={35}
-              name={focused ? "apps" : "apps-outline"}
-            />
-          ),
+          tabBarIcon: TabBarIcon("apps"),
         }}
       />
       <RootTab.Screen
-        name="ExploreStack"
+        name="ExploreTab"
         component={ExploreStackNavigator}
         options={{
-          tabBarIcon: ({
-            focused,
-            color,
-            size,
-          }: {
-            focused: boolean;
-            color: string;
-            size: number;
-          }) => (
-            <RemixIcons
-              color={color}
-              size={35}
-              name={focused ? "compass" : "compass-outline"}
-            />
-          ),
+          tabBarIcon: TabBarIcon("compass"),
         }}
       />
     </RootTab.Navigator>
   );
 }
 
-const RootStack = createNativeStackNavigator<RootStackParamList>();
+const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
-function RootStackNavigator() {
+function HomeStackNavigator() {
   return (
     <FriendContextProvider>
-      <RootStack.Navigator
+      <HomeStack.Navigator
         screenOptions={{
           headerShown: false,
         }}
       >
-        <RootStack.Screen name="Home" component={HomeScreen} />
-        <RootStack.Screen name="User" component={UserScreen} />
-        <RootStack.Screen name="Friend" component={FriendScreen} />
+        <HomeStack.Screen name="Home" component={HomeScreen} />
+        <HomeStack.Screen name="User" component={UserScreen} />
+        <HomeStack.Screen name="Friend" component={FriendScreen} />
 
-        <RootStack.Screen name="AddFriend" component={AddFromContacts} />
-        <RootStack.Screen name="AddFromContacts" component={AddFromContacts} />
-        <RootStack.Screen name="AddNewFriend" component={AddNewFriendScreen} />
-        <RootStack.Screen name="EditFriend" component={EditFriendScreen} />
-      </RootStack.Navigator>
+        <HomeStack.Screen name="AddFriend" component={AddFromContacts} />
+        <HomeStack.Screen name="AddFromContacts" component={AddFromContacts} />
+        <HomeStack.Screen name="AddNewFriend" component={AddNewFriendScreen} />
+        <HomeStack.Screen name="EditFriend" component={EditFriendScreen} />
+      </HomeStack.Navigator>
     </FriendContextProvider>
+  );
+}
+
+const UserStack = createNativeStackNavigator<UserStackParamList>();
+
+function UserStackNavigator() {
+  return (
+    <UserStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <UserStack.Screen name="UserScreen" component={UserScreen} />
+      {/* <UserStack.Screen name="EditUser" component={EditUserScreen} /> */}
+    </UserStack.Navigator>
   );
 }
 
@@ -224,7 +210,7 @@ function AppStackNavigator() {
       ) : (
         <>
           <AppStack.Screen name="AppList" component={AppListScreen} />
-          <AppStack.Screen name="App" component={AppScreen} />
+          <AppStack.Screen name="AppScreen" component={AppScreen} />
         </>
       )}
     </AppStack.Navigator>
@@ -258,3 +244,22 @@ function ExploreStackNavigator() {
 //     </Tab.Navigator>
 //   );
 // }
+
+const TabBarIcon =
+  (name: "apps" | "compass" | "home") =>
+  ({
+    focused,
+    color,
+    size,
+  }: {
+    focused: boolean;
+    color: string;
+    size: number;
+  }) =>
+    (
+      <RemixIcons
+        color={color}
+        size={35}
+        name={focused ? name : `${name}-outline`}
+      />
+    );

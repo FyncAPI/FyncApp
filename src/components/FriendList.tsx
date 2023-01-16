@@ -7,11 +7,9 @@ export default function FriendList({ friends }: { friends: Friend[] }) {
   // //console.log(friends, "friends");
   if (!friends || friends?.length == 0) {
     return (
-      <View p="2" m={2}>
-        <Text ml={2} fontWeight={"bold"}>
-          no one here
-        </Text>
-      </View>
+      <Text m={"2"} fontSize={"lg"} fontWeight={"light"}>
+        No apps found
+      </Text>
     );
   } else
     return (

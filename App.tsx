@@ -128,13 +128,28 @@ export const theme = extendTheme({
     Button: {
       // Can simply pass default props to change default behaviour of components.
       baseStyle: {
-        rounded: "md",
+        // rounded: "md",
+        p: 4,
+        py: 8,
+        // bg: `#C4D8FC`,
+        _hover: {
+          // bg: `#cddefd`,
+        },
+        _pressed: {
+          // bg: `#abc1e9`,
+        },
+        rounded: "full",
+        _text: {
+          color: `#000`,
+        },
       },
-      defaultProps: {
-        colorScheme: "red",
-      },
+      // defaultProps: {
+      //   colorScheme: "red",
+      // },
       variants: {
         rounded: {
+          p: 4,
+          py: 8,
           bg: `#C4D8FC`,
           _hover: {
             bg: `#cddefd`,
@@ -143,6 +158,9 @@ export const theme = extendTheme({
             bg: `#abc1e9`,
           },
           rounded: "full",
+          _text: {
+            color: `#000`,
+          },
         },
       },
     },

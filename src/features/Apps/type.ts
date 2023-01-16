@@ -3,6 +3,7 @@ export type App = {
   name: string;
   description: string;
   image: string;
+  friends: string[];
   url: string;
   userCount: number;
 };

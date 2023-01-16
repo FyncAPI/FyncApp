@@ -43,15 +43,6 @@ export const convertIdsToContacts = async (
         // phoneNumbers,
         contactId: contact.id,
       };
-
-      // if (!contact.image?.uri) {
-      //   // generate avatar
-      //   generateAvatar(contact.name).then((avatar) => {
-      //     if (!avatar) throw new Error("Avatar not generated");
-      //     friend.avatar = avatar;
-      //   });
-      // }
-
       return friend;
     });
 

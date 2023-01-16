@@ -3,12 +3,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 // import { AuthUser } from "../../constants/UserInterfaces";
 import { Alert } from "react-native";
+import { getUserDataAS } from "../AsyncStorageService";
 // import { auth } from "../../../firebase";
 
 interface AuthUser {
   id: string;
-  contacts: Contact[];
-  friends: Friend[];
   name: string;
 }
 interface AuthContextInterface {
@@ -67,8 +66,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   const getUserFromStorage = async () => {
     try {
-      const value = await AsyncStorage.getItem("@user");
-      if (value !== null) {
+      const value = await getUserDataAS();
+      if (value != null) {
         //console.log("storage data", value);
         const user = JSON.parse(value);
         setAuthUser(user);

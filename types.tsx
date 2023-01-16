@@ -32,37 +32,66 @@ export type AuthStackParamList = {
   Landing: undefined;
   Form: undefined;
 };
+export type RootStackParamList = {
+  Root: NavigatorScreenParams<RootTabParamList>;
+  Friend: NavigatorScreenParams<FriendStackParamList>;
+  User: NavigatorScreenParams<UserStackParamList>;
+  App: NavigatorScreenParams<AppStackParamList>;
+};
 
 export type RootTabParamList = {
-  HomeStack: undefined;
-  AppStack: undefined;
-  ExploreStack: undefined;
+  HomeTab: undefined;
+  AppTab: undefined;
+  ExploreTab: undefined;
 };
 
-export type RootStackParamList = {
-  Home: undefined;
-  User: undefined;
-  AddFriend: undefined;
-  AddFromContacts: undefined;
-  AddNewFriend: undefined;
-  EditFriend: { contactId: string };
-  Friend: { id: string };
-};
+// export type HomeStackParamList = {
+//   HomeScreen: undefined;
+//   UserScreen: undefined;
+//   AddFriend: undefined;
+//   AddFromContacts: undefined;
+//   AddNewFriend: undefined;
+//   EditFriend: { contactId: string };
+//   FriendScreen: { id: string };
+// };
+
+export type AppType =
+  | "myApps"
+  | "newApps"
+  | "featuredApps"
+  | "popularApps"
+  | "searchApps"
+  | "exploreApps";
 
 export type AppStackParamList = {
   EnableOnline: undefined;
   AppList: undefined;
-  App: { id: string };
+  AppScreen: {
+    id: string;
+    type: AppType;
+  };
 };
 
-export type ExploreStackParamList = {
-  Home: undefined;
-  App: { id: string };
-  Event: { id: string };
+export type FriendStackParamList = {
+  FriendScreen: { id: string };
+  AddFriend: undefined;
+  AddFromContacts: undefined;
+  AddNewFriend: undefined;
+  EditFriend: { contactId: string };
+};
+
+export type UserStackParamList = {
+  UserScreen: undefined;
 };
 
 export type AuthStackScreenProps<Screen extends keyof AuthStackParamList> =
   NativeStackScreenProps<AuthStackParamList, Screen>;
+
+export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
+  BottomTabScreenProps<RootTabParamList, Screen>;
+
+export type RootTabNavigationProp<Screen extends keyof RootTabParamList> =
+  BottomTabNavigationProp<RootTabParamList, Screen>;
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
@@ -84,10 +113,3 @@ export type AppStackNavigationProp<Screen extends keyof AppStackParamList> =
     BottomTabNavigationProp<AppStackParamList, Screen>,
     NativeStackNavigationProp<AppStackParamList>
   >;
-
-export type ExploreStackNavigationProp<
-  Screen extends keyof ExploreStackParamList
-> = CompositeNavigationProp<
-  BottomTabNavigationProp<ExploreStackParamList, Screen>,
-  NativeStackNavigationProp<ExploreStackParamList>
->;

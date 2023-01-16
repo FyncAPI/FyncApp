@@ -3,15 +3,22 @@ import React from "react";
 import { App } from "../type";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { AppStackNavigationProp, AppStackParamList } from "../../../../types";
+import {
+  AppStackNavigationProp,
+  AppStackParamList,
+  AppType,
+} from "../../../../types";
 
-export const AppCard = ({ app }: { app: App }) => {
+export const AppCard = ({ app, type }: { app: App; type: AppType }) => {
   const navigation = useNavigation<AppStackNavigationProp<"AppList">>();
 
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("App", { id: app._id });
+        navigation.navigate("App", {
+          screen: "AppScreen",
+          params: { id: app._id, type },
+        });
       }}
     >
       <View m={1}>

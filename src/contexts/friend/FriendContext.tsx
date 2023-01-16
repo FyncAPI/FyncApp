@@ -6,12 +6,13 @@ import { useUserContext } from "../../hooks";
 import { useContact } from "../../hooks/useContact";
 import { useFriends } from "../../hooks/useFriends";
 import { CallHistory, Friend, FriendsData } from "../user/types";
+import { saveFriendsAS, saveRecentCallsAS } from "../AsyncStorageService";
 
 interface FriendContextInterface {
   friends: Friend[];
   updateFriends: (friends: Friend[]) => void;
   editContact: (contactId: string) => Promise<void>;
-  //   saveFriendsData: (friendsData: FriendsData) => void;
+  saveFriendsData: (friendsData: Partial<FriendsData>) => void;
 
   addFriends: (friends: Friend[]) => void;
   removeFriend: (friendId: Friend["contactId"]) => void;
@@ -28,6 +29,7 @@ interface FriendContextInterface {
   //   setFriends: (friends: Friend[]) => void;
   //   increaseFriendship: (friendId: Friend["id"]) => void;
 }
+
 export const FriendContext = createContext({} as FriendContextInterface);
 
 export const FriendContextProvider = ({
@@ -35,7 +37,6 @@ export const FriendContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { saveFriendsData, contacts } = useUserContext();
   const { friends, setFriends } = useFriends();
   const { getContacts } = useContact();
   const [isCalling, setIsCalling] = useState<Friend["contactId"]>("");
@@ -75,10 +76,6 @@ export const FriendContextProvider = ({
   }, []);
 
   useEffect(() => {
-    console.log("contacts changed", "asdsd");
-  }, [contacts]);
-
-  useEffect(() => {
     if (finishedCall && isCalling) {
       setRecentCalls((prev) => [
         {
@@ -91,17 +88,33 @@ export const FriendContextProvider = ({
       setIsCalling("");
       setFinishedCall(false);
 
-      saveFriendsData((prev: FriendsData) => ({
-        ...prev,
+      saveFriendsData({
         recentCalls: [
           {
             contactId: isCalling,
             date: new Date(),
           },
         ],
-      }));
+      });
     }
   }, [finishedCall]);
+
+  const saveFriendsData = (friendsData: Partial<FriendsData>) => {
+    if (!friendsData) return;
+    // save user to async storage
+
+    console.log("saving friends sata", friendsData);
+
+    // saveValueAsync("friendsData", friendsData);
+    Object.keys(friendsData).forEach((key) => {
+      if (key === "friends") {
+        saveFriendsAS(friendsData.friends);
+      }
+      if (key === "recentCalls") {
+        saveRecentCallsAS(friendsData.recentCalls);
+      }
+    });
+  };
 
   const updateFriends = async (newfriends: Friend[]) => {
     // merge new friends with old friends
@@ -118,7 +131,6 @@ export const FriendContextProvider = ({
     setFriends(newFriends);
     saveFriendsData({
       friends: newFriends,
-      recentCalls,
     });
   };
 
@@ -174,6 +186,7 @@ export const FriendContextProvider = ({
     // add the array of new friends to the old friends
     const newFriendsData: FriendsData = {
       friends: [...friends, ...newFriends],
+      recentCalls,
     };
 
     console.log("new friends", newFriendsData.friends.length);
@@ -187,7 +200,7 @@ export const FriendContextProvider = ({
 
     const newFriends = friends.filter((f) => f.contact.id !== friendId);
     setFriends(newFriends);
-    saveFriendsData({ friends: newFriends });
+    saveFriendsData({ friends: newFriends, recentCalls });
   };
 
   const callFriend = async (
@@ -214,7 +227,7 @@ export const FriendContextProvider = ({
         friends,
         updateFriends,
         editContact,
-        //   saveFriendsData,
+        saveFriendsData,
 
         addFriends,
         removeFriend,

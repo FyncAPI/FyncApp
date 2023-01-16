@@ -10,7 +10,7 @@ import {
 import React, { useContext } from "react";
 import { SafeBottom, SafeTop } from "../../../components/SafeTop";
 import { useNavigation } from "@react-navigation/native";
-import { RootStackNavigationProp } from "../../../../types";
+import { AppType, RootStackNavigationProp } from "../../../../types";
 import { Ionicons } from "@expo/vector-icons";
 import { AnimatedCircles } from "../components/AnimatedCircles";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
@@ -19,11 +19,14 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AppList } from "../components/AppList";
 import { App } from "../type";
 import { SettingsContext } from "../../../contexts/settings/SettingsContext";
+import { AppsContext } from "../../../contexts/apps/AppsContext";
 
 export const AppListScreen = () => {
   const navigation = useNavigation<RootStackNavigationProp<"Home">>();
   const { bottom } = useSafeAreaInsets();
   const { fyncOnlineEnabled } = useContext(SettingsContext);
+  const { myApps, newApps, featuredApps, popularApps } =
+    useContext(AppsContext);
   // const matrix = useSharedValue(identity4);
   const pan = Gesture.Pan();
   const pinch = Gesture.Pinch();
@@ -66,20 +69,26 @@ export const AppListScreen = () => {
         pb={bottom}
         sections={[
           {
-            title: "Your Apps",
+            title: "My Apps",
+            type: "myApps",
             horizontal: true,
-            data: mockApps,
+            data: myApps,
           },
           {
             title: "New Apps",
+            type: "newApps",
             horizontal: true,
-            data: mockApps,
+            data: newApps,
+          },
+          {
+            title: "Featured Apps",
+            type: "featuredApps",
+            data: featuredApps,
           },
           {
             title: "Popular Apps",
-            numColumns: 3,
-            carousel: true,
-            data: mockApps,
+            type: "popularApps",
+            data: popularApps,
           },
         ]}
         renderItem={({ item, section }) =>
@@ -90,7 +99,11 @@ export const AppListScreen = () => {
         }
         renderSectionHeader={({ section }) => (
           <>
-            <AppList apps={section.data} title={section.title} />
+            <AppList
+              apps={section.data}
+              title={section.title}
+              type={section.type as AppType}
+            />
           </>
         )}
         keyExtractor={(item) => {
@@ -98,7 +111,7 @@ export const AppListScreen = () => {
         }}
         stickySectionHeadersEnabled
         renderSectionFooter={({ section }) =>
-          section.safeBottom ? <SafeBottom /> : null
+          section?.safeBottom ? <SafeBottom /> : null
         }
       />
       {/* <AnimatedCircles /> */}
