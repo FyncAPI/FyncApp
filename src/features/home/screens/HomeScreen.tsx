@@ -83,6 +83,7 @@ const HomeScreen = () => {
       <SectionList
         showsVerticalScrollIndicator={false}
         pb={bottom}
+        mt={2}
         sections={[
           {
             title: "Recents",
@@ -115,27 +116,17 @@ const HomeScreen = () => {
         }
         renderSectionHeader={({ section }) => (
           <>
+            {section.data.length > 0 && (
+              <Heading fontSize={"2xl"} pl="5" my="2">
+                {section.title}
+              </Heading>
+            )}
             {section.title == "Favorites" && section.data.length > 0 ? (
-              <>
-                <Heading fontSize={"2xl"} pl="5" my="5">
-                  {section.title}
-                </Heading>
-                <FriendList friends={section.data} />
-              </>
+              <FriendList friends={section.data} />
             ) : section.title == "All" ? (
-              <>
-                <Heading fontSize={"2xl"} pl="5" my="5">
-                  {section.title}
-                </Heading>
-                <FriendCarousel friends={section.data} />
-              </>
+              <FriendCarousel friends={section.data} />
             ) : section.title == "Recents" && section.data.length > 0 ? (
-              <>
-                <Heading fontSize={"2xl"} pl="5" my="5">
-                  {section.title}
-                </Heading>
-                <RecentCallList calls={section.data} />
-              </>
+              <RecentCallList calls={section.data} />
             ) : null}
           </>
         )}
