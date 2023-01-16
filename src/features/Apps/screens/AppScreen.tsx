@@ -1,15 +1,41 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { Heading, ScrollView, View } from "native-base";
-import React from "react";
-import { AppStackNavigationProp, AppStackParamList } from "../../../../types";
+import { Button, Heading, Image, ScrollView, Text, View } from "native-base";
+import React, { useContext } from "react";
+import {
+  AppStackNavigationProp,
+  AppStackParamList,
+  NavigationProp,
+} from "../../../../types";
 import BackButton from "../../../components/BackButton";
 import { LinearGradient } from "expo-linear-gradient";
+import { AppsContext } from "../../../contexts/apps/AppsContext";
+import { SafeBottom, SafeTop } from "../../../components/SafeTop";
+import FriendList from "../../../components/FriendList";
+import { Linking } from "react-native";
 
 export const AppScreen = () => {
-  const navigation = useNavigation<AppStackNavigationProp<"App">>();
+  const navigation = useNavigation<NavigationProp<"Apps">>();
   const route = useRoute<RouteProp<AppStackParamList, "App">>();
 
-  const { id } = route.params;
+  const { id, type } = route.params;
+  const { getAppData } = useContext(AppsContext);
+
+  const [app, setApp] = React.useState(getAppData(id, type));
+
+  if (!app) {
+    return (
+      <View
+        flex={1}
+        justifyContent="center"
+        alignItems="center"
+        variant="background"
+      >
+        <BackButton />
+        <Heading>App not found</Heading>
+      </View>
+    );
+  }
+
   return (
     <>
       <BackButton />
@@ -21,7 +47,7 @@ export const AppScreen = () => {
           top: 0,
           left: 0,
           width: "100%",
-          height: "100%",
+          height: "50%",
         }}
         colors={["black", "transparent", "transparent", "transparent"]}
       />
@@ -33,7 +59,7 @@ export const AppScreen = () => {
         alignSelf={"center"}
         fontSize="3xl"
       >
-        {id}
+        {app.name}
       </Heading>
 
       <ScrollView
@@ -42,9 +68,67 @@ export const AppScreen = () => {
         flexGrow={1}
         _contentContainerStyle={{
           flexGrow: 1,
-          justifyContent: "space-between",
+          // justifyContent: "space-between",
         }}
-      ></ScrollView>
+      >
+        <SafeTop />
+        <Image
+          source={{ uri: app.image }}
+          alt={app.name + " image"}
+          mt={"20"}
+          w="220"
+          h="220"
+          rounded={"26px"}
+          alignSelf={"center"}
+          mb={"5"}
+        />
+        <Text
+          fontWeight={"thin"}
+          my={5}
+          alignSelf={"center"}
+          fontSize={"xl"}
+          mt={"2"}
+        >
+          {app.description}
+        </Text>
+        <View m="2" rounded={25} bg="gray.800" p="1.5" pl={"2.5"}>
+          <Heading m={"1"}>Friends</Heading>
+          <FriendList friends={app.friends} />
+        </View>
+
+        {/* <View m="2" rounded={25} bg="gray.800" p="1.5" pl={"2.5"}>
+          <Heading m={"1"}>Reviews</Heading>
+          <Text m={"2"} fontWeight={"light"} fontSize={"lg"}>
+            No reviews yet
+          </Text>
+        </View>
+        <View m="2" rounded={25} bg="gray.800" p="1.5" pl={"2.5"}>
+          <Heading m={"1"}>Comments</Heading>
+          <Text m={"2"} fontWeight={"light"} fontSize={"lg"}>
+            No comments yet
+          </Text>
+        </View>
+        <View m="2" rounded={25} bg="gray.800" p="1.5" pl={"2.5"}>
+          <Heading m={"1"}>Updates</Heading>
+          <Text m={"2"} fontWeight={"light"} fontSize={"lg"}>
+            No updates yet
+          </Text>
+        </View> */}
+
+        <Button
+          mt={"auto"}
+          mx={5}
+          variant={"rounded"}
+          onPress={() => {
+            Linking.openURL(app.url);
+          }}
+        >
+          <Text fontSize={"lg"} fontWeight={"medium"} color="black">
+            Let's Go
+          </Text>
+        </Button>
+        <SafeBottom />
+      </ScrollView>
     </>
   );
 };

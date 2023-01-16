@@ -19,6 +19,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AppList } from "../components/AppList";
 import { App } from "../apps.type";
 import { SettingsContext } from "../../../contexts/settings/SettingsContext";
+import { AppType, AppsContext } from "../../../contexts/apps/AppsContext";
 
 export const AppListScreen = () => {
   const navigation = useNavigation<RootStackNavigationProp<"Home">>();
@@ -29,16 +30,7 @@ export const AppListScreen = () => {
   const pinch = Gesture.Pinch();
   const rotation = Gesture.Rotation();
 
-  const mockApps: App[] = [
-    {
-      name: "App 1",
-      image: "https://picsum.photos/200",
-      _id: "1",
-      description: "asdfasdf",
-      url: "https://google.com",
-      userCount: 200,
-    },
-  ];
+  const { newApps, popularApps, myApps } = useContext(AppsContext);
 
   return (
     <View variant="background" flex={1}>
@@ -66,31 +58,32 @@ export const AppListScreen = () => {
         pb={bottom}
         sections={[
           {
-            title: "Your Apps",
+            title: "My Apps",
+            type: "myApps",
             horizontal: true,
-            data: mockApps,
+            data: myApps,
           },
           {
             title: "New Apps",
+            type: "newApps",
             horizontal: true,
-            data: mockApps,
+            data: newApps,
           },
           {
             title: "Popular Apps",
-            numColumns: 3,
-            carousel: true,
-            data: mockApps,
+            type: "popularApps",
+            horizontal: true,
+            data: popularApps,
           },
         ]}
-        renderItem={({ item, section }) =>
-          section.horizontal || section.numColumns ? null : (
-            // <FriendCard bigger={false} />
-            <Text>sd</Text>
-          )
-        }
+        renderItem={({ item, section }) => null}
         renderSectionHeader={({ section }) => (
           <>
-            <AppList apps={section.data} title={section.title} />
+            <AppList
+              apps={section.data}
+              title={section.title}
+              type={section.type as AppType}
+            />
           </>
         )}
         keyExtractor={(item) => {

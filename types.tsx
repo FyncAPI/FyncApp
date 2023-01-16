@@ -16,6 +16,7 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
+import { AppType } from "./src/contexts/apps/AppsContext";
 
 declare global {
   namespace ReactNavigation {
@@ -66,7 +67,7 @@ export type UserStackParamList = {
 export type AppStackParamList = {
   // EnableOnline: undefined;
   AppList: undefined;
-  App: { id: string };
+  App: { id: string; type: AppType };
 };
 
 export type AuthStackScreenProps<Screen extends keyof AuthStackParamList> =

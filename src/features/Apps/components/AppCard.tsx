@@ -14,13 +14,14 @@ import {
 } from "../../../../types";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { AppType } from "../../../contexts/apps/AppsContext";
 
 type AppListScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<RootTabParamList, "Apps">,
   NativeStackNavigationProp<RootStackParamList>
 >;
 
-export const AppCard = ({ app }: { app: App }) => {
+export const AppCard = ({ app, type }: { app: App; type: AppType }) => {
   const navigation = useNavigation<AppListScreenNavigationProp>();
 
   return (
@@ -28,7 +29,7 @@ export const AppCard = ({ app }: { app: App }) => {
       onPress={() => {
         navigation.navigate("AppStack", {
           screen: "App",
-          params: { id: app._id },
+          params: { id: app._id, type },
         });
       }}
     >
