@@ -37,6 +37,7 @@ export type AuthStackParamList = {
 export type RootStackParamList = {
   RootTab: NavigatorScreenParams<RootTabParamList>;
   AppStack: NavigatorScreenParams<AppStackParamList>;
+  EventStack: NavigatorScreenParams<EventStackParamList>;
   AddStack: NavigatorScreenParams<AddStackParamList>;
   FriendStack: NavigatorScreenParams<FriendStackParamList>;
   UserStack: NavigatorScreenParams<UserStackParamList>;
@@ -66,8 +67,12 @@ export type UserStackParamList = {
 
 export type AppStackParamList = {
   // EnableOnline: undefined;
-  AppList: undefined;
   App: { id: string; type: AppType };
+};
+
+export type EventStackParamList = {
+  // EnableOnline: undefined;
+  IRLEvent: { id: string; type: EventType };
 };
 
 export type AuthStackScreenProps<Screen extends keyof AuthStackParamList> =

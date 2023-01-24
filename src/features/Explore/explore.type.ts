@@ -23,3 +23,5 @@ export type AppEvent = {
 };
 
 export type ExploreItem = IRLEvent | AppEvent;
+
+export type EventType = ExploreItem["type"];

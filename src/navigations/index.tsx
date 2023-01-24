@@ -5,6 +5,7 @@ import {
   AddStackParamList,
   AppStackParamList,
   AuthStackParamList,
+  EventStackParamList,
   FriendStackParamList,
   NavigationParamList,
   RootStackNavigationProp,
@@ -36,6 +37,7 @@ import { AppScreen } from "../features/Apps/screens/AppScreen";
 import { ExploreScreen } from "../features/Explore/ExploreScreen";
 import { EnableOnlineScreen } from "../features/Apps/screens/EnableOnlineScreen";
 import { SettingsContext } from "../contexts/settings/SettingsContext";
+import { IRLEventScreen } from "../features/Explore/IRLEventScreen";
 const Stack = createNativeStackNavigator<NavigationParamList>();
 
 export function Navigation() {
@@ -87,6 +89,7 @@ function RootStackNavigator() {
         <RootStack.Screen name="FriendStack" component={FriendStackNavigator} />
         <RootStack.Screen name="AddStack" component={AddStackNavigator} />
         <RootStack.Screen name="AppStack" component={AppStackNavigator} />
+        <RootStack.Screen name="EventStack" component={EventStackNavigator} />
         <RootStack.Screen name="UserStack" component={UserStackNavigator} />
       </RootStack.Navigator>
     </FriendContextProvider>
@@ -226,7 +229,19 @@ function AppStackNavigator() {
     </AppStack.Navigator>
   );
 }
+const EventStack = createNativeStackNavigator<EventStackParamList>();
 
+function EventStackNavigator() {
+  return (
+    <EventStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <EventStack.Screen name="IRLEvent" component={IRLEventScreen} />
+    </EventStack.Navigator>
+  );
+}
 const TabBarIcon =
   (name: "apps" | "compass" | "home") =>
   ({
