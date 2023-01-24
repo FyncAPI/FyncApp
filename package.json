@@ -27,6 +27,7 @@
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/native-stack": "^6.9.0",
     "@shopify/flash-list": "1.1.0",
+    "@shopify/react-native-skia": "^0.1.171",
     "axios": "^1.2.1",
     "babel-plugin-inline-import": "^3.0.0",
     "dotenv": "^16.0.3",

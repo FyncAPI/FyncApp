@@ -36,7 +36,15 @@ import { BlurView } from "expo-blur";
 import LoadingIndicator from "../../../components/LoadingIndicator";
 import RecentCallList from "../../../components/RecentCallList";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import Svg, {
+  Circle,
+  G,
+  SvgXml,
+  TextPath,
+  Text as TextS,
+} from "react-native-svg";
+import { processFontFamily } from "expo-font";
+import { FriendBlob } from "../../friend/components/FriendBlob";
 type HomeScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<RootTabParamList, "Home">,
   NativeStackNavigationProp<RootStackParamList>
@@ -50,6 +58,7 @@ const HomeScreen = () => {
   const { friends, recentCalls } = useContext(FriendContext);
 
   const appState = React.useRef(AppState.currentState);
+  const size = 120;
 
   return (
     <View flex={1} variant="background">
@@ -80,7 +89,7 @@ const HomeScreen = () => {
       </Button> */}
 
       {/* <Text>{JSON.stringify(userData.friends[0])}</Text> */}
-      <SectionList
+      {/* <SectionList
         showsVerticalScrollIndicator={false}
         pb={bottom}
         mt={2}
@@ -133,11 +142,11 @@ const HomeScreen = () => {
         keyExtractor={(item) => {
           return item.contactId;
         }}
-        stickySectionHeadersEnabled
         renderSectionFooter={({ section }) =>
           section.safeBottom ? <SafeBottom /> : null
         }
-      />
+      /> */}
+      <FriendBlob friends={friends} />
     </View>
   );
 };

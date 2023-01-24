@@ -57,6 +57,7 @@ export interface Friend extends User {
 }
 
 export interface UserData {
+  _id?: string;
   // friends: Friend[];
   // memories: Memory[];
   favorites: Friend[];

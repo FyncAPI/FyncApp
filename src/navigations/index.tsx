@@ -52,7 +52,6 @@ export function Navigation() {
       ) : (
         <Stack.Screen name="AuthStack" component={AuthStackNavigator} />
       )}
-
       {/* <Stack.Screen name="User" component={UserScreen} /> */}
     </Stack.Navigator>
   );
@@ -220,7 +219,7 @@ function AppStackNavigator() {
         <AppStack.Screen name="EnableOnline" component={EnableOnlineScreen} />
       ) : (
         <> */}
-      <AppStack.Screen name="AppList" component={AppListScreen} />
+      {/* <AppStack.Screen name="AppList" component={AppListScreen} /> */}
       <AppStack.Screen name="App" component={AppScreen} />
       {/* </>
       )} */}

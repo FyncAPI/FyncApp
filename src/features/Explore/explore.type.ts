@@ -1,6 +1,20 @@
-export type event = {
+export type IRLEvent = {
   _id: string;
   name: string;
+  type: "IRL";
+  description: string;
+  mapsLink: string;
+  date: Date;
+  location: string;
+  images: string[];
+  videos?: string[];
+};
+
+export type AppEvent = {
+  _id: string;
+  appId: string;
+  title: string;
+  type: "APP";
   description: string;
   date: Date;
   location: string;
@@ -8,4 +22,4 @@ export type event = {
   videos: string[];
 };
 
-export type ExploreItem = event[];
+export type ExploreItem = IRLEvent | AppEvent;

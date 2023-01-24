@@ -7,8 +7,7 @@ import {
   Text,
   View,
 } from "native-base";
-import React from "react";
-import { SafeBottom, SafeTop } from "../../components/SafeTop";
+import React, { useContext } from "react";
 import {
   CompositeNavigationProp,
   NavigationProp,
@@ -19,6 +18,10 @@ import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { UserContext } from "../../contexts/user/userContext";
+import { EventCard } from "./components/EventCard";
+import { add } from "react-native-reanimated";
+import { SafeTop } from "../../components/SafeTop";
 
 type HomeScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<RootTabParamList, "Explore">,
@@ -27,14 +30,25 @@ type HomeScreenNavigationProp = CompositeNavigationProp<
 
 // make a function that returns a navigation prop type
 
+const func = (x: number) => {
+  return x;
+};
+
 export const ExploreScreen = () => {
   const navigation = useNavigation<NavigationProp<"Explore">>();
   const { bottom } = useSafeAreaInsets();
+  const { exploreItems } = useContext(UserContext);
 
   return (
     <View flex={1} variant="background">
       <SafeTop />
-      <HStack space={4} alignItems="center" pl="5" _android={{ mt: 3 }}>
+      <HStack
+        space={4}
+        alignItems="center"
+        pl="5"
+        // m={"5"}
+        _android={{ mt: 3 }}
+      >
         <Heading fontSize={"4xl"}>Explore</Heading>
 
         <Icon
@@ -49,15 +63,10 @@ export const ExploreScreen = () => {
       </HStack>
       <FlatList
         pb={bottom}
-        data={[
-          {
-            title: "adsff",
-            type: "event",
-          },
-        ]}
-        renderItem={({ item, index }) => <Text>card</Text>}
-        keyExtractor={(item) => {
-          return item._id;
+        data={exploreItems}
+        renderItem={({ item, index }) => {
+          if (item.type === "IRL") return <EventCard event={item} />;
+          if (item.type === "APP") return <Text>user</Text>;
         }}
       />
     </View>

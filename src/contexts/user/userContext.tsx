@@ -4,6 +4,7 @@ import { Friend, FriendsData, Memory, UserData } from "./user.types";
 import { useContact } from "../../hooks/useContact";
 import { Contact } from "expo-contacts";
 import { ExploreItem } from "../../features/Explore/explore.type";
+import { useExploreItems } from "../../hooks/useExploreItems";
 
 interface UserContextInterface {
   userData: UserData;
@@ -37,6 +38,8 @@ export function UserContextProvider({
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
 
   const { contacts } = useContact();
+
+  const { exploreItems } = useExploreItems(userData._id);
 
   useEffect(() => {
     getUserData();
@@ -124,6 +127,7 @@ export function UserContextProvider({
       favorites: newFriends,
     });
   };
+
   const addMemory = (friend: Friend, memory: Memory) => {};
 
   return (
@@ -132,6 +136,7 @@ export function UserContextProvider({
         userData,
         isRegistered,
         contacts,
+        exploreItems,
 
         addMemory,
         saveUserData,
