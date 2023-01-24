@@ -17,6 +17,7 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { AppType } from "./src/contexts/apps/AppsContext";
+import { ExploreEventType } from "./src/features/Explore/explore.type";
 
 declare global {
   namespace ReactNavigation {
@@ -72,7 +73,7 @@ export type AppStackParamList = {
 
 export type EventStackParamList = {
   // EnableOnline: undefined;
-  IRLEvent: { id: string; type: EventType };
+  IRLEvent: { id: string; type: ExploreEventType };
 };
 
 export type AuthStackScreenProps<Screen extends keyof AuthStackParamList> =
