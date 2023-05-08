@@ -13,7 +13,11 @@ import {
   NavigationProp,
   useNavigation,
 } from "@react-navigation/native";
-import { RootStackParamList, RootTabParamList } from "../../../types";
+import {
+  RootStackParamList,
+  RootTabNavigationProp,
+  RootTabParamList,
+} from "../../../types";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
@@ -23,19 +27,10 @@ import { EventCard } from "./components/EventCard";
 import { add } from "react-native-reanimated";
 import { SafeTop } from "../../components/SafeTop";
 
-type HomeScreenNavigationProp = CompositeNavigationProp<
-  BottomTabNavigationProp<RootTabParamList, "Explore">,
-  NativeStackNavigationProp<RootStackParamList>
->;
-
 // make a function that returns a navigation prop type
 
-const func = (x: number) => {
-  return x;
-};
-
 export const ExploreScreen = () => {
-  const navigation = useNavigation<NavigationProp<"Explore">>();
+  const navigation = useNavigation<RootTabNavigationProp<"Explore">>();
   const { bottom } = useSafeAreaInsets();
   const { exploreItems } = useContext(UserContext);
 

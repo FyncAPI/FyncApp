@@ -28,28 +28,33 @@ import { processFontFamily } from "expo-font";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { useDerivedValue, useSharedValue } from "react-native-reanimated";
 import { AnimatePresence, MotiView, useDynamicAnimation } from "moti";
-import { MotiPressable } from "moti/interactions";
-import { Feather, FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import {
+  Feather,
+  FontAwesome,
+  Ionicons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import { translate } from "@shopify/react-native-skia";
 
-const actions = [
-  {
-    type: "Send",
-    icon: <FontAwesome name="send" size={24} color="white" />,
-    translate: { x: 0, y: -10 },
-    color: "#ff9500",
-  },
-  {
-    type: "Scan",
-    icon: <MaterialIcons name="qr-code" size={24} color="white" />,
-    translate: { x: 10, y: 0 },
-    color: "#5856d6",
-  },
+type Action = {
+  type: string;
+  icon: JSX.Element;
+  translate: { x: number; y: number };
+  color: string;
+};
 
+const actions: Action[] = [
   {
-    type: "Activity",
-    icon: <Feather name="clock" size={24} color="white" />,
-    color: "#34c759",
+    type: "Profile",
+    icon: <Ionicons name="person" size={24} color="white" />,
+    translate: { x: 1, y: 0.5 },
+    color: "#ffc698",
+  },
+  {
+    type: "Edit",
+    icon: <MaterialIcons name="edit" size={24} color="white" />,
+    translate: { x: Math.sin(45), y: Math.sin(45) },
+    color: "#9c9aff",
   },
 ];
 
@@ -72,8 +77,8 @@ export default function FriendCard({
 
   const screenSizes = Dimensions.get("window");
 
-  const size = screenSizes.width / carouselNumColumns + 0;
-  console.log(size);
+  const size = screenSizes.width / carouselNumColumns + 20;
+  const circleSize = size - 22;
 
   const offset = useSharedValue({
     translateX: location.x,
@@ -84,6 +89,7 @@ export default function FriendCard({
     x: location.x,
     y: location.y,
   });
+
   const scale = useSharedValue(1);
   const savedScale = useSharedValue(1);
   const rotation = useSharedValue(0);
@@ -128,34 +134,46 @@ export default function FriendCard({
 
   return (
     <GestureDetector gesture={composed}>
-      <MotiView
-        // from={{
-        //   scale: 0,
-        //   translateX: (Math.random() * screenSizes.width) / 2,
-        //   translateY: (Math.random() * screenSizes.height) / 2,
-        // }}
-        animate={useDerivedValue(() => ({
-          translateX: offset.value.translateX,
-          translateY: offset.value.translateY,
-          rotate: rotation.value + "deg",
-          scale: scale.value,
-        }))}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            setExpanded(!expanded);
-            // callFriend(friend?.contact.phoneNumbers, friend?.contact.id);
-          }}
-          onLongPress={() => {
-            navigation.navigate("FriendStack", {
-              screen: "Friend",
-              params: { id: friend?.contact.id },
-            });
-          }}
+      <TouchableOpacity
+        style={{
+          backgroundColor: "pink",
+        }}
+        onPress={() => {
+          setExpanded(!expanded);
+          // callFriend(friend?.contact.phoneNumbers, friend?.contact.id);
+        }}
+        onLongPress={() => {
+          navigation.navigate("FriendStack", {
+            screen: "Friend",
+            params: { id: friend?.contact.id },
+          });
+        }}
 
-          // delayLongPress={500}
-          // style={{ flex: 0.5, zIndex: 20 }}
-          // style={{ overflow: "visible" }}
+        // delayLongPress={500}
+        // style={{ flex: 0.5, zIndex: 20 }}
+        // style={{ overflow: "visible" }}
+      >
+        <MotiView
+          // from={{
+          //   scale: 0,
+          //   translateX: (Math.random() * screenSizes.width) / 2,
+          //   translateY: (Math.random() * screenSizes.height) / 2,
+          // }}
+          style={{
+            width: expanded ? size * 2 : size,
+            height: expanded ? size * 2 : size,
+            backgroundColor: "red",
+          }}
+          animate={useDerivedValue(() => ({
+            translateX: expanded
+              ? offset.value.translateX + circleSize / 2
+              : offset.value.translateX,
+            translateY: expanded
+              ? offset.value.translateY + circleSize / 2
+              : offset.value.translateY,
+            rotate: rotation.value + "deg",
+            scale: expanded ? scale.value * 1.2 : scale.value,
+          }))}
         >
           <Box
             overflow="visible"
@@ -173,8 +191,8 @@ export default function FriendCard({
               {friend?.contact?.image ? (
                 <Image
                   source={friend?.contact.image}
-                  w={size - 22}
-                  h={size - 22}
+                  w={"100%"}
+                  h={"100%"}
                   rounded={"full"}
                   alt="friend image"
                 />
@@ -182,25 +200,37 @@ export default function FriendCard({
                 <View>
                   <SvgXml
                     xml={friend.avatar}
-                    width={size - 22}
-                    height={size - 22}
+                    width={circleSize}
+                    height={circleSize}
                   />
                 </View>
               ) : null}
             </View>
             <RadiusName size={size} contact={friend?.contact} />
           </Box>
-        </TouchableOpacity>
-        <AnimatePresence>
-          {expanded && (
-            <View style={{}}>
-              {actions.map((action, i) => (
-                <ActionButton key={i} action={action} index={i} />
-              ))}
-            </View>
-          )}
-        </AnimatePresence>
-      </MotiView>
+          <AnimatePresence>
+            {expanded && (
+              <View style={{ zIndex: -20 }}>
+                {actions.map((action, i) => (
+                  <ActionButton
+                    key={i}
+                    action={action}
+                    index={i}
+                    size={circleSize}
+                    disabled={!expanded}
+                    onPress={() =>
+                      navigation.navigate("FriendStack", {
+                        screen: "Friend",
+                        params: { id: friend?.contact.id },
+                      })
+                    }
+                  />
+                ))}
+              </View>
+            )}
+          </AnimatePresence>
+        </MotiView>
+      </TouchableOpacity>
     </GestureDetector>
   );
 }
@@ -225,7 +255,7 @@ const RadiusName = ({
     >
       <G id="circle">
         <Circle
-          r={size / 2 - 10}
+          r={size / 2 - 11}
           x={size / 2 + 5}
           y={size / 2 + 5}
           // fill={"red"}
@@ -248,33 +278,56 @@ const RadiusName = ({
   );
 };
 
-function ActionButton({ action, index }) {
+function ActionButton({
+  action,
+  index,
+  size,
+  onPress,
+  disabled,
+}: {
+  action: Action;
+  index: number;
+  size: number;
+  onPress: () => void;
+  disabled: boolean;
+}) {
   return (
     <MotiView
       transition={{ delay: index * 100, damping: 15 }}
       from={{
         opacity: 0,
-        translateX: 0,
-        translateY: 0,
+        translateX: size / 2,
+        translateY: size / 2,
       }}
       animate={{
         opacity: 1,
+        // rotation: 90,
         // translateX: 0, //-65 * (index + 1),
-        ...translate,
+        translateX:
+          size / 2 + (size / 2) * Math.cos((45 * Math.PI) / 180) ||
+          action.translate.x * size,
+        translateY:
+          size / 2 + (size / 2) * Math.sin((45 * Math.PI) / 180) ||
+          action.translate.y * size,
       }}
       exit={{
         opacity: 0,
-        translateX: 0,
-        translateY: 0,
+        translateX: 100 / 2,
+        translateY: 50,
       }}
     >
       <Pressable
-        onPress={() => console.log(action.type)}
+        disabled={disabled}
+        onPress={() => {
+          console.log("pressed", disabled);
+          onPress();
+        }}
         style={[
           {
             borderRadius: 100,
-            width: 55,
-            height: 55,
+            width: 45,
+            height: 45,
+
             justifyContent: "center",
             alignItems: "center",
             position: "absolute",
