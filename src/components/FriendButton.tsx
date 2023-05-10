@@ -48,6 +48,9 @@ export default function FriendButton({
             source={friend?.contact.image}
             w={size || 100}
             h={size || 100}
+            style={{
+              borderRadius: "100%",
+            }}
             alt="friend image"
           />
         ) : friend.avatar ? (
