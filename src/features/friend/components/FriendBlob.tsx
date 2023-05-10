@@ -19,13 +19,20 @@ export const FriendBlob = ({ friends }: { friends: Friend[] }) => {
 
   return (
     <View flex={1}>
-      {friends.map((friend, index) => (
-        // <FriendCard
+      {/* {friends.map((friend, index) => (
+        <FriendCard
+          friend={friend}
+          position={"absolute"}
+          key={index + "fbo"}
+          location={locations[index]}
+        />
+        // <FriendCircle
         //   friend={friend}
-        //   position={"absolute"}
         //   key={index + "fbo"}
         //   location={locations[index]}
         // />
+      ))} */}
+      {friends.map((friend, index) => (
         <FriendCircle
           friend={friend}
           key={index + "fbo"}

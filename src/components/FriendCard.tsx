@@ -160,8 +160,8 @@ export default function FriendCard({
           //   translateY: (Math.random() * screenSizes.height) / 2,
           // }}
           style={{
-            width: expanded ? size * 2 : size,
-            height: expanded ? size * 2 : size,
+            width: size || expanded ? size * 2 : size,
+            height: size || expanded ? size * 2 : size,
             backgroundColor: "red",
           }}
           animate={useDerivedValue(() => ({

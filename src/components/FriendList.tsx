@@ -2,6 +2,7 @@ import React from "react";
 import { FlatList, Text, View } from "native-base";
 import FriendCard from "./FriendCard";
 import { Friend } from "../contexts/user/user.types";
+import FriendButton from "./FriendButton";
 
 export default function FriendList({ friends }: { friends: Friend[] }) {
   // //console.log(friends, "friends");
@@ -26,7 +27,7 @@ export default function FriendList({ friends }: { friends: Friend[] }) {
           horizontal
           showsHorizontalScrollIndicator={false}
           data={friends}
-          renderItem={({ item, index }) => <FriendCard friend={item} />}
+          renderItem={({ item, index }) => <FriendButton friend={item} />}
         />
       </View>
     );

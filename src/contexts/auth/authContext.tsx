@@ -3,6 +3,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 // import { AuthUser } from "../../constants/UserInterfaces";
 import { Alert } from "react-native";
+import { Contact } from "expo-contacts";
+import { Friend } from "../user/user.types";
 // import { auth } from "../../../firebase";
 
 interface AuthUser {

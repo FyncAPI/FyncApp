@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FriendCard from "../../../components/FriendCard";
 import { SettingsContext } from "../../../contexts/settings/SettingsContext";
 import { Friend } from "../../../contexts/user/user.types";
+import FriendButton from "../../../components/FriendButton";
 
 export const FriendCarousel = gestureHandlerRootHOC(
   ({ friends }: { friends: Friend[] }) => {
@@ -61,7 +62,7 @@ export const FriendCarousel = gestureHandlerRootHOC(
                   </View>
                 )}
                 renderItem={({ item: friend, index }) => (
-                  <FriendCard
+                  <FriendButton
                     listLength={item.length}
                     friend={friend}
                     key={index + "FRIEND"}

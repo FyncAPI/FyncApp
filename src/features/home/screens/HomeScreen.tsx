@@ -89,7 +89,7 @@ const HomeScreen = () => {
       </Button> */}
 
       {/* <Text>{JSON.stringify(userData.friends[0])}</Text> */}
-      {/* <SectionList
+      <SectionList
         showsVerticalScrollIndicator={false}
         pb={bottom}
         mt={2}
@@ -145,8 +145,8 @@ const HomeScreen = () => {
         renderSectionFooter={({ section }) =>
           section.safeBottom ? <SafeBottom /> : null
         }
-      /> */}
-      <FriendBlob friends={friends} />
+      />
+      {/* <FriendBlob friends={friends} /> */}
     </View>
   );
 };
