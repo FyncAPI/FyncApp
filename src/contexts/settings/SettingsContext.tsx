@@ -44,6 +44,7 @@ export const SettingsContextProvider = ({
       return false;
     }
   };
+
   const updateSettings = async (
     settings: Partial<SettingsContextInterface>
   ) => {

@@ -10,7 +10,6 @@ import {
   View,
 } from "native-base";
 import type { StorageManager } from "native-base";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { Navigation } from "./src/navigations";
 import { UserContextProvider } from "./src/contexts/user/userContext";
@@ -34,7 +33,9 @@ import { LoadingModal } from "./src/components/LoadingModal";
 import { useLoading } from "./src/hooks/useLoading";
 import { SettingsContextProvider } from "./src/contexts/settings/SettingsContext";
 import { AppsContextProvider } from "./src/contexts/apps/AppsContext";
+import { MMKV } from "react-native-mmkv";
 
+export const storage = new MMKV();
 // Define the config
 const config = {
   useSystemColorMode: true,
@@ -210,16 +211,17 @@ export default function App() {
   const colorModeManager: StorageManager = {
     get: async () => {
       try {
-        let val = await AsyncStorage.getItem("@my-app-color-mode");
+        let val = storage.getString("@my-app-color-mode");
         return val === "dark" ? "dark" : "light";
       } catch (e) {
         console.log(e);
         return "dark";
       }
     },
-    set: async (value: ColorMode) => {
+    set: (value: ColorMode) => {
       try {
-        await AsyncStorage.setItem("@my-app-color-mode", value);
+        if (value) storage.set("@my-app-color-mode", value);
+        else storage.delete("@my-app-color-mode");
       } catch (e) {
         console.log(e);
       }

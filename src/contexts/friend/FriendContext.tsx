@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Contact, PhoneNumber, presentFormAsync } from "expo-contacts";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { AppState, Linking } from "react-native";
