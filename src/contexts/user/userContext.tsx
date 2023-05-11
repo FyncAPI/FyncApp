@@ -1,10 +1,10 @@
 import React, { createContext, useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Friend, FriendsData, Memory, UserData } from "./user.types";
 import { useContact } from "../../hooks/useContact";
 import { Contact } from "expo-contacts";
 import { ExploreItem } from "../../features/Explore/explore.type";
 import { useExploreItems } from "../../hooks/useExploreItems";
+import { storage } from "../../../App";
 
 interface UserContextInterface {
   userData: UserData;
@@ -155,7 +155,7 @@ export function UserContextProvider({
 const saveValueAsync = async (key: string, value: any) => {
   try {
     const jsonValue = JSON.stringify(value);
-    await AsyncStorage.setItem("@" + key, jsonValue);
+    storage.set("@" + key, jsonValue);
     // console.log("value saved", value);
   } catch (e) {
     // saving error
@@ -165,7 +165,7 @@ const saveValueAsync = async (key: string, value: any) => {
 
 const getValue = async (key: string) => {
   try {
-    const value = await AsyncStorage.getItem(`@${key}`);
+    const value = storage.getString(`@${key}`);
 
     if (value !== null) {
       // value previously stored
@@ -180,7 +180,7 @@ const getValue = async (key: string) => {
 const clearAS = async () => {
   try {
     console.log("clearing storage");
-    await AsyncStorage.clear();
+    storage.clearAll();
   } catch (e) {
     // clear error
     console.log("error clearing storage", e);

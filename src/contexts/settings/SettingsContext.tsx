@@ -1,6 +1,6 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Contact, PhoneNumber } from "expo-contacts";
 import { createContext, useEffect, useRef, useState } from "react";
+import { storage } from "../../../App";
 interface SettingsContextInterface {
   carouselNumColumns: number;
   fyncOnlineEnabled: boolean;
@@ -30,7 +30,7 @@ export const SettingsContextProvider = ({
   }, []);
   const getSettings = async () => {
     try {
-      const settings = await AsyncStorage.getItem("settings");
+      const settings = storage.getString("settings");
       if (settings) {
         console.log(settings, "sett");
         const parsedSettings = JSON.parse(settings);
@@ -55,7 +55,7 @@ export const SettingsContextProvider = ({
     //   setFyncOnlineEnabled(settings.fyncOnlineEnabled);
     // }
     try {
-      await AsyncStorage.setItem(
+      storage.set(
         "settings",
         JSON.stringify({ carouselNumColumns, fyncOnlineEnabled, ...settings })
       );

@@ -1,8 +1,8 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Contact } from "expo-contacts";
 import { useEffect, useState } from "react";
 import { Friend } from "../contexts/user/user.types";
 import { useContact } from "./useContact";
+import { storage } from "../../App";
 
 export const useFriends = () => {
   const [friends, setFriends] = useState<Friend[]>([]);
@@ -19,7 +19,7 @@ export const useFriends = () => {
 
   const getFriendsData = async () => {
     try {
-      const friendsData = await AsyncStorage.getItem("@friendsData");
+      const friendsData = storage.getString("@friendsData");
       // console.log(friendsData, "friendsData");
       if (friendsData && contacts.length > 0) {
         const parsedFriendsData = JSON.parse(friendsData);

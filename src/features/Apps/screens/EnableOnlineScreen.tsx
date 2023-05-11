@@ -1,11 +1,15 @@
 import { useNavigation } from "@react-navigation/native";
 import { Button, Heading, Text, VStack, View } from "native-base";
 import React, { useContext } from "react";
-import { AppStackNavigationProp } from "../../../../types";
+import {
+  AppStackNavigationProp,
+  RootTabNavigationProp,
+} from "../../../../types";
+import { PrimaryButton } from "../../../components/PrimaryButton";
 import { SettingsContext } from "../../../contexts/settings/SettingsContext";
 
 export const EnableOnlineScreen = () => {
-  const navigation = useNavigation<AppStackNavigationProp<"EnableOnline">>();
+  const navigation = useNavigation<RootTabNavigationProp<"Apps">>();
 
   const { enableFyncOnline, fyncOnlineEnabled } = useContext(SettingsContext);
   return (
@@ -29,11 +33,16 @@ export const EnableOnlineScreen = () => {
             </Text>
           ))}
           <Text mt={10}>And a lot more...</Text>
-          <Button mt={5} variant={"rounded"} onPress={() => enableFyncOnline()}>
-            <Text fontSize={"lg"} fontWeight={"medium"} color="black">
-              Let's Go
-            </Text>
-          </Button>
+          <PrimaryButton
+            mt={5}
+            onPress={() =>
+              navigation.navigate("AppStack", {
+                screen: "Auth",
+              })
+            }
+          >
+            Let's Go
+          </PrimaryButton>
         </VStack>
       </VStack>
     </View>

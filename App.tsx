@@ -36,6 +36,7 @@ import { AppsContextProvider } from "./src/contexts/apps/AppsContext";
 import { MMKV } from "react-native-mmkv";
 
 export const storage = new MMKV();
+// export const storage = {};
 // Define the config
 const config = {
   useSystemColorMode: true,
@@ -81,7 +82,7 @@ const newColorTheme = {
 };
 
 // extend the theme
-export const theme = extendTheme({
+export const customTheme = extendTheme({
   colors: newColorTheme,
   fontConfig: {
     SpaceGrotesk: {
@@ -142,6 +143,11 @@ export const theme = extendTheme({
       // Can simply pass default props to change default behaviour of components.
       baseStyle: {
         rounded: "md",
+        _text: {
+          fontSize: "xl",
+          fontWeight: "medium",
+          color: "black",
+        },
       },
       variants: {
         rounded: {
@@ -153,6 +159,14 @@ export const theme = extendTheme({
             bg: `#abc1e9`,
           },
           rounded: "full",
+          _text: {
+            // style: {
+            //   fontSize: 33,
+            // },
+            fontSize: "xl",
+            fontWeight: "medium",
+            color: "black",
+          },
         },
       },
     },
@@ -200,7 +214,7 @@ export const theme = extendTheme({
   },
 });
 
-type MyThemeType = typeof theme;
+type MyThemeType = typeof customTheme;
 declare module "native-base" {
   interface ICustomTheme extends MyThemeType {}
 }
@@ -249,7 +263,7 @@ export default function App() {
 
   return (
     <NativeBaseProvider
-      theme={theme}
+      theme={customTheme}
       colorModeManager={colorModeManager}
       config={config}
     >

@@ -49,7 +49,7 @@ export default function FriendButton({
             w={size || 100}
             h={size || 100}
             style={{
-              borderRadius: "100%",
+              borderRadius: 100,
             }}
             alt="friend image"
           />

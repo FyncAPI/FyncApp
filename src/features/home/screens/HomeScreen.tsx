@@ -35,7 +35,6 @@ import { useLoading } from "../../../hooks/useLoading";
 import { BlurView } from "expo-blur";
 import LoadingIndicator from "../../../components/LoadingIndicator";
 import RecentCallList from "../../../components/RecentCallList";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Svg, {
   Circle,
   G,

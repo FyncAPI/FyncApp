@@ -1,9 +1,8 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Contact } from "expo-contacts";
 import { useEffect, useRef, useState } from "react";
 import { CallHistory, Friend } from "../contexts/user/user.types";
-import { useContact } from "./useContact";
 import { AppState } from "react-native";
+import { storage } from "../../App";
 
 export const useCalls = (increaseFriendship: any, saveFriendsData: any) => {
   const [recentCalls, setRecentCalls] = useState<CallHistory[]>([]);
@@ -74,7 +73,7 @@ export const useCalls = (increaseFriendship: any, saveFriendsData: any) => {
 
   const getCallsData = async () => {
     try {
-      const friendsData = await AsyncStorage.getItem("@friendsData");
+      const friendsData = storage.getString("@friendsData");
       // console.log(friendsData, "friendsData");
       if (friendsData) {
         const parsedFriendsData = JSON.parse(friendsData);

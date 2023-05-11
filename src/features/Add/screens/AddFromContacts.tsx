@@ -116,6 +116,7 @@ export const AddFromContacts = gestureHandlerRootHOC(() => {
               return f.avatar == null && !f.contact.image?.uri;
             }).length > 0
           }
+          shadow={3}
         >
           {page == 0 ? "Save" : page == 1 ? "Finish" : null}
         </Button>

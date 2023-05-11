@@ -38,6 +38,9 @@ import { ExploreScreen } from "../features/Explore/ExploreScreen";
 import { EnableOnlineScreen } from "../features/Apps/screens/EnableOnlineScreen";
 import { SettingsContext } from "../contexts/settings/SettingsContext";
 import { IRLEventScreen } from "../features/Explore/IRLEventScreen";
+import { OnlineAuthScreen } from "../features/online/OnlineAuthScreen";
+import { OnlineSignUpForm } from "../features/online/SignUpForm";
+
 const Stack = createNativeStackNavigator<NavigationParamList>();
 
 export function Navigation() {
@@ -224,6 +227,8 @@ function AppStackNavigator() {
         <> */}
       {/* <AppStack.Screen name="AppList" component={AppListScreen} /> */}
       <AppStack.Screen name="App" component={AppScreen} />
+      <AppStack.Screen name="Auth" component={OnlineAuthScreen} />
+      <AppStack.Screen name="Form" component={OnlineSignUpForm} />
       {/* </>
       )} */}
     </AppStack.Navigator>

@@ -67,8 +67,10 @@ export type UserStackParamList = {
 };
 
 export type AppStackParamList = {
-  // EnableOnline: undefined;
+  EnableOnline: undefined;
   App: { id: string; type: AppType };
+  Auth: undefined;
+  Form: undefined;
 };
 
 export type EventStackParamList = {
