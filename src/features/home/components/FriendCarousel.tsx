@@ -45,11 +45,13 @@ export const FriendCarousel = gestureHandlerRootHOC(
               rounded={"xl"}
               key={index + "LSX"}
               // alignItems="center"
+              overflow="visible"
               // justifyContent="center"
             >
               <FlatList
                 columnWrapperStyle={{
                   justifyContent: "space-evenly",
+                  overflow: "visible",
                 }}
                 data={item}
                 key={item.length + "FRIEND" + carouselNumColumns}

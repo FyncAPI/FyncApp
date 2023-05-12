@@ -34,7 +34,7 @@ export default function FriendButton({
   const screenSizes = Dimensions.get("window");
 
   const size = screenSizes.width / carouselNumColumns;
-  const circleSize = size - 22;
+  const circleSize = size - 22 + "px";
   console.log(circleSize, "circleSize");
 
   return (
@@ -52,16 +52,20 @@ export default function FriendButton({
     >
       <Box
         overflow="visible"
+        style={{
+          overflow: "visible",
+          position: "relative",
+          alignSelf: "center",
+        }}
         m="1"
         borderRadius="lg"
-        // style={{ overflow: "visible" }}
+        w={circleSize}
+        h={circleSize}
+        alignContent="center"
+        justifyItems={"center"}
+        justifyContent={"center"}
       >
-        <View
-          alignItems={"center"}
-          justifyContent={"center"}
-          w={circleSize}
-          h={circleSize}
-        >
+        <View alignItems={"center"} justifyContent={"center"}>
           {friend?.contact?.image ? (
             <Image
               source={friend?.contact.image}
@@ -94,28 +98,7 @@ export default function FriendButton({
           {friend?.contact?.nickname || friend?.contact?.name}
         </Text> */}
         </View>
-        {/* <LinearGradient
-          colors={
-            listLength == 1
-              ? [
-                  "transparent",
-                  "transparent",
-                  "transparent",
-                  "transparent",
-                  "rgba(0,0,0,0.8)",
-                ]
-              : ["transparent", "transparent", "transparent", "rgba(0,0,0,0.8)"]
-          }
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            top: 0,
-            width: size,
-            height: size,
-          }}
-        /> */}
-        <RadiusName size={circleSize} contact={friend?.contact} />
+        <RadiusName size={size} contact={friend?.contact} />
       </Box>
     </TouchableOpacity>
   );
@@ -131,14 +114,16 @@ const RadiusName = ({
 } & React.ComponentProps<typeof Svg>) => {
   return (
     <Svg
-      height={size + 30}
-      width={size + 30}
+      height={size}
+      width={size}
       style={[
         {
           overflow: "visible",
           position: "absolute",
-          // alignSelf: "center",
-          // justifyContent: "center",
+          alignSelf: "center",
+          justifyContent: "center",
+          alignItems: "center",
+
           // for ios
           shadowColor: "#000",
           shadowOffset: {
@@ -148,17 +133,16 @@ const RadiusName = ({
           shadowOpacity: 0.25,
           shadowRadius: 3.84,
           // for android
-          elevation: 5,
+          elevation: 8,
         },
         props.style,
       ]}
     >
       <G id="circle">
         <Circle
-          r={size / 2 - 15}
+          r={size / 2 - 22}
           x={size / 2}
           y={size / 2}
-          // fill={"red"}
           stroke="none"
           strokeWidth={0}
           transform="rotate(-80)"
@@ -168,7 +152,7 @@ const RadiusName = ({
       <TextPath href="#circle">
         <TextS
           fill={"white"}
-          fontSize={18 * (size / 100)}
+          fontSize={18 * (size / 90)}
           fontFamily={processFontFamily("Outfit_700Bold")}
         >
           {contact?.nickname || contact?.firstName || contact?.name}

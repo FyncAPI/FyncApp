@@ -88,7 +88,7 @@ export default function UserScreen() {
           </Select> */}
           <Slider
             value={carouselNumColumns}
-            width={100}
+            width={"full"}
             minValue={2}
             maxValue={6}
             step={1}

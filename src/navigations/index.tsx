@@ -26,7 +26,7 @@ import HomeScreen from "../features/home/screens/HomeScreen";
 import UserScreen from "../features/user/screens/UserScreen";
 import { useUserContext } from "../hooks";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Text, useColorModeValue } from "native-base";
+import { Icon, Text, useColorModeValue } from "native-base";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Svg, { Path, SvgFromUri, SvgUri } from "react-native-svg";
 import { RemixIcons } from "../../assets/Icons/RemixIcons";
@@ -259,7 +259,13 @@ const TabBarIcon =
     size: number;
   }) =>
     (
-      <RemixIcons
+      // <RemixIcons
+      //   color={color}
+      //   size={30}
+      //   name={focused ? name : `${name}-outline`}
+      // />
+      <Icon
+        as={Ionicons}
         color={color}
         size={30}
         name={focused ? name : `${name}-outline`}

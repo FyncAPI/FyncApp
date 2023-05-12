@@ -2,6 +2,7 @@ import { IIconProps, Icon } from "native-base";
 import { Platform } from "react-native";
 import Svg, { G, Path, SvgProps, SvgUri, SvgXml } from "react-native-svg";
 import TestXml from "../../src/features/home/components/TextXml";
+import compassFill from "./remix/compass-fill.svg";
 
 const iconSvgs = {
   "apps-outline": (
@@ -36,21 +37,27 @@ export const RemixIcons = (
 ) => {
   console.log(Platform.OS == "android" && icons[props.name]);
 
+  return <SvgXml width="24" height="24" xml={compassFill} />;
+
   return (
-    <Icon {...props} viewBox="0 0 24 24">
-      <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
-        <G>
-          <Path fill="none" d="M0 0h24v24H0z" />
-          <Path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm3.5-13.5l-5 2-2 5 5-2 2-5z" />
-        </G>
-      </Svg>
-    </Icon>
+    // <Icon {...props} viewBox="0 0 24 24">
+    //   {/* <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
+    //     <G>
+    //       <Path fill="none" d="M0 0h24v24H0z" />
+    //       <Path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm3.5-13.5l-5 2-2 5 5-2 2-5z" />
+    //     </G>
+    //   </Svg> */}
+    //   {iconSvgs[props.name]}
+    // </Icon>
+    <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
+      <Path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10Zm3.5-13.5-5 2-2 5 5-2 2-5Z" />
+    </Svg>
   );
 
   return (
     <Icon {...props} viewBox="0 0 24 24">
       <SvgXml xml={icons[props.name]} />
-      <TestXml />
+
       <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
         <G>
           <Path fill="none" d="M0 0h24v24H0z" />

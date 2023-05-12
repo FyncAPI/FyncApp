@@ -85,21 +85,8 @@ const HomeScreen = () => {
         />
       </HStack>
 
-      {/* <Button
-        onPress={() => AsyncStorage.getItem("@friendsData").then(console.log)}
-      >
-        <Text>Get all keys</Text>
-      </Button> */}
-      {/* <Icon size="3xl" as={<RemixIcons name="apps" />} /> */}
-      {/* <TestXml /> */}
-      {/* <Icon
-        as={Ionicons}
-        name={Platform.OS ? "ios-menu" : "md-menu"}
-        size="20"
-        color="red"
-      /> */}
-      {/* <Text>{JSON.stringify(userData.friends[0])}</Text> */}
       <Icon as={RemixIcons} name="home" size={30} boxSize={30} />
+      <RemixIcons name="home" />
       <SectionList
         showsVerticalScrollIndicator={false}
         pb={bottom}
