@@ -1,19 +1,40 @@
-import { useNavigation } from "@react-navigation/native";
+import {
+  CompositeNavigationProp,
+  useNavigation,
+} from "@react-navigation/native";
 import { Button, Heading, Text, View } from "native-base";
 import React, { useContext } from "react";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel";
 import FriendCard from "../../../components/FriendCard";
 import { SafeBottom, SafeTop } from "../../../components/SafeTop";
-import { RootStackNavigationProp } from "../../../../types";
+import {
+  AddStackNavigationProp,
+  AddStackParamList,
+  FriendStackNavigationProp,
+  RootStackNavigationProp,
+  RootStackParamList,
+  RootTabParamList,
+} from "../../../../types";
 import BackButton from "../../../components/BackButton";
-import { FriendContext } from "../../../contexts/FriendContext";
-import { UserContext } from "../../../contexts/user/context";
-import { Friend, FriendsData, UserData } from "../../../contexts/user/types";
+import { FriendContext } from "../../../contexts/friend/FriendContext";
+import { UserContext } from "../../../contexts/user/userContext";
+import {
+  Friend,
+  FriendsData,
+  UserData,
+} from "../../../contexts/user/user.types";
 import LoadFriends from "../../auth/components/load-friends/LoadFriend";
 import ContactSelectorList from "../../auth/components/ContactSelectorList";
-import { convertIdsToContacts } from "../../../contexts/FriendService";
+import { convertIdsToContacts } from "../../../contexts/friend/FriendService";
 import { LoadingModal } from "../../../components/LoadingModal";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
+type NavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<RootTabParamList, "Home">,
+  NativeStackNavigationProp<RootStackParamList>
+>;
 
 export const AddFromContacts = gestureHandlerRootHOC(() => {
   const [page, setPage] = React.useState(0);
@@ -28,8 +49,7 @@ export const AddFromContacts = gestureHandlerRootHOC(() => {
   const [newFriends, setNewFriends] =
     React.useState<FriendsData["friends"]>(friends);
 
-  const navigation =
-    useNavigation<RootStackNavigationProp<"AddFromContacts">>();
+  const navigation = useNavigation<NavigationProp>();
 
   const onNext = async () => {
     if (page == 0) {
@@ -68,7 +88,7 @@ export const AddFromContacts = gestureHandlerRootHOC(() => {
           <ContactSelectorList
             selectedContactsId={selectedContactsId}
             setSelectedContactsId={setSelectedContactsId}
-            friendsIds={friends.map((friend) => friend.contactId)}
+            friendsIds={friends?.map((friend) => friend.contactId)}
           />
         ) : page == 1 ? (
           <LoadFriends
@@ -96,6 +116,7 @@ export const AddFromContacts = gestureHandlerRootHOC(() => {
               return f.avatar == null && !f.contact.image?.uri;
             }).length > 0
           }
+          shadow={3}
         >
           {page == 0 ? "Save" : page == 1 ? "Finish" : null}
         </Button>

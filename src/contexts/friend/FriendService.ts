@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Contact } from "expo-contacts";
-import { Friend } from "./user/types";
+import { Friend } from "../user/user.types";
 
 export const generateAvatar = async (name: string, random?: boolean) => {
   console.log(

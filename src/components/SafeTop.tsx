@@ -26,7 +26,7 @@ export function SafeBottom(props: ViewProps) {
     <View
       style={[
         {
-          height: insets.bottom,
+          height: insets.bottom + 50,
           backgroundColor: "transparent",
         },
         style,

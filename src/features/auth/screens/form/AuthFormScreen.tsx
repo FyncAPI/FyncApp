@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Button, Heading, Icon, ScrollView, Text, View } from "native-base";
 import ContactSelectorList from "../../components/ContactSelectorList";
 import { SafeBottom, SafeTop } from "../../../../components/SafeTop";
-import { UserContext } from "../../../../contexts/user/context";
+import { UserContext } from "../../../../contexts/user/userContext";
 import ProfileForm from "../../components/profile-form/ProfileForm";
 import { Contact, getContactByIdAsync, getContactsAsync } from "expo-contacts";
 import GetGps from "../../components/get-gps";
@@ -10,18 +10,22 @@ import LoadFriends from "../../components/load-friends/LoadFriend";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Friend, FriendsData, UserData } from "../../../../contexts/user/types";
+import {
+  Friend,
+  FriendsData,
+  UserData,
+} from "../../../../contexts/user/user.types";
 import { AuthStackNavigationProp } from "../../../../../types";
 import BackButton from "../../../../components/BackButton";
 import { LoadingModal } from "../../../../components/LoadingModal";
 import {
   convertIdsToContacts,
   generateAvatar,
-} from "../../../../contexts/FriendService";
+} from "../../../../contexts/friend/FriendService";
 import { useLoading } from "../../../../hooks/useLoading";
 
 export default function AuthFormScreen() {
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState(1);
   const [selectedContactsId, setSelectedContactsId] = React.useState<string[]>(
     []
   );
@@ -65,7 +69,12 @@ export default function AuthFormScreen() {
           "loaded friends"
         );
         saveFriendsData({ friends: loadedFriends });
-        saveUserData(userData);
+        saveUserData({
+          ...userData,
+          recents: [],
+          suggestions: [],
+          socialMode: false,
+        });
       }
       // stopLoading()
       setLoading(false);
@@ -78,7 +87,7 @@ export default function AuthFormScreen() {
 
   const onBack = () => {
     //console.log(page, "back");
-    if (page <= 0) {
+    if (page <= 1) {
       navigation.navigate("Landing");
     } else {
       //console.log(page);
@@ -92,7 +101,7 @@ export default function AuthFormScreen() {
       <View flex={1} variant="background" px="3">
         <SafeTop />
         <Heading ml={8} fontSize={"4xl"}>
-          {page == 0 ? "Profile" : page == 1 ? "Select Friends" : "Confirm"}
+          {page == 0 ? "Profile" : page == 1 ? "Add Friends" : "Confirm"}
         </Heading>
         <BackButton onPress={onBack} />
         {/* <TouchableOpacity onPress={onBack}>
@@ -127,17 +136,7 @@ export default function AuthFormScreen() {
           _disabled={{
             bg: "gray.400",
           }}
-          // isDisabled={
-          //   page == 2 &&
-          //   friends.filter((f) => {
-          //     console.log(
-          //       f.avatar?.length,
-          //       f.contact.name,
-          //       !f.contact.image?.uri
-          //     );
-          //     return f.avatar == null && !f.contact.image?.uri;
-          //   }).length > 0
-          // }
+          mb="2"
         >
           {page == 1 ? "Finish" : "Next"}
         </Button>

@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Icon, Text, View } from "native-base";
 import { Factory } from "native-base";
-import { Friend } from "../contexts/user/types";
+import { Friend } from "../contexts/user/user.types";
 import { PhoneNumberCard } from "./PhoneNumberCard";
 
 function PhoneNumberListBase({
@@ -20,6 +20,7 @@ function PhoneNumberListBase({
       }}
       rounded={"sm"}
       p={"1"}
+      mx="2"
     >
       {phoneNumbers.map((p, index) => (
         <PhoneNumberCard phoneNumber={p} p={2} key={index + "PHONE"} />

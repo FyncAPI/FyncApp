@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { HStack, Icon, IconButton, Text, View } from "native-base";
 import React from "react";
-import { Friend } from "../contexts/user/types";
+import { Friend } from "../contexts/user/user.types";
 import { Factory } from "native-base";
 import { PhoneNumber } from "expo-contacts";
 import CountryFlag from "react-native-country-flag";
@@ -27,7 +27,7 @@ function PhoneNumberCardBase({ phoneNumber }: { phoneNumber: PhoneNumber }) {
         {phoneNumber.number}
       </Text>
       <View flex={1} />
-      <IconButton
+      {/* <IconButton
         icon={<Icon as={Ionicons} name="pencil" />}
         _icon={{
           color: "light.100",
@@ -36,7 +36,7 @@ function PhoneNumberCardBase({ phoneNumber }: { phoneNumber: PhoneNumber }) {
           },
         }}
         borderRadius="full"
-      />
+      /> */}
       <IconButton
         icon={<Icon as={Ionicons} name="call" />}
         borderRadius="full"

@@ -1,67 +1,86 @@
-import React, { useContext } from "react";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { RootStackParamList, RootStackScreenProps } from "../../../../types";
-import { UserContext } from "../../../contexts/user/context";
+import React, { useContext, useEffect } from "react";
+import {
+  CompositeNavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
+import {
+  RootStackNavigationProp,
+  RootStackScreenProps,
+  RootTabParamList,
+  RootStackParamList,
+  FriendStackParamList,
+} from "../../../../types";
+import { UserContext } from "../../../contexts/user/userContext";
 import {
   Button,
   Heading,
+  HStack,
   Icon,
   IconButton,
   Image,
   ScrollView,
   Text,
+  useColorModeValue,
   View,
 } from "native-base";
 import BackButton from "../../../components/BackButton";
-import { SafeTop } from "../../../components/SafeTop";
+import { SafeBottom, SafeTop } from "../../../components/SafeTop";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { FriendshipIcon } from "../../../components/FriendshipIcon";
 import { PhoneNumberList } from "../../../components/PhoneNumberList";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { FriendContext } from "../../../contexts/FriendContext";
+import { FriendContext } from "../../../contexts/friend/FriendContext";
 import { SvgXml } from "react-native-svg";
 import { BlurView } from "expo-blur";
-import { Alert, StyleSheet } from "react-native";
+import { Alert, StyleSheet, TouchableOpacity } from "react-native";
+import { presentFormAsync } from "expo-contacts";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import {
+  NativeStackNavigationProp,
+  NativeStackNavigatorProps,
+} from "@react-navigation/native-stack/lib/typescript/src/types";
+
+type NavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<RootTabParamList, "Home">,
+  NativeStackNavigationProp<RootStackParamList>
+>;
 
 export function FriendScreen() {
-  const navigation = useNavigation();
-  const route = useRoute<RouteProp<RootStackParamList, "Friend">>();
+  const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<FriendStackParamList, "Friend">>();
 
   const { userData, favoriteFriend } = useContext(UserContext);
-  const { friends, removeFriend } = useContext(FriendContext);
+  const { friends, removeFriend, editContact } = useContext(FriendContext);
   const { id } = route.params;
 
   const insets = useSafeAreaInsets();
   const [friend, setFriend] = React.useState(
     friends?.find((f) => f.contactId == id)
   );
+  const tintMode = useColorModeValue("light", "dark");
 
-  // profile
-  // name
-  // edit
-  // recents
+  useEffect(() => {
+    setFriend(friends?.find((f) => f.contactId == id));
+  }, [friends]);
 
-  //memories
-  // friendships
-  // number
-
-  // return (
-  //   <ScrollView variant="background" flex={1}>
-  //     <LinearGradient
-  //       colors={["#824242", "#1d9c4e", "#854646", "#2b1d76", "#430d58"]}
-  //       style={{
-  //         width: "100%",
-  //         height: 2000,
-  //       }}
-  //     >
-  //       <Heading m="30">asdas</Heading>
-  //     </LinearGradient>
-  //   </ScrollView>
-  // );
   return (
     <>
-      <BackButton _light={{ color: "white" }} />
+      <BackButton _light={{ color: "white" }} zIndex={5} />
+      <LinearGradient
+        pointerEvents="none"
+        style={{
+          zIndex: 2,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+        }}
+        colors={["black", "transparent", "transparent", "transparent"]}
+      />
       <View position={"absolute"} left={"10"} zIndex={5} mx={2}>
         <SafeTop />
         <Heading fontSize="4xl" color={"light.100"} shadow={"9"}>
@@ -70,7 +89,6 @@ export function FriendScreen() {
         <Text fontSize="lg" color={"light.100"}>
           {friend?.contact.nickname && friend?.contact.name}
         </Text>
-        {/* <FriendshipIcon friendship={friend?.friendship!} /> */}
       </View>
       <View
         top={insets.top + 5 + "px"}
@@ -85,7 +103,9 @@ export function FriendScreen() {
           alignSelf={"center"}
           rounded={"full"}
           variant={
-            userData?.favorites?.find((fav) => fav.id == friend?.id)
+            userData?.favorites?.find(
+              (fav) => fav.contactId == friend?.contactId
+            )
               ? "solid"
               : "outline"
           }
@@ -95,6 +115,7 @@ export function FriendScreen() {
           size="lg"
         />
       </View>
+
       <ScrollView
         variant="background"
         flex={1}
@@ -105,17 +126,6 @@ export function FriendScreen() {
         }}
       >
         <View>
-          <LinearGradient
-            style={{
-              zIndex: 2,
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-            }}
-            colors={["black", "transparent", "transparent", "transparent"]}
-          />
           {friend?.contact.image?.uri ? (
             <Image
               source={friend?.contact.image}
@@ -125,26 +135,66 @@ export function FriendScreen() {
               zIndex={-1}
             />
           ) : (
-            <>
+            <View m={1}>
               <SvgXml
                 width="100%"
-                height="350px"
+                height="400px"
                 xml={friend?.avatar}
-                style={[StyleSheet.absoluteFill, { overflow: "visible" }]}
+                style={[
+                  StyleSheet.absoluteFill,
+                  { overflow: "visible", marginVertical: 50 },
+                ]}
               />
-              <BlurView intensity={100} style={{ overflow: "visible" }}>
-                <SvgXml width="100%" height="350px" xml={friend?.avatar} />
+              <BlurView
+                tint={tintMode}
+                intensity={100}
+                style={{ overflow: "visible", paddingVertical: 50 }}
+              >
+                <SvgXml width="100%" height="400px" xml={friend?.avatar} />
               </BlurView>
-            </>
+            </View>
           )}
+          <TouchableOpacity
+            style={{
+              position: "absolute",
+              zIndex: 10,
+              bottom: 10,
+              left: 10,
+            }}
+            onPress={async () => {
+              await editContact(friend?.contactId!);
+            }}
+          >
+            <View
+              flexDir={"row"}
+              alignItems={"center"}
+              variant="background"
+              shadow={2}
+              // borderColor={"pink.500"}
+              padding="2"
+              borderRadius={"md"}
+            >
+              <Icon
+                as={<Ionicons name="pencil" />}
+                size="lg"
+                color={"light.100"}
+                _light={{
+                  color: "dark.100",
+                }}
+              />
+              <Heading size={"sm"} ml={2}>
+                Edit
+              </Heading>
+            </View>
+          </TouchableOpacity>
         </View>
 
-        <View p={3}>
+        <View p={3} flex={1}>
           <Heading m={2} fontSize="2xl">
             Numbers
           </Heading>
           <PhoneNumberList phoneNumbers={friend?.contact.phoneNumbers} />
-          <Heading m={2} fontSize="2xl">
+          {/* <Heading m={2} fontSize="2xl">
             Memories
           </Heading>
           <Text m={5} fontSize={"lg"}>
@@ -155,7 +205,7 @@ export function FriendScreen() {
           </Heading>
           <Text m={5} fontSize={"lg"}>
             in the future
-          </Text>
+          </Text> */}
 
           <Heading m={2} fontSize="2xl">
             Friendships
@@ -191,6 +241,7 @@ export function FriendScreen() {
           >
             Delete Friend
           </Button>
+          <SafeBottom />
         </View>
       </ScrollView>
     </>

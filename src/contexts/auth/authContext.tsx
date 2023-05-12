@@ -1,8 +1,10 @@
 import React, { createContext, useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 // import { AuthUser } from "../../constants/UserInterfaces";
 import { Alert } from "react-native";
+import { Contact } from "expo-contacts";
+import { Friend } from "../user/user.types";
+import { storage } from "../../../App";
 // import { auth } from "../../../firebase";
 
 interface AuthUser {
@@ -67,8 +69,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   const getUserFromStorage = async () => {
     try {
-      const value = await AsyncStorage.getItem("@user");
-      if (value !== null) {
+      const value = storage.getString("@user");
+      if (value) {
         //console.log("storage data", value);
         const user = JSON.parse(value);
         setAuthUser(user);
@@ -83,55 +85,12 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   const storeData = async (userInfo: AuthUser) => {
     try {
-      await AsyncStorage.setItem("@user", JSON.stringify(userInfo));
+      storage.set("@user", JSON.stringify(userInfo));
     } catch (error) {
       //console.log("ere storing", error);
     }
   };
 
-  async function appleCandidateAuth(token: string) {
-    const res = await appleAuthServer(token, "candidate");
-    if (res) {
-      //console.log("apple data", res);
-      if (res.iss) {
-        setAuthUser({
-          provider: "apple",
-          email: res.email,
-          role: "candidate",
-        });
-      } else {
-        setAuthUser({
-          ...res,
-          provider: "apple",
-          email: res.email,
-          role: "candidate",
-        });
-      }
-      return res;
-    } else {
-      //console.log("no apple data");
-    }
-  }
-
-  async function appleBusinessAuth(token: string) {
-    const res = await appleAuthServer(token, "business");
-    if (res) {
-      //console.log("apple data", res);
-      if (!res.iss)
-        setAuthUser({ ...res, provider: "apple", role: "business" });
-      else
-        setAuthUser({
-          ...res,
-          provider: "apple",
-          email: res.email,
-          role: "business",
-        });
-
-      return res;
-    } else {
-      //console.log("no apple data");
-    }
-  }
   // these should run once
   async function getGoogleUserData(accessToken: string) {
     let userInfoResponse = await fetch(
@@ -191,35 +150,24 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     }
   }
 
-  const onLogout = async () => {
-    await AsyncStorage.removeItem("@user");
+  const onLogout = () => {
+    storage.delete("@user");
     // setAccessToken(undefined);
     setAuthUser(null);
   };
 
   const onDeleteAccount = async () => {
     const deleteUser = async () => {
-      if (role == "candidate") {
-        deleteCandidate(authUser?._id!)
-          .then((res) => {
-            //console.log("deleted candidate", res);
-            onLogout();
-          })
-          .catch((err) => {
-            //console.log("error deleting candidate", err);
-            Alert.alert("Error", err.message);
-          });
-      } else if (role == "business") {
-        deleteBusiness(authUser?._id!)
-          .then((res) => {
-            //console.log("deleted business", res);
-            onLogout();
-          })
-          .catch((err) => {
-            //console.log("error deleting business", err);
-            Alert.alert("Error", err.message);
-          });
-      }
+      deleteUserServer(authUser?._id!)
+        .then((res) => {
+          //console.log("deleted candidate", res);
+          onLogout();
+        })
+        .catch((err) => {
+          //console.log("error deleting candidate", err);
+          Alert.alert("Error", err.message);
+        });
+
       setAuthUser(null);
     };
     Alert.alert(
@@ -234,15 +182,6 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       ],
       { cancelable: false }
     );
-    // await AsyncStorage.removeItem("@user");
-    // if (role == "candidate") {
-    //   const res = await deleteCandidate(authUser?._id!);
-    // } else if (role == "business") {
-    //   const res = await deleteBusiness(authUser?._id!);
-    // }
-    // // setAuthUser(null);
-
-    // //console.log(role, "erl");
   };
 
   // Get the user's access token from response after login & store in async storage

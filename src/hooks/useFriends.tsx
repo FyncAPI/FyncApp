@@ -1,19 +1,26 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Contact } from "expo-contacts";
 import { useEffect, useState } from "react";
-import { Friend } from "../contexts/user/types";
+import { Friend } from "../contexts/user/user.types";
+import { useContact } from "./useContact";
+import { storage } from "../../App";
 
-export const useFriends = (contacts: Contact[]) => {
+export const useFriends = () => {
   const [friends, setFriends] = useState<Friend[]>([]);
+  const { contacts } = useContact();
 
   useEffect(() => {
+    console.log("contacts changed at friends");
+  }, [contacts]);
+
+  useEffect(() => {
+    console.log("useFriends mounted or contacts changed");
     getFriendsData();
   }, [contacts]);
 
   const getFriendsData = async () => {
     try {
-      const friendsData = await AsyncStorage.getItem("@friendsData");
-      console.log(friendsData, "friendsData");
+      const friendsData = storage.getString("@friendsData");
+      // console.log(friendsData, "friendsData");
       if (friendsData && contacts.length > 0) {
         const parsedFriendsData = JSON.parse(friendsData);
         // update friends with new contacts
@@ -34,5 +41,18 @@ export const useFriends = (contacts: Contact[]) => {
     }
   };
 
-  return { friends, setFriends };
+  const updateFriendsAfterContactChange = (contact: Contact) => {
+    const newFriends = friends.map((friend) => {
+      if (friend.contactId === contact.id) {
+        return {
+          ...friend,
+          contact: contact,
+        };
+      }
+      return friend;
+    });
+    setFriends(newFriends);
+  };
+
+  return { friends, setFriends, updateFriendsAfterContactChange };
 };

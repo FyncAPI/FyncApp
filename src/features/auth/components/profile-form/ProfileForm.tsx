@@ -11,7 +11,7 @@ import {
 } from "native-base";
 import React, { useEffect, useState } from "react";
 import { DismissKeyboardView } from "../../../../components/DismissKeyboardView";
-import { User } from "../../../../contexts/user/types";
+import { User } from "../../../../contexts/user/user.types";
 export default function ProfileForm({
   profile,
   setProfile,

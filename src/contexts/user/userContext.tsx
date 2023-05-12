@@ -1,12 +1,16 @@
 import React, { createContext, useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Friend, FriendsData, Memory, UserData } from "./types";
+import { Friend, FriendsData, Memory, UserData } from "./user.types";
 import { useContact } from "../../hooks/useContact";
 import { Contact } from "expo-contacts";
+import { ExploreItem } from "../../features/Explore/explore.type";
+import { useExploreItems } from "../../hooks/useExploreItems";
+import { storage } from "../../../App";
 
 interface UserContextInterface {
   userData: UserData;
   isRegistered: boolean;
+
+  exploreItems: ExploreItem[];
 
   contacts: Contact[];
 
@@ -16,7 +20,8 @@ interface UserContextInterface {
   unfavoriteFriend: (friendId: Friend["contactId"]) => void;
 
   saveUserData: (user: UserData, stopLoading?: () => void) => void;
-  saveFriendsData: (friendsData: FriendsData) => void;
+  saveFriendsData: (friendsData: Partial<FriendsData>) => void;
+
   deleteUserData: () => void;
 }
 
@@ -32,7 +37,9 @@ export function UserContextProvider({
   const [userData, setUserData] = useState<UserData>({} as UserData);
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
 
-  const contacts = useContact();
+  const { contacts } = useContact();
+
+  const { exploreItems } = useExploreItems(userData._id);
 
   useEffect(() => {
     getUserData();
@@ -46,19 +53,31 @@ export function UserContextProvider({
     // save user to async storage
     saveValueAsync("user", user);
     setIsRegistered(true);
-
     setUserData(user);
   };
 
-  const saveFriendsData = (friendsData: FriendsData) => {
+  const saveFriendsData = (friendsData: Partial<FriendsData>) => {
     if (!friendsData) return;
     // save user to async storage
-    saveValueAsync("friendsData", friendsData);
+
+    getValue("friendsData").then((data) => {
+      console.log(data, "data");
+      if (!data) {
+        console.log("no data");
+      }
+      const fd: FriendsData = JSON.parse(data || "{}");
+      console.log(fd, "fd");
+      const newFriendsData = { ...fd, ...friendsData };
+      console.log(newFriendsData, "newFriendsData");
+
+      saveValueAsync("friendsData", newFriendsData);
+    });
   };
 
   const deleteUserData = () => {
     // delete user from async storage
-    saveValueAsync("user", "");
+    // saveValueAsync("user", "");
+    clearAS();
     saveFriendsData({} as FriendsData);
     setIsRegistered(false);
     setUserData({} as UserData);
@@ -69,7 +88,7 @@ export function UserContextProvider({
     console.log(user, "user");
 
     if (user && user != "{}") {
-      const ud = JSON.parse(user);
+      const ud: UserData = JSON.parse(user);
       console.log(ud, "UXD");
       setUserData(ud);
       setIsRegistered(true);
@@ -108,6 +127,7 @@ export function UserContextProvider({
       favorites: newFriends,
     });
   };
+
   const addMemory = (friend: Friend, memory: Memory) => {};
 
   return (
@@ -116,6 +136,7 @@ export function UserContextProvider({
         userData,
         isRegistered,
         contacts,
+        exploreItems,
 
         addMemory,
         saveUserData,
@@ -134,7 +155,7 @@ export function UserContextProvider({
 const saveValueAsync = async (key: string, value: any) => {
   try {
     const jsonValue = JSON.stringify(value);
-    await AsyncStorage.setItem("@" + key, jsonValue);
+    storage.set("@" + key, jsonValue);
     // console.log("value saved", value);
   } catch (e) {
     // saving error
@@ -144,7 +165,7 @@ const saveValueAsync = async (key: string, value: any) => {
 
 const getValue = async (key: string) => {
   try {
-    const value = await AsyncStorage.getItem(`@${key}`);
+    const value = storage.getString(`@${key}`);
 
     if (value !== null) {
       // value previously stored
@@ -153,5 +174,15 @@ const getValue = async (key: string) => {
   } catch (e) {
     // error reading Value
     console.log("error getting value", e);
+  }
+};
+
+const clearAS = async () => {
+  try {
+    console.log("clearing storage");
+    storage.clearAll();
+  } catch (e) {
+    // clear error
+    console.log("error clearing storage", e);
   }
 };

@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "trojung",
-    "slug": "trojang",
-    "owner": "bunyasit",
+    "name": "Fync",
+    "slug": "fync",
+    "owner": "fync",
     "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/trolljang.png",
@@ -13,12 +13,12 @@
     },
     "updates": {
       "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/c90b8cf8-bce9-4072-98f5-b891bdd2072c"
+      "url": "https://u.expo.dev/9478f613-7d93-46ac-bd2d-c0d04597e68b"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bunyasit.trojang",
+      "bundleIdentifier": "com.bunyasit.fync",
       "buildNumber": "1"
     },
     "android": {
@@ -26,7 +26,7 @@
         "foregroundImage": "./assets/adaptroll.png",
         "backgroundColor": "#220035"
       },
-      "package": "com.bunyasit.trojang",
+      "package": "com.bunyasit.fync",
       "versionCode": 3
     },
     "web": {
@@ -34,7 +34,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "c90b8cf8-bce9-4072-98f5-b891bdd2072c"
+        "projectId": "9478f613-7d93-46ac-bd2d-c0d04597e68b"
       }
     },
     "runtimeVersion": {

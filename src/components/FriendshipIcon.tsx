@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { FavouriteIcon, Heading, HStack, Icon, Text, View } from "native-base";
 import React from "react";
 import { Factory } from "native-base";
-import { Friend } from "../contexts/user/types";
+import { Friend } from "../contexts/user/user.types";
 
 function FriendshipIconBase({
   friendship,

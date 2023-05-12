@@ -4,8 +4,8 @@ import React from "react";
 import { SafeTop } from "../../../components/SafeTop";
 import { RootStackNavigationProp } from "../../../../types";
 import BackButton from "../../../components/BackButton";
-import { FriendContext } from "../../../contexts/FriendContext";
-import { UserContext } from "../../../contexts/user/context";
+import { FriendContext } from "../../../contexts/friend/FriendContext";
+import { UserContext } from "../../../contexts/user/userContext";
 import ContactSelectorList from "../../auth/components/ContactSelectorList";
 import { AddFromContacts } from "./AddFromContacts";
 
