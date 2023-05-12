@@ -85,8 +85,6 @@ const HomeScreen = () => {
         />
       </HStack>
 
-      <Icon as={RemixIcons} name="home" size={30} boxSize={30} />
-      <RemixIcons name="home" />
       <SectionList
         showsVerticalScrollIndicator={false}
         pb={bottom}
