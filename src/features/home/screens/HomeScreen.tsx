@@ -1,4 +1,4 @@
-import { AppState, Dimensions, TextInput } from "react-native";
+import { AppState, Dimensions, Platform, TextInput } from "react-native";
 import React, { useContext, useEffect } from "react";
 import {
   FlatList,
@@ -12,7 +12,7 @@ import {
 } from "native-base";
 import Carousel from "react-native-reanimated-carousel";
 import { SafeBottom, SafeTop } from "../../../components/SafeTop";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import FriendCard from "../../../components/FriendCard";
 import FriendList from "../../../components/FriendList";
 import {
@@ -37,6 +37,7 @@ import LoadingIndicator from "../../../components/LoadingIndicator";
 import RecentCallList from "../../../components/RecentCallList";
 import Svg, {
   Circle,
+  Path,
   G,
   SvgXml,
   TextPath,
@@ -44,6 +45,8 @@ import Svg, {
 } from "react-native-svg";
 import { processFontFamily } from "expo-font";
 import { FriendBlob } from "../../friend/components/FriendBlob";
+import { RemixIcons } from "../../../../assets/Icons/RemixIcons";
+import TestXml from "../components/TextXml";
 type HomeScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<RootTabParamList, "Home">,
   NativeStackNavigationProp<RootStackParamList>
@@ -81,17 +84,27 @@ const HomeScreen = () => {
           as={<Ionicons name="add-circle-outline" />}
         />
       </HStack>
+
       {/* <Button
         onPress={() => AsyncStorage.getItem("@friendsData").then(console.log)}
       >
         <Text>Get all keys</Text>
       </Button> */}
-
+      {/* <Icon size="3xl" as={<RemixIcons name="apps" />} /> */}
+      {/* <TestXml /> */}
+      {/* <Icon
+        as={Ionicons}
+        name={Platform.OS ? "ios-menu" : "md-menu"}
+        size="20"
+        color="red"
+      /> */}
       {/* <Text>{JSON.stringify(userData.friends[0])}</Text> */}
+      <Icon as={RemixIcons} name="home" size={30} boxSize={30} />
       <SectionList
         showsVerticalScrollIndicator={false}
         pb={bottom}
         mt={2}
+        flex={1}
         sections={[
           {
             title: "Recents",

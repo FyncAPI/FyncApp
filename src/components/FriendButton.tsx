@@ -4,7 +4,7 @@ import { Friend } from "../contexts/user/user.types";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Linking from "expo-linking";
 import { useNavigation } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native";
+import { Dimensions, TouchableOpacity } from "react-native";
 import { RootStackNavigationProp, RootTabNavigationProp } from "../../types";
 import { FriendContext } from "../contexts/friend/FriendContext";
 import Svg, {
@@ -15,6 +15,7 @@ import Svg, {
   Text as TextS,
 } from "react-native-svg";
 import { processFontFamily } from "expo-font";
+import { SettingsContext } from "../contexts/settings/SettingsContext";
 
 // export default function FriendCard({ friend }: { friend: Friend }) {
 export default function FriendButton({
@@ -28,7 +29,14 @@ export default function FriendButton({
 
   const { callFriend } = useContext(FriendContext);
 
-  const size = listLength == 2 ? 160 : listLength == 1 ? 300 : 110;
+  const { carouselNumColumns } = React.useContext(SettingsContext);
+
+  const screenSizes = Dimensions.get("window");
+
+  const size = screenSizes.width / carouselNumColumns;
+  const circleSize = size - 22;
+  console.log(circleSize, "circleSize");
+
   return (
     <TouchableOpacity
       onPress={() => {
@@ -42,28 +50,39 @@ export default function FriendButton({
       }}
       delayLongPress={500}
     >
-      <Box overflow="hidden" mx="2.5" borderRadius="lg">
-        {friend?.contact?.image ? (
-          <Image
-            source={friend?.contact.image}
-            w={size || 100}
-            h={size || 100}
-            style={{
-              borderRadius: 100,
-            }}
-            alt="friend image"
-          />
-        ) : friend.avatar ? (
-          <View>
-            <SvgXml
-              xml={friend.avatar}
-              width={size || 100}
-              height={size || 100}
+      <Box
+        overflow="visible"
+        m="1"
+        borderRadius="lg"
+        // style={{ overflow: "visible" }}
+      >
+        <View
+          alignItems={"center"}
+          justifyContent={"center"}
+          w={circleSize}
+          h={circleSize}
+        >
+          {friend?.contact?.image ? (
+            <Image
+              source={friend?.contact.image}
+              // w={"full"}
+              // h={"full"}
+              w={circleSize}
+              h={circleSize}
+              rounded={"full"}
+              alt="friend image"
             />
-          </View>
-        ) : null}
+          ) : friend.avatar ? (
+            <View>
+              <SvgXml
+                xml={friend.avatar}
+                width={circleSize}
+                height={circleSize}
+              />
+            </View>
+          ) : null}
 
-        {/* <Text
+          {/* <Text
           zIndex={2}
           position="absolute"
           bottom="0.5"
@@ -74,6 +93,7 @@ export default function FriendButton({
         >
           {friend?.contact?.nickname || friend?.contact?.name}
         </Text> */}
+        </View>
         {/* <LinearGradient
           colors={
             listLength == 1
@@ -95,7 +115,7 @@ export default function FriendButton({
             height: size,
           }}
         /> */}
-        <RadiusName size={size} contact={friend?.contact} />
+        <RadiusName size={circleSize} contact={friend?.contact} />
       </Box>
     </TouchableOpacity>
   );
@@ -148,7 +168,7 @@ const RadiusName = ({
       <TextPath href="#circle">
         <TextS
           fill={"white"}
-          fontSize={18}
+          fontSize={18 * (size / 100)}
           fontFamily={processFontFamily("Outfit_700Bold")}
         >
           {contact?.nickname || contact?.firstName || contact?.name}

@@ -49,18 +49,18 @@ export const FriendCarousel = gestureHandlerRootHOC(
             >
               <FlatList
                 columnWrapperStyle={{
-                  justifyContent: "flex-start",
+                  justifyContent: "space-evenly",
                 }}
                 data={item}
                 key={item.length + "FRIEND" + carouselNumColumns}
                 keyExtractor={(item) => item.contactId + carouselNumColumns}
                 horizontal={false}
                 numColumns={carouselNumColumns}
-                ItemSeparatorComponent={() => (
-                  <View style={{ height: 13 + carouselNumColumns }}>
-                    {/* <View height={"0.2"} bg="amber.100" /> */}
-                  </View>
-                )}
+                // ItemSeparatorComponent={() => (
+                //   <View style={{ height: 13 + carouselNumColumns }}>
+                //     {/* <View height={"0.2"} bg="amber.100" /> */}
+                //   </View>
+                // )}
                 renderItem={({ item: friend, index }) => (
                   <FriendButton
                     listLength={item.length}
