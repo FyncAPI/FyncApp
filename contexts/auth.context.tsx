@@ -5,7 +5,7 @@ import endpoints from "constants/endpoints";
 import * as WebBrowser from "expo-web-browser";
 
 const AuthContext = React.createContext<{
-  signIn: () => void;
+  signIn: () => Promise<void | string>;
   signOut: () => void;
   session?: string | null;
   isLoading: boolean;
@@ -28,6 +28,34 @@ export function useSession() {
   return value;
 }
 
+function exchangeCodeForToken(authorizationCode) {
+  console.log(process.env.EXPO_PUBLIC_FYNC_CLIENT_ID);
+  const tokenRequestBody = new FormData();
+  tokenRequestBody.append("grant_type", "authorization_code");
+  tokenRequestBody.append("code", authorizationCode);
+  tokenRequestBody.append("client_id", process.env.EXPO_PUBLIC_FYNC_CLIENT_ID);
+  tokenRequestBody.append(
+    "client_secret",
+    process.env.EXPO_PUBLIC_FYNC_CLIENT_SECRET
+  );
+
+  return fetch(endpoints.fync.auth.token.url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: tokenRequestBody,
+  })
+    .then((response) => response.json())
+    .then((tokenData) => {
+      console.log(tokenData);
+      // Handle the obtained access token (tokenData.access_token)
+      console.log("Access Token:", tokenData.access_token);
+      return tokenData.access_token;
+    })
+    .catch((error) => console.error("Error during token exchange:", error));
+}
+
 export function SessionProvider(props: React.PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState("session");
 
@@ -35,16 +63,28 @@ export function SessionProvider(props: React.PropsWithChildren) {
     <AuthContext.Provider
       value={{
         signIn: async () => {
-          Linking.addEventListener("url", (event) => {
-            console.log(event.url);
-          });
-
-          const res = await WebBrowser.openBrowserAsync(
-            endpoints.fync.auth.register.url
-          );
+          const authUrl = process.env.EXPO_PUBLIC_FYNC_AUTH_URL;
+          const res = await WebBrowser.openAuthSessionAsync(authUrl);
           // Perform sign-in logic here
           console.log(res);
-          setSession("xxx");
+
+          if (res.type !== "success") {
+            return;
+          }
+          const code = res.url.split("?code=")[1];
+
+          // get access token
+          try {
+            const accessToken = await exchangeCodeForToken(code);
+            console.log(accessToken);
+            if (accessToken) {
+              setSession(accessToken);
+            } else {
+              console.log("no access token");
+            }
+          } catch (e) {
+            console.log(e);
+          }
         },
         signOut: () => {
           setSession(null);

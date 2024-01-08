@@ -2,16 +2,19 @@ import { useSession } from "contexts/auth.context";
 import { router } from "expo-router";
 import { Text, View } from "react-native";
 import * as Linking from "expo-linking";
+import { useEffect } from "react";
 
 export default function SignIn() {
-  const { signIn } = useSession();
-  const url = Linking.useURL();
+  const { signIn, isLoading, session } = useSession();
+  useEffect(() => {
+    console.log(session, isLoading);
+  }, [session, isLoading]);
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text
-        onPress={() => {
-          signIn();
+        onPress={async () => {
+          await signIn();
           // Navigate after signing in. You may want to tweak this to ensure sign-in is
           // successful before navigating.
           router.replace("/");
@@ -19,7 +22,9 @@ export default function SignIn() {
       >
         Sign In
       </Text>
-      <Text>URL: {url}</Text>
+
+      <Text>Isloading: {isLoading}</Text>
+      <Text>session: {session}</Text>
     </View>
   );
 }
