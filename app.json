@@ -46,7 +46,8 @@
             "DEFAULT"
           ]
         }
-      ]
+      ],
+      "package": "com.fync"
     },
     "web": {
       "favicon": "./assets/favicon.png"

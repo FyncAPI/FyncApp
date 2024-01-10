@@ -9,5 +9,8 @@ export default {
         url: "https://fync.in/api/oauth/token",
       },
     },
+    me: {
+      url: "https://api.fync.in/users/me",
+    },
   },
 };
