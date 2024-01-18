@@ -2,15 +2,15 @@ import React from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Canvas, Circle, Group } from "@shopify/react-native-skia";
 import { useUser } from "contexts/user.context";
-import { Button, Image, Pressable, View } from "react-native";
+import { Button, Image, Pressable } from "react-native";
 import { useSession } from "contexts/auth.context";
 import { Text } from "components/Text";
 import { SafeTop } from "components/SafeTop";
-import { Ionicons } from "@expo/vector-icons";
 import { IconButton } from "components/IconButton";
 import { Skeleton } from "moti/skeleton";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link } from "expo-router";
+import { View } from "components/View";
 
 const App = () => {
   const { user } = useUser();
