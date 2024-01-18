@@ -1,6 +1,7 @@
 import endpoints from "constants/endpoints";
 
 export const getUserFromFync = async (session: string) => {
+  console.log(session);
   const response = await fetch(endpoints.fync.me.url, {
     headers: {
       Authorization: `Bearer ${session}`,
@@ -9,6 +10,6 @@ export const getUserFromFync = async (session: string) => {
 
   const data = await response.json();
 
-  console.log(data);
+  console.log(data, "data");
   return data;
 };

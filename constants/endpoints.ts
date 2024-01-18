@@ -10,7 +10,7 @@ export default {
       },
     },
     me: {
-      url: "https://api.fync.in/users/me",
+      url: "https://api.fync.in/v1/users/@me",
     },
   },
 };

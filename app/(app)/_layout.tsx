@@ -3,6 +3,11 @@ import { UserProvider } from "contexts/user.context";
 import { Redirect, Stack, Tabs } from "expo-router";
 import { Text } from "react-native";
 
+export const unstable_settings = {
+  // Ensure any route can link back to `/`
+  initialRouteName: "home",
+};
+
 export default function AppLayout() {
   const { session, isLoading } = useSession();
 
@@ -27,25 +32,11 @@ export default function AppLayout() {
           headerShown: false,
           // tabBarShowLabel: false,
         }}
+        initialRouteName="home"
       >
         <Tabs.Screen
           // Name of the route to hide.
-          name="index"
-          options={{
-            // This tab will no longer show up in the tab bar.
-            href: null,
-          }}
-        />
-        <Tabs.Screen
-          // Name of the route to hide.
-          name="meets"
-          options={{
-            // This tab will no longer show up in the tab bar.
-            href: null,
-          }}
-        />
-        <Tabs.Screen
-          // Name of the route to hide.
+
           name="home"
           options={{
             tabBarIcon: ({ focused }) => {
@@ -61,6 +52,23 @@ export default function AppLayout() {
                 </Text>
               );
             },
+          }}
+        />
+
+        <Tabs.Screen
+          // Name of the route to hide.
+          name="index"
+          options={{
+            // This tab will no longer show up in the tab bar.
+            href: null,
+          }}
+        />
+        <Tabs.Screen
+          // Name of the route to hide.
+          name="meets"
+          options={{
+            // This tab will no longer show up in the tab bar.
+            href: null,
           }}
         />
         <Tabs.Screen

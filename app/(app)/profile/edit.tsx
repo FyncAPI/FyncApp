@@ -12,10 +12,9 @@ import { Skeleton } from "moti/skeleton";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link } from "expo-router";
 
-const App = () => {
+const Edit = () => {
   const { user } = useUser();
   const { signOut } = useSession();
-  const [show, setShow] = React.useState(true);
   const width = 256;
   const height = 256;
   const r = width * 0.33;
@@ -34,15 +33,7 @@ const App = () => {
           }}
         >
           <IconButton
-            name="settings"
-            href="/profile/settings"
-            onPress={() => {
-              console.log("hi");
-            }}
-          />
-          <IconButton
-            name="pencil"
-            href="/profile/edit"
+            name="checkmark"
             onPress={() => {
               console.log("hi");
             }}
@@ -50,11 +41,8 @@ const App = () => {
         </View>
 
         <View style={{ padding: 10, marginLeft: 10, marginRight: 10 }}>
-          <Skeleton show={show} height={100} width={100} radius={35}>
+          <Skeleton show={true}>
             <Image
-              onLoad={() => {
-                setShow(false);
-              }}
               source={{ uri: user?.profilePicture }}
               style={{ width: 100, height: 100, borderRadius: 35 }}
             />
@@ -72,7 +60,13 @@ const App = () => {
         </Canvas> */}
         </View>
       </View>
+      <Button
+        title="Sign out"
+        onPress={() => {
+          signOut();
+        }}
+      />
     </GestureHandlerRootView>
   );
 };
-export default App;
+export default Edit;

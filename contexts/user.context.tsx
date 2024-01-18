@@ -35,7 +35,13 @@ export function UserProvider(props: React.PropsWithChildren) {
   useEffect(() => {
     (async () => {
       const jsonUser = storage.getString("user");
-      if (!jsonUser || jsonUser === "undefined" || jsonUser === "{}") {
+      if (
+        !jsonUser ||
+        jsonUser === "undefined" ||
+        jsonUser === "{}" ||
+        !jsonUser.includes("_id")
+      ) {
+        console.log("fetching user");
         const user = await getUserFromFync(session);
         if (!user) {
           setError("User not found");
