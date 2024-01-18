@@ -2,6 +2,7 @@ import { MotiPressable } from "moti/interactions";
 import { useCallback, useMemo } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Link, router } from "expo-router";
+import { useColorScheme } from "react-native";
 
 export const IconButton = ({
   onPress,
@@ -14,6 +15,7 @@ export const IconButton = ({
   name: keyof typeof Ionicons.glyphMap;
   href?: string;
 } & React.ComponentProps<typeof Ionicons>) => {
+  const mode = useColorScheme();
   return (
     <MotiPressable
       onPress={
@@ -46,7 +48,12 @@ export const IconButton = ({
         []
       )}
     >
-      <Ionicons name={name} size={24} color="black" {...props} />
+      <Ionicons
+        name={name}
+        size={24}
+        color={mode == "dark" ? "white" : "black"}
+        {...props}
+      />
     </MotiPressable>
   );
 };

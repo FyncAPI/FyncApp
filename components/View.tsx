@@ -6,19 +6,23 @@ export const View = ({
   children,
   row,
   col,
+  gap,
   p,
   m,
   style,
+  bg,
   ...props
 }: {
   children: React.ReactNode;
   row?: boolean;
   col?: boolean;
+  gap?: number;
   p?: number;
   m?: number;
+  bg?: 1 | 2 | 3 | 4;
 } & ComponentProps<typeof DefaultView>) => {
-  const colorScheme = useColorScheme();
-  console.log(colorScheme);
+  const mode = useColorScheme();
+  console.log(mode);
 
   return (
     <DefaultView
@@ -36,9 +40,10 @@ export const View = ({
               justifyContent: "space-between",
             }
           : {},
-        backgrounds[colorScheme][1],
+        backgrounds[mode][bg || 1],
         p ? { padding: p } : {},
         m ? { margin: m } : {},
+        gap ? { gap } : {},
         style,
       ]}
       {...props}

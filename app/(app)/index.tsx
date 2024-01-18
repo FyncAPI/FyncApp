@@ -16,7 +16,7 @@ const Home = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeTop />
-      <Text fontSize={"2xl"}>Fync</Text>
+      <Text variant="header">Fync</Text>
       {/* <Canvas style={{ width, height }}>
         <Group blendMode="multiply">
           <Circle cx={r} cy={r} r={r} color="cyan" />

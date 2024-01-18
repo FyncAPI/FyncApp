@@ -1,57 +1,116 @@
+import { COLORS } from "constants/colors";
 import { ComponentProps } from "react";
-import { Text as DefaultText, StyleSheet } from "react-native";
+import { Text as DefaultText, StyleSheet, useColorScheme } from "react-native";
 
 export const Text = ({
   children,
-  fontSize = "xl",
+  fontSize,
   variant,
   style,
-  color,
+  color = "default",
   ...props
 }: {
   children: React.ReactNode;
   fontSize?: "sm" | "md" | "l" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl";
-  variant?: "h1" | "h2" | "h3";
-  color?: "primary" | "secondary" | "error" | "success" | "warning";
+  variant?: "header" | "title" | "subtitile" | "body" | "caption";
+  color?:
+    | "default"
+    | "inverted"
+    | "primary"
+    | "secondary"
+    | "error"
+    | "success"
+    | "warning";
 } & ComponentProps<typeof DefaultText>) => {
+  const mode = useColorScheme();
   return (
-    <DefaultText style={[styles[variant], colorTheme[color], style]} {...props}>
+    <DefaultText
+      style={[
+        styles[variant],
+        fontSize
+          ? {
+              fontSize: fontSizes[fontSize],
+            }
+          : {},
+        colorTheme[mode][color],
+        style,
+      ]}
+      {...props}
+    >
       {children}
     </DefaultText>
   );
 };
 
 const styles = StyleSheet.create({
-  h1: {
+  header: {
     fontSize: 32,
     fontWeight: "bold",
   },
-  h2: {
+  title: {
     fontSize: 24,
     fontWeight: "bold",
   },
-  h3: {
-    fontSize: 16,
+  subtitle: {
+    fontSize: 20,
     fontWeight: "bold",
+  },
+  body: {
+    fontSize: 16,
+  },
+  caption: {
+    fontSize: 12,
   },
 });
 
 const colorTheme = {
-  primary: {
-    color: "#6C63FF",
-  },
-  secondary: {
-    color: "#FF5C58",
-  },
-  error: {
-    color: "#FF5C58",
-  },
-  success: {
-    color: "#6C63FF",
-  },
-  warning: {
-    color: "#FF5C58",
-  },
+  light: StyleSheet.create({
+    default: {
+      color: COLORS.background[900],
+    },
+    inverted: {
+      color: COLORS.background[50],
+    },
+    primary: {
+      color: COLORS.primary[600],
+    },
+    secondary: {
+      color: COLORS.secondary[600],
+    },
+    error: {
+      color: COLORS.background[800],
+    },
+    success: {
+      color: COLORS.secondary[800],
+    },
+    warning: {
+      color: COLORS.error[600],
+    },
+  }),
+
+  dark: StyleSheet.create({
+    default: {
+      color: COLORS.background[50],
+    },
+    inverted: {
+      color: COLORS.background[900],
+    },
+    primary: {
+      color: COLORS.primary[500],
+    },
+    secondary: {
+      color: COLORS.secondary[500],
+    },
+    error: {
+      color: COLORS.background[900],
+    },
+    success: {
+      color: COLORS.secondary[300],
+    },
+    warning: {
+      color: COLORS.error[300],
+    },
+  }),
 };
 
 export const fontSizes = {

@@ -18,7 +18,7 @@ const Add = () => {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeTop back />
       <View p={10} style={{ flex: 1 }}>
-        <Text variant="h1">Add friend</Text>
+        <Text variant="header">Add friend</Text>
       </View>
     </GestureHandlerRootView>
   );
