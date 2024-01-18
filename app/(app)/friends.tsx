@@ -13,7 +13,7 @@ const Friends = () => {
   const height = 256;
   const r = width * 0.33;
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <SafeTop title={"Friends"} />
       <IconButton
         name="add"
@@ -26,7 +26,7 @@ const Friends = () => {
           // right: 20,
         }}
         size={30}
-        href="/friends/add"
+        href="/add-friend"
       />
       <FlatList
         data={user.friends}
@@ -38,7 +38,7 @@ const Friends = () => {
           );
         }}
       />
-    </GestureHandlerRootView>
+    </View>
   );
 };
 export default Friends;

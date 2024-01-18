@@ -31,11 +31,66 @@ export default function AppLayout() {
   // This layout can be deferred because it's not the root layout.
   return (
     <UserProvider>
-      <Stack
+      <Tabs
         screenOptions={{
           headerShown: false,
+          tabBarShowLabel: false,
+          tabBarBadgeStyle: {},
+          tabBarStyle: {
+            position: "absolute",
+            paddingBottom: 10 + insets.bottom,
+            paddingTop: 20,
+            marginTop: 0,
+
+            overflow: "hidden",
+            borderWidth: 0,
+            backgroundColor: "transparent",
+
+            height: 50 + insets.bottom,
+            borderTopWidth: 0,
+            borderTopColor: "transparent",
+          },
+          tabBarBackground: () => (
+            <BlurView
+              tint={mode}
+              intensity={100}
+              style={[
+                StyleSheet.absoluteFill,
+                {
+                  backgroundColor: "transparent",
+                },
+              ]}
+            />
+          ),
+          tabBarActiveTintColor: "#7b93ec",
         }}
-      />
+        initialRouteName="home"
+      >
+        <Tabs.Screen
+          // Name of the route to hide.
+
+          name="home"
+          options={{
+            tabBarIcon: TabBarIcon("home"),
+          }}
+        />
+        <Tabs.Screen
+          // Name of the route to hide.
+
+          name="explore"
+          options={{
+            tabBarIcon: TabBarIcon("compass"),
+          }}
+        />
+
+        <Tabs.Screen
+          // Name of the route to hide.
+          name="profile"
+          options={{
+            tabBarIcon: TabBarIcon("user"),
+          }}
+        />
+      </Tabs>
     </UserProvider>
   );
 }

@@ -40,7 +40,7 @@ const Settings = () => {
   const height = 256;
   const r = width * 0.33;
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <SafeTop back />
       <SectionList
         sections={DATA}
@@ -68,7 +68,7 @@ const Settings = () => {
         )}
         renderSectionHeader={({ section: { title } }) => <Text>{title}</Text>}
       />
-    </GestureHandlerRootView>
+    </View>
   );
 };
 export default Settings;

@@ -15,12 +15,12 @@ const Add = () => {
   const r = width * 0.33;
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <SafeTop back />
       <View p={10} style={{ flex: 1 }}>
         <Text variant="header">Add friend</Text>
       </View>
-    </GestureHandlerRootView>
+    </View>
   );
 };
 export default Add;

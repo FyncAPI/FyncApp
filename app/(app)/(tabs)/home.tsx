@@ -32,7 +32,7 @@ const Home = () => {
 
         <View row gap={30}>
           <IconButton name="notifications" />
-          <IconButton name="add" href="/home/add" />
+          <IconButton name="add" href="/add-friend" />
         </View>
       </View>
       <ScrollView>

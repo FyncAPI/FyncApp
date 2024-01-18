@@ -19,7 +19,7 @@ const Edit = () => {
   const height = 256;
   const r = width * 0.33;
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
         <SafeTop />
 
@@ -66,7 +66,7 @@ const Edit = () => {
           signOut();
         }}
       />
-    </GestureHandlerRootView>
+    </View>
   );
 };
 export default Edit;
