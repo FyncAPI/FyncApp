@@ -12,7 +12,7 @@ export const Text = ({
 }: {
   children: React.ReactNode;
   fontSize?: "sm" | "md" | "l" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl";
-  variant?: "header" | "title" | "subtitile" | "body" | "caption";
+  variant?: "header" | "title" | "subtitle" | "body" | "caption";
   color?:
     | "default"
     | "inverted"
@@ -26,13 +26,15 @@ export const Text = ({
   return (
     <DefaultText
       style={[
-        styles[variant],
+        { fontFamily: "Outfit_400Regular" },
+        fontStyles[variant],
         fontSize
           ? {
               fontSize: fontSizes[fontSize],
             }
           : {},
-        colorTheme[mode][color],
+        textColorTheme[mode][color],
+
         style,
       ]}
       {...props}
@@ -42,28 +44,30 @@ export const Text = ({
   );
 };
 
-const styles = StyleSheet.create({
+export const fontStyles = StyleSheet.create({
   header: {
     fontSize: 32,
-    fontWeight: "bold",
+    fontFamily: "Outfit_700Bold",
   },
   title: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontFamily: "Outfit_700Bold",
   },
   subtitle: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 18,
+    fontFamily: "Outfit_600SemiBold",
   },
   body: {
     fontSize: 16,
+    fontFamily: "Outfit_400Regular",
   },
   caption: {
     fontSize: 12,
+    fontFamily: "Outfit_300Light",
   },
 });
 
-const colorTheme = {
+export const textColorTheme = {
   light: StyleSheet.create({
     default: {
       color: COLORS.background[900],

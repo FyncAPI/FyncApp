@@ -1,8 +1,12 @@
 import { COLORS } from "constants/colors";
 import { ComponentProps } from "react";
-import { View as DefaultView, StyleSheet, useColorScheme } from "react-native";
+import {
+  ScrollView as DefaultScrollView,
+  StyleSheet,
+  useColorScheme,
+} from "react-native";
 
-export const View = ({
+export const ScrollView = ({
   children,
   row,
   col,
@@ -10,25 +14,23 @@ export const View = ({
   p,
   m,
   r,
-  flex,
   style,
   bg,
   ...props
 }: {
-  children?: React.ReactNode;
+  children: React.ReactNode;
   row?: boolean;
   col?: boolean;
   gap?: number;
   p?: number;
   r?: number;
   m?: number;
-  flex?: boolean;
   bg?: 1 | 2 | 3 | 4;
-} & ComponentProps<typeof DefaultView>) => {
+} & ComponentProps<typeof DefaultScrollView>) => {
   const mode = useColorScheme();
 
   return (
-    <DefaultView
+    <DefaultScrollView
       style={[
         row
           ? {
@@ -48,13 +50,12 @@ export const View = ({
         m ? { margin: m } : {},
         r ? { borderRadius: r } : {},
         gap ? { gap } : {},
-        flex ? { flex: 1 } : {},
         style,
       ]}
       {...props}
     >
       {children}
-    </DefaultView>
+    </DefaultScrollView>
   );
 };
 

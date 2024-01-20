@@ -14,8 +14,12 @@ export function SafeTop({
     <View
       style={[
         {
-          height: insets.top + (back ? 30 : 0),
+          // height: insets.top + (back ? 30 : 0),
+          // flex: 1,
+          flexDirection: "row",
+          marginTop: insets.top,
           backgroundColor: "transparent",
+          // overflow: "visible",
         },
         props.style,
       ]}
@@ -24,14 +28,17 @@ export function SafeTop({
       {back && (
         <View
           style={{
-            position: "absolute",
-            top: insets.top,
-            left: 0,
-            padding: 10,
-            marginLeft: 10,
-            marginRight: 10,
-            gap: 10,
-            flexDirection: "row",
+            // overflow: "visible",
+            // position: "absolute",
+            // top: insets.top,
+            // left: 0,
+            margin: 10,
+            // padding: 10,
+            // marginLeft: 10,
+            // marginRight: 10,
+            // gap: 10,
+            // flexDirection: "row",
+            // justifyContent: "flex-start",
           }}
         >
           <IconButton
@@ -43,7 +50,10 @@ export function SafeTop({
         </View>
       )}
       {title && (
-        <Text variant="h1" style={{ position: "absolute", top: insets.top }}>
+        <Text
+          // style={{ top: insets.top, left: 60, overflow: "visible" }}
+          variant="header"
+        >
           {title}
         </Text>
       )}
