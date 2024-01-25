@@ -54,7 +54,7 @@ export const Input = ({
       bg={bg}
       style={{
         paddingLeft: p * 2 || 10,
-        flexGrow: 1,
+        // flexGrow: 1,
         justifyContent: "flex-start",
       }}
     >
@@ -66,6 +66,7 @@ export const Input = ({
           gap ? { gap } : {},
           // { flexGrow: 1 },
           // { alignContent: "stretch" },
+
           { fontFamily: "Outfit_400Regular" },
           { flex: 1 },
           fontStyles[variant],

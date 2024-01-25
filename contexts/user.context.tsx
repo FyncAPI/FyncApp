@@ -6,7 +6,7 @@ import endpoints from "constants/endpoints";
 import * as WebBrowser from "expo-web-browser";
 import { storage } from "utils/storage";
 import { useSession } from "./auth.context";
-import { getUserFromFync } from "utils/fync";
+import { getCurrentUserFromFync } from "utils/fync";
 
 const UserContext = React.createContext<{
   user: User;
@@ -42,7 +42,7 @@ export function UserProvider(props: React.PropsWithChildren) {
         !jsonUser.includes("_id")
       ) {
         console.log("fetching user");
-        const user = await getUserFromFync(session);
+        const user = await getCurrentUserFromFync(session);
         if (!user) {
           setError("User not found");
           return;

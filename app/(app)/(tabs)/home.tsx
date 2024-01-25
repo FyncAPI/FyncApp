@@ -14,7 +14,7 @@ const Home = () => {
   const height = 256;
   const r = width * 0.33;
   return (
-    <View style={{ flex: 1 }}>
+    <View bg={1} style={{ flex: 1 }}>
       <SafeTop />
       <View
         row

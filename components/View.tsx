@@ -8,11 +8,15 @@ export const View = ({
   col,
   gap,
   p,
+  px,
   m,
   r,
   flex,
   style,
   bg,
+  variant,
+  color,
+  glass,
   ...props
 }: {
   children?: React.ReactNode;
@@ -20,10 +24,14 @@ export const View = ({
   col?: boolean;
   gap?: number;
   p?: number;
+  px?: number;
   r?: number;
   m?: number;
   flex?: boolean;
   bg?: 1 | 2 | 3 | 4;
+  variant?: "primary" | "secondary" | "text";
+  color?: string;
+  glass?: boolean;
 } & ComponentProps<typeof DefaultView>) => {
   const mode = useColorScheme();
 
@@ -43,12 +51,20 @@ export const View = ({
               justifyContent: "space-between",
             }
           : {},
-        backgrounds[mode][bg || 1],
+        color ? { backgroundColor: color } : {},
+        backgrounds[mode][variant || bg || 0],
         p ? { padding: p } : {},
+        px ? { paddingHorizontal: px } : {},
         m ? { margin: m } : {},
         r ? { borderRadius: r } : {},
         gap ? { gap } : {},
         flex ? { flex: 1 } : {},
+        glass
+          ? {
+              backgroundColor: "rgba(255,255,255,0.1)",
+              backdropFilter: "blur(10px)",
+            }
+          : {},
         style,
       ]}
       {...props}
@@ -60,6 +76,7 @@ export const View = ({
 
 const backgrounds = {
   dark: StyleSheet.create({
+    0: {},
     1: {
       backgroundColor: COLORS.background[950],
     },
@@ -71,6 +88,15 @@ const backgrounds = {
     },
     4: {
       backgroundColor: COLORS.background[700],
+    },
+    primary: {
+      backgroundColor: COLORS.primary[700],
+    },
+    secondary: {
+      backgroundColor: COLORS.secondary[700],
+    },
+    text: {
+      backgroundColor: COLORS.background[100],
     },
   }),
   light: StyleSheet.create({
@@ -85,6 +111,15 @@ const backgrounds = {
     },
     4: {
       backgroundColor: COLORS.background[300],
+    },
+    primary: {
+      backgroundColor: COLORS.primary[300],
+    },
+    secondary: {
+      backgroundColor: COLORS.secondary[300],
+    },
+    text: {
+      backgroundColor: COLORS.background[900],
     },
   }),
 };

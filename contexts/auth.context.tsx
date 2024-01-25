@@ -3,15 +3,19 @@ import { useStorageState } from "../hooks/useStorageState";
 import { Linking } from "react-native";
 import endpoints from "constants/endpoints";
 import * as WebBrowser from "expo-web-browser";
+import axios from "axios";
+import { User } from "constants/type";
 
 const AuthContext = React.createContext<{
   signIn: () => Promise<void | string>;
   signOut: () => void;
+  getFyncUserById: (id: string) => Promise<User | null>;
   session?: string | null;
   isLoading: boolean;
 }>({
   signIn: () => null,
   signOut: () => null,
+  getFyncUserById: () => null,
   session: null,
   isLoading: false,
 });
@@ -90,6 +94,29 @@ export function SessionProvider(props: React.PropsWithChildren) {
           setSession(null);
         },
         session,
+        getFyncUserById: async (id: string) => {
+          console.log(session, id, "ssidd");
+          try {
+            const response = await axios.get(endpoints.fync.user.url(id), {
+              headers: {
+                Authorization: `Bearer ${session}`,
+              },
+            });
+            const data = response.data;
+            console.log(data, "data");
+
+            return data;
+          } catch (error) {
+            console.log(error.response.data.message);
+            if (
+              error.response.data.message === "Unauthorized - Token expired"
+            ) {
+              setSession(null);
+              return null;
+            }
+            return null;
+          }
+        },
         isLoading,
       }}
     >

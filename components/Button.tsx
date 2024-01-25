@@ -8,6 +8,7 @@ export const Button = ({
   onPress,
   href,
   mx,
+  children,
   ...props
 }: {
   onPress?: () => void;
@@ -54,7 +55,7 @@ export const Button = ({
       )}
       {...props}
     >
-      {props.children}
+      {children}
     </MotiPressable>
   );
 };

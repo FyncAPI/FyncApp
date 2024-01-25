@@ -1,41 +1,36 @@
-import React from "react";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Canvas, Circle, Group } from "@shopify/react-native-skia";
-import { useUser } from "contexts/user.context";
-import { Button, Image, Pressable } from "react-native";
-import { useSession } from "contexts/auth.context";
+import { Image } from "react-native";
+import { useLocalSearchParams } from "expo-router";
+import { View } from "components/View";
 import { Text } from "components/Text";
 import { SafeTop } from "components/SafeTop";
+import { MotiView } from "moti";
+import { useDerivedValue } from "react-native-reanimated";
 import { IconButton } from "components/IconButton";
+import { ScrollView } from "components/ScrollView";
 import { Skeleton } from "moti/skeleton";
-import { LinearGradient } from "expo-linear-gradient";
-import { Link } from "expo-router";
-import { View } from "components/View";
+import { useEffect, useState } from "react";
+import { useUser } from "contexts/user.context";
+import { User } from "constants/type";
+import { useSession } from "contexts/auth.context";
 
-import { useSharedValue, useDerivedValue } from "react-native-reanimated";
-import { MotiView, ScrollView } from "moti";
-import { JsonViewer } from "components/JsonViewer";
-const App = () => {
-  const { user } = useUser();
-  const { signOut } = useSession();
-  const [show, setShow] = React.useState(true);
-  const width = 256;
-  const height = 256;
-  const r = width * 0.33;
+export default function UserProfile() {
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const { session, getFyncUserById } = useSession();
+  const [user, setUser] = useState<User>({} as User);
+  const [show, setShow] = useState(true);
 
-  const isValid = useSharedValue(false);
+  useEffect(() => {
+    (async () => {
+      const user = await getFyncUserById(id);
+      console.log(user, "uuu");
+      if (user) setUser(user);
+    })();
+  }, []);
 
   return (
     <View bg={1} flex>
-      <SafeTop />
-      <MotiView
-        animate={useDerivedValue(() => ({
-          opacity: isValid.value ? 1 : 0,
-        }))}
-        transition={useDerivedValue(() => ({
-          delay: isValid.value ? 0 : 100,
-        }))}
-      />
+      <SafeTop back title={user.username} />
+
       <View
         row
         style={{
@@ -67,11 +62,11 @@ const App = () => {
             />
           </Skeleton>
           <Text>{user?.name}</Text>
-          {user.bio && <Text fontSize="md"> {user.bio}</Text>}
-          <Text fontSize="xl"> Friends: {user?.friends.length}</Text>
+          {user?.bio && <Text fontSize="md"> {user.bio}</Text>}
+          <Text fontSize="xl"> Friends: {user?.friends?.length}</Text>
           <Text fontSize="xl"> Friendships: {"notyet"}</Text>
           <Text fontSize="xl"> interests: {"notyet"}</Text>
-          <JsonViewer json={JSON.stringify(user)} />
+          {/* <JsonViewer json={JSON.stringify(user)} /> */}
           {/* <Canvas style={{ width, height }}>
           <Group blendMode="exclusion">
             <Circle cx={r} cy={r} r={r} color="cyan" />
@@ -82,5 +77,4 @@ const App = () => {
       </ScrollView>
     </View>
   );
-};
-export default App;
+}
