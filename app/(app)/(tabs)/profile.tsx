@@ -15,6 +15,7 @@ import { View } from "components/View";
 import { useSharedValue, useDerivedValue } from "react-native-reanimated";
 import { MotiView, ScrollView } from "moti";
 import { JsonViewer } from "components/JsonViewer";
+import { ProfileImage } from "components/ProfileImage";
 const App = () => {
   const { user } = useUser();
   const { signOut } = useSession();
@@ -57,15 +58,11 @@ const App = () => {
       </View>
       <ScrollView style={{ flex: 1 }}>
         <View style={{ padding: 10, marginLeft: 10, marginRight: 10 }}>
-          <Skeleton show={show} height={100} width={100} radius={35}>
-            <Image
-              onLoad={() => {
-                setShow(false);
-              }}
-              source={{ uri: user?.profilePicture }}
-              style={{ width: 100, height: 100, borderRadius: 35 }}
-            />
-          </Skeleton>
+          <ProfileImage
+            source={{ uri: user?.profilePicture }}
+            size={100}
+            radius={35}
+          />
           <Text>{user?.name}</Text>
           {user.bio && <Text fontSize="md"> {user.bio}</Text>}
           <Text fontSize="xl"> Friends: {user?.friends.length}</Text>

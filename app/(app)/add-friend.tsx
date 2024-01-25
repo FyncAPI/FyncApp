@@ -7,7 +7,7 @@ import {
 import { useUser } from "contexts/user.context";
 import { View } from "components/View";
 import { Text } from "components/Text";
-import { SafeTop } from "components/SafeTop";
+import { SafeBottom, SafeTop } from "components/SafeTop";
 import { IconButton } from "components/IconButton";
 import { Input } from "components/Input";
 import { Ionicons } from "@expo/vector-icons";
@@ -130,12 +130,13 @@ const Add = () => {
             )}
           </View>
         ) : (
-          <>
+          <View row>
             <IconButton name="qr-code" />
             <IconButton name="search" />
-          </>
+          </View>
         )}
       </View>
+      <SafeBottom />
       {/* </ScrollView> */}
     </View>
   );

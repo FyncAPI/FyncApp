@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "contexts/user.context";
 import { User } from "constants/type";
 import { useSession } from "contexts/auth.context";
+import { ProfileImage } from "components/ProfileImage";
 
 export default function UserProfile() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -31,36 +32,9 @@ export default function UserProfile() {
     <View bg={1} flex>
       <SafeTop back title={user.username} />
 
-      <View
-        row
-        style={{
-          justifyContent: "space-between",
-          alignItems: "center",
-          paddingHorizontal: 20,
-          backgroundColor: "transparent",
-        }}
-      >
-        {/* <IconButton name="menu" /> */}
-        <Text variant="header" style={{ textAlign: "center" }}>
-          {user?.name}
-        </Text>
-
-        <View row gap={30}>
-          <IconButton href="/settings" name="settings-sharp" />
-          <IconButton name="pencil" href="/edit-profile" />
-        </View>
-      </View>
       <ScrollView style={{ flex: 1 }}>
         <View style={{ padding: 10, marginLeft: 10, marginRight: 10 }}>
-          <Skeleton show={show} height={100} width={100} radius={35}>
-            <Image
-              onLoad={() => {
-                setShow(false);
-              }}
-              source={{ uri: user?.profilePicture }}
-              style={{ width: 100, height: 100, borderRadius: 35 }}
-            />
-          </Skeleton>
+          <ProfileImage source={{ uri: user?.profilePicture }} size={100} />
           <Text>{user?.name}</Text>
           {user?.bio && <Text fontSize="md"> {user.bio}</Text>}
           <Text fontSize="xl"> Friends: {user?.friends?.length}</Text>
